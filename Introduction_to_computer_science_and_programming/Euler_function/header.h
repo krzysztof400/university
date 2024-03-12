@@ -1,0 +1,1 @@
+bool wzglpierwsze(int num, int i);
