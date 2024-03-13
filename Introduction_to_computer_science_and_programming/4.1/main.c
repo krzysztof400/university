@@ -38,6 +38,5 @@ int main() {
     {
         printf("napisy nie sa zgodne\n\n");
     }
-
     return 0;
 }
