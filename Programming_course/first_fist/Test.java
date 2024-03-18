@@ -15,21 +15,22 @@ public class Test {
                         m=Integer.parseInt(args[i]);
                         if(board.liczba(m) != -1)
                         {
+                            System.out.print(m + " - ");
                             System.out.println(board.liczba(m));
                         }
                         else{
-                            System.out.println(m + " -liczba spoza zakresu");
+                            System.out.println(m + " - liczba spoza zakresu");
                         }
                     }
-                    catch (NumberFormatException ex) {System.out.println(args[i] + " -nieprawidlowa dana");}
+                    catch (NumberFormatException ex) {System.out.println(args[i] + " - nieprawidlowa dana");}
                 }
             }
             else
             {
-                System.out.println(n + " -nieprawidlowy zakres");
+                System.out.println(n + " - nieprawidlowy zakres");
             }
         }
         
-        catch (NumberFormatException ex) {System.out.println(args[0] + " -nieprawidlowa dana");}
+        catch (NumberFormatException ex) {System.out.println(args[0] + " - nieprawidlowa dana");}
     }
 }
