@@ -19,18 +19,21 @@ public class Test {
                             System.out.println(board.liczba(m));
                         }
                         else{
-                            System.out.println(m + " - liczba spoza zakresu");
+                            System.out.println(m + " - out of range");
                         }
                     }
-                    catch (NumberFormatException ex) {System.out.println(args[i] + " - nieprawidlowa dana");}
+                    catch (NumberFormatException ex) {System.out.println(args[i] + " - invalid input");}
                 }
             }
             else
             {
-                System.out.println(n + " - nieprawidlowy zakres");
+                System.out.println(n + " - out of range");
             }
         }
         
-        catch (NumberFormatException ex) {System.out.println(args[0] + " - nieprawidlowa dana");}
+        catch (NumberFormatException ex) 
+        {
+            System.out.println(args[0] + " - invalid input");
+        }
     }
 }
