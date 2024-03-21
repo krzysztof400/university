@@ -1,7 +1,12 @@
 import java.math.BigInteger;
 
 public class Test {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+        if(args.length < 2)
+        {
+            System.err.println("Usage: java Test <row_number> [<column_index1> <column_index2> ...]");
+        }
         long n;
         try
         {

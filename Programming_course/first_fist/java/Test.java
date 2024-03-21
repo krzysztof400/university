@@ -1,5 +1,13 @@
-public class Test {
-    public static void main(String[] args) {
+public class Test 
+{
+    public static void main(String[] args) 
+    {
+        if(args.length < 2)
+        {
+            System.err.println("Usage: java Test <limit> [<index1> <index2> ...]");
+        }
+        else
+        {
         int n;
         try
         {
@@ -18,7 +26,8 @@ public class Test {
                             System.out.print(m + " - ");
                             System.out.println(board.liczba(m));
                         }
-                        else{
+                        else
+                        {
                             System.out.println(m + " - out of range");
                         }
                     }
@@ -34,6 +43,7 @@ public class Test {
         catch (NumberFormatException ex) 
         {
             System.out.println(args[0] + " - invalid input");
+        }
         }
     }
 }

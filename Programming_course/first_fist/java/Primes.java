@@ -1,29 +1,29 @@
+import java.util.Vector;
+
 public class Primes {
-    private int[] primes;
+    private Vector<Integer> primes;
 
     public Primes(int n) {
         primes = GenPrimes(n);
     }
 
-    private int[] GenPrimes(int n) {
-        int[] board = new int[n];
-        int count = 0;
-        for (int i = 2; i <= n; i++) {
-            if (MathUtil.isPrime(i)) {
-                board[count] = i;
-                count++;
+    private Vector<Integer> GenPrimes(int n) {
+        Vector<Integer> board = new Vector<Integer>();
+
+        for (int i = 2; i <= n; i++)
+        {
+            if (MathUtil.isPrime(i))
+            {
+                board.add(i);
             }
         }
-
-        int[] result = new int[count];
-        System.arraycopy(board, 0, result, 0, count);
-        return result;
+        return board;
     }
 
     public int liczba(int m) {
-        if (m < 0 || m >= primes.length) {
+        if (m < 0 || m >= primes.size()) {
             return -1;
         }
-        return primes[m];
+        return primes.get(m);
     }
 }

@@ -1,26 +1,33 @@
 import java.math.BigInteger;
+import java.util.Vector;
 
 public class pascal_triangle_row
 {
-    private BigInteger[] row;
+    private Vector<BigInteger> row;
 
     public pascal_triangle_row(int n) {
         row = gen_row(n);
     }
 
-    private BigInteger[] gen_row(int n) {
-        BigInteger[] board = new BigInteger[n + 1];
-        for (int i = 0; i <= n; i++) {
-            board[i] = math_util.newton_binominal(n, i);
+    private Vector<BigInteger> gen_row(int n)
+    {
+        Vector<BigInteger> board = new Vector<BigInteger>();
+        for (int i = 0; i <= n; i++)
+        {
+            board.add(math_util.newton_binominal(n, i));
         }
         return board;
     }
 
-    public BigInteger number(int m) {
-        if (m >= row.length || m < 0) {
+    public BigInteger number(int m) 
+    {
+        if (m >= row.size() || m < 0) 
+        {
             return BigInteger.valueOf(-1);
-        } else {
-            return row[m];
+        } 
+        else 
+        {
+            return row.get(m);
         }
     }
 }
