@@ -3,46 +3,25 @@
 #include <stdexcept>
 #include <cstdint>
 
-class MathUtil 
-{
-public:
-    static uint64_t newton_binominal(int n, int k) 
-    {
-        return factorial(n) / (factorial(k) * factorial(n - k));
-    }
-
-    static uint64_t factorial(int n) 
-    {
-        if (n < 0) 
-        {
-            throw std::invalid_argument("Factorial input must be non-negative");
-        }
-        uint64_t result = 1;
-        for (int i = 2; i <= n; i++) 
-        {
-            result *= i;
-        }
-        return result;
-    }
-};
-
 class pascal_triangle_row 
 {
 private:
-    std::vector<uint64_t> row;
+    std::vector<long long> row;
 
-    std::vector<uint64_t> gen_row(int n) 
+    std::vector<long long> gen_row(long long n) 
     {
-        std::vector<uint64_t> board(n + 1);
-        for (int i = 0; i <= n; i++) 
+        std::vector<long long> board(n + 1);
+        board[0] = 1;
+        for (long long i = 1; i <= n; i++)
         {
-            board[i] = MathUtil::newton_binominal(n, i);
+            board[i] = board[i-1] * (n - i + 1) / i;
         }
         return board;
     }
 
+
 public:
-    pascal_triangle_row(int n) 
+    pascal_triangle_row(long long n) 
     {
         row = gen_row(n);
     }
@@ -52,10 +31,11 @@ public:
         std::cout << "Destructor called for pascal_triangle_row" << std::endl;
     }
 
-    uint64_t number(int m) 
+    long long number(long long m) 
     {
-        if (m >= static_cast<int>(row.size()) || m < 0) 
+        if (m >= static_cast<long long>(row.size()) || m < 0) 
         {
+            throw std::out_of_range(std::string("ala ma ") + std::to_string(m));
             return -1;
         } 
         else 
@@ -73,7 +53,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    int n;
+    long long n;
     try 
     {
         n = std::stoi(argv[1]);
@@ -84,13 +64,13 @@ int main(int argc, char* argv[])
         }
 
         pascal_triangle_row row(n);
-        for (int i = 2; i < argc; i++) 
+        for (long long i = 2; i < argc; i++) 
         {
             try 
             {
-                int m = std::stoi(argv[i]);
-                uint64_t value = row.number(m);
-                if (value != static_cast<uint64_t>(-1)) 
+                long long m = std::stoi(argv[i]);
+                long long value = row.number(m);
+                if (value != static_cast<long long>(-1)) 
                 {
                     std::cout << m << " - " << value << std::endl;
                 } 
@@ -101,7 +81,7 @@ int main(int argc, char* argv[])
             } 
             catch (const std::invalid_argument& ex) 
             {
-                std::cerr << argv[i] << " - Invalid input" << std::endl;
+                std::cerr << argv[i] << " - Invalid input" << ex.what() << std::endl;
             }
         }
     } 
@@ -113,3 +93,32 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
+
+// class MathUtil 
+// {
+// public:
+//     static long long newton_binominal(long long n, long long k)
+//     {
+//         long long result;
+//         for(int i = 1; i <= k; i++)
+//         {
+//             result
+//         }
+//         return (factorial(n) / factorial(k) )/ factorial(n - k);
+//     }
+
+//     static long long factorial(long long n) 
+//     {
+//         if (n < 0) 
+//         {
+//             throw std::invalid_argument("Factorial input must be non-negative");
+//         }
+//         long long result = 1;
+//         for (long long i = 2; i <= n; i++) 
+//         {
+//             result *= i;
+//         }
+//         return result;
+//     }
+// };
