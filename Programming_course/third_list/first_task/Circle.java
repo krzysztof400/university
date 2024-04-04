@@ -1,4 +1,4 @@
-package Programming_course.third_list;
+package Programming_course.third_list.first_task;
 
 class Circle implements Figure
 {
@@ -17,5 +17,10 @@ class Circle implements Figure
     public double calculate_peremiter()
     {
         return radius*2*Math.PI;
+    }
+    
+    public String name()
+    {
+        return "Circle";
     }
 }

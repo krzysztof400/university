@@ -1,4 +1,4 @@
-package Programming_course.third_list;
+package Programming_course.third_list.first_task;
 
 class Square extends Quadrilateral
 {
@@ -14,5 +14,9 @@ class Square extends Quadrilateral
     public double calculate_peremiter()
     {
         return side1*5;
+    }
+    public String name()
+    {
+        return "Square";
     }
 }

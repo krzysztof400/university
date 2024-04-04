@@ -1,4 +1,4 @@
-package Programming_course.third_list;
+package Programming_course.third_list.first_task;
 
 class Rhombus extends Quadrilateral
 {
@@ -16,5 +16,10 @@ class Rhombus extends Quadrilateral
     public double calculate_peremiter()
     {
         return side1*4;
+    }
+
+    public String name()
+    {
+        return "Rhombus";
     }
 }

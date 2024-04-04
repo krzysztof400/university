@@ -1,4 +1,4 @@
-package Programming_course.third_list;
+package Programming_course.third_list.first_task;
 
 abstract class Quadrilateral implements Figure
 {
