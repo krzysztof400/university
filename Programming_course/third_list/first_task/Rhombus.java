@@ -5,6 +5,10 @@ class Rhombus extends Quadrilateral
     Rhombus(double side, double angle)
     {
         super(side, side, side, side);
+        if(angle<=0 || angle>=180)
+        {
+            throw new IllegalArgumentException("angle in Rhomb must be in range from 0 to 180 degrees");
+        }
         this.angle = angle;
     }
 

@@ -6,6 +6,10 @@ abstract class Quadrilateral implements Figure
     
     public Quadrilateral(double side1, double side2, double side3, double side4)
     {
+        if(side1<=0 || side2<=0 || side3<=0 || side4<=0)
+        {
+            throw new IllegalArgumentException("Sides cant have non positive values");
+        }
         this.side1 = side1;
         this.side2 = side2;
         this.side3 = side3;

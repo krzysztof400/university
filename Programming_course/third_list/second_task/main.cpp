@@ -2,7 +2,6 @@
 #include <cmath>
 #include <stdexcept>
 
-// Interface for geometric figures
 class Figure {
 public:
     virtual double calculate_area() const = 0;
@@ -11,16 +10,19 @@ public:
     virtual ~Figure() {}
 };
 
-// Abstract class for quadrilaterals
 class Quadrilateral : public Figure {
 protected:
     double side1, side2, side3, side4, angle;
 public:
     Quadrilateral(double s1, double s2, double s3, double s4)
-        : side1(s1), side2(s2), side3(s3), side4(s4) {}
+        : side1(s1), side2(s2), side3(s3), side4(s4) {
+            if(s1<=0 || s2<=0 || s3<=0 || s4<=0)
+            {
+                throw std::invalid_argument("side values in quadrilateral cant be nonpositive");
+            }
+        }
 };
 
-// Square class
 class Square : public Quadrilateral {
 public:
     Square(double side) : Quadrilateral(side, side, side, side) {}
@@ -38,12 +40,16 @@ public:
     }
 };
 
-// Rhombus class
 class Rhombus : public Quadrilateral 
 {
 private: double angle;
 public:
-    Rhombus(double side, double ang) : Quadrilateral(side, side, side, side), angle(ang) {}
+    Rhombus(double side, double ang) : Quadrilateral(side, side, side, side), angle(ang) {
+        if(ang<=0 || ang>=180)
+        {
+            throw std::invalid_argument("angle in rhomb must be in range from 0 to 180 degrees");
+        }
+    }
 
     double calculate_area() const override {
         return sin(angle * M_PI / 180) * side1 * side1;
@@ -58,7 +64,6 @@ public:
     }
 };
 
-// Rectangle class
 class Rectangle : public Quadrilateral {
 public:
     Rectangle(double s1, double s2) : Quadrilateral(s1, s2, s1, s2) {}
@@ -76,12 +81,16 @@ public:
     }
 };
 
-// Pentagon class
 class Pentagon : public Figure {
 private:
     double side;
 public:
-    Pentagon(double s) : side(s) {}
+    Pentagon(double s) : side(s) {
+        if(s<=0)
+        {
+            throw std::invalid_argument("siedes in pentagon cant have nonpositive values");
+        }
+    }
 
     double calculate_area() const override {
         return 0.25 * sqrt(5 * (5 + 2 * sqrt(5))) * side * side;
@@ -96,12 +105,16 @@ public:
     }
 };
 
-// Hexagon class
 class Hexagon : public Figure {
 private:
     double side;
 public:
-    Hexagon(double s) : side(s) {}
+    Hexagon(double s) : side(s) {
+        if(s<=0)
+        {
+            throw std::invalid_argument("sides in hexagon cant have nonpositive values");
+        }
+    }
 
     double calculate_area() const override {
         return 3 * sqrt(3) * side * side / 2;
@@ -116,12 +129,16 @@ public:
     }
 };
 
-// Circle class
 class Circle : public Figure {
 private:
     double radius;
 public:
-    Circle(double r) : radius(r) {}
+    Circle(double r) : radius(r) {
+        if(r<=0)
+        {
+            throw std::invalid_argument("radius value cant be non positive");
+        }
+    }
 
     double calculate_area() const override {
         return M_PI * radius * radius;
@@ -224,6 +241,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
-
-//add non positive contracts in each class

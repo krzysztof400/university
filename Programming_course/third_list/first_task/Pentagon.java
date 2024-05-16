@@ -6,6 +6,10 @@ class Pentagon implements Figure
 
     public Pentagon(double side)
     {
+        if(side<=0)
+        {
+            throw new IllegalArgumentException("Sides of pentagon cant have nonpositive values");
+        }
         this.side = side;
     }
 

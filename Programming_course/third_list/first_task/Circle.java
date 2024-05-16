@@ -3,9 +3,14 @@ package Programming_course.third_list.first_task;
 class Circle implements Figure
 {
     protected double radius;
+    protected String type = "Circle";
     
     public Circle(double radius)
     {
+        if(radius<=0)
+        {
+            throw new IllegalArgumentException("Radius cant have nonpositive value");
+        }
         this.radius = radius;
     }
 
@@ -21,6 +26,6 @@ class Circle implements Figure
     
     public String name()
     {
-        return "Circle";
+        return type;
     }
 }
