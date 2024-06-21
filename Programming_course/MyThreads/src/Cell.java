@@ -1,37 +1,29 @@
-import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
-import java.util.Random;
 import java.util.ArrayList;
 
-public class Cell extends Rectangle{
+public class Cell{
     private boolean suspended = false;
     private Color color;
     private ArrayList<Cell> neighbours;
     private Object locker;
-    private int i;
-    private int j;
+    private GUICell guiCell;
 
     public Cell(int size, Object locker, Color color){
-       super(size, size);
+       this.guiCell = new GUICell(size, color, this);
        this.color = color;
        this.neighbours = new ArrayList<>();
        this.locker = locker;
-       setOnMouseClicked(event -> toggleSuspended());
-    }
-
-    public Rectangle getCell(){
-       return this;
     }
 
     public synchronized void toggleSuspended(){
        suspended = !suspended;
     }
 
-    public Color getColor(){
+    public synchronized Color getColor(){
         return color;
     }
 
-    public synchronized void setNeighbours(ArrayList<Cell> neighbours){
+    public void setNeighbours(ArrayList<Cell> neighbours){
         this.neighbours = neighbours;
     }
 
@@ -49,46 +41,47 @@ public class Cell extends Rectangle{
         }
     }
 
-    public synchronized Cell getNeighbour(int index){
+    public Cell getNeighbour(int index){
         return neighbours.get(index);
     }
 
-    public boolean isSuspended(){
+    public GUICell getGUICell(){
+        return guiCell;
+    }
+
+    public synchronized boolean isSuspended(){
         return suspended;
     }
 
-    public void updateColor(int i, int j, Object locker, int K, double P, Random RANDOM, Cell[][] cells, int N, int M) {
-        while (true) {
+    public void updateColor(int i, int j, Object locker, int K, double P, Cell[][] cells, int N, int M) {
+        while (!Thread.currentThread().isInterrupted()) {
             try {
-                Thread.sleep((long) (0.5 * K + RANDOM.nextDouble() * K));
+                Thread.sleep(MyRandom.getSpeed(K));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
             }
 
             synchronized (locker) {
-                // if(cells[i][j].isSuspended()) {
-                //     continue;
-                // }
-            
-                double probability = RANDOM.nextDouble();
-                if (probability < P) {
-                    setColor(MyUtils.getRandomColor(RANDOM)); 
+                if (MyRandom.getProbability(P)) {
+                    setColor(MyUtils.getRandomColor()); 
                 } else {
                     setColor(MyUtils.getNeighbourColor(this));
                 }
                 MyGUIUtils.setNewColor(this);
 
-
                 System.out.println("Start: " + (i * M + j));
-                // try{
+
+                // try {
                 //     Thread.sleep(1000);
-                // }catch(InterruptedException e){
+                // } catch (InterruptedException e) {
                 //     Thread.currentThread().interrupt();
                 //     break;
                 // }
+
                 System.out.println("End: " + (i * M + j));
             }
         }
     }
 }
+

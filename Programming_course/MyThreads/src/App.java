@@ -1,21 +1,15 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.Scanner;
 
 public class App extends Application {
 
     private static int RECT_SIZE = 100;
-    private static final Random RANDOM = new Random();
     public static int N;
     public static int M;
     public static int K;
     public static double P;
     private final Cell[][] cells = new Cell[N][M];
-    private final ExecutorService executor = Executors.newFixedThreadPool(N * M);
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -41,18 +35,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        new GUI(primaryStage, N, M, RECT_SIZE, K, P, RANDOM, cells, executor);
+        Object locker = new Object();
+        MyUtils.prepereCells(cells, N, M, locker, RECT_SIZE);
+        MyUtils.addAllNeighbours(cells, N, M);
+
+        new GUI(primaryStage, N, M, RECT_SIZE, K, P, cells, locker);
     }
 
-    @Override
-    public void stop() {
-        executor.shutdownNow();
-        try {
-            if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
-                executor.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            executor.shutdownNow();
-        }
-    }
+    // @Override
+    // public void stop() {
+    //     MyGUIUtils.stopAllThreads();
+    // }
 }

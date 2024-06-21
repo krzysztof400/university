@@ -1,10 +1,9 @@
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MyUtils {
-    public static Color getRandomColor(Random RANDOM) {
-        return Color.rgb(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256));
+    public static Color getRandomColor() {
+        return Color.rgb(MyRandom.getRandomInt(256), MyRandom.getRandomInt(256), MyRandom.getRandomInt(256));
     }
 
     public static Color getNeighbourColor(Cell cell) {
@@ -12,6 +11,7 @@ public class MyUtils {
         
         for(int i = 0; i<4; i++){
             if (!cell.getNeighbour(i).isSuspended()) {
+                //
                 colors.add(cell.getNeighbour(i).getColor());
             }
         }
@@ -41,7 +41,7 @@ public class MyUtils {
         }
     }
 
-    public static void addAllNeighbours(int i, int j, Cell[][] cells, int N, int M) {
+    public static void detectNeighbours(int i, int j, Cell[][] cells, int N, int M) {
         ArrayList<Cell> neighbours = new ArrayList<>();
         neighbours.add(cells[i][(j - 1 + M) % M]);
         neighbours.add(cells[i][(j + 1) % M]);
@@ -49,6 +49,39 @@ public class MyUtils {
         neighbours.add(cells[(i + 1) % N][j]);
         
         cells[i][j].setNeighbours(neighbours);
+    }
+
+    public static void addAllNeighbours(Cell[][] cells, int N, int M){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                MyUtils.detectNeighbours(i, j, cells, N, M);
+            }
+        }
+    }
+    
+    public static void prepereCells(Cell[][] cells, int N, int M, Object locker, int RECT_SIZE){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                cells[i][j] = new Cell(RECT_SIZE, locker, getRandomColor());
+            }
+        }
+    }
+
+    public static void runThreads(Cell[][] cells, Object locker, int K, double P, int N, int M){
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < M; j++){
+                int finalI = i;
+                int finalJ = j;
+                
+                Thread cellThread = new Thread(() -> cells[finalI][finalJ].updateColor(finalI, finalJ, locker, K, P, cells, N, M));
+                cellThread.setDaemon(true);
+                cellThread.start();
+            }
+        }
+    }
+
+    public static void toggleSuspended(Cell cell){
+        cell.toggleSuspended();
     }
 
     public static int calculateRECT_SIZE(int N, int M){
