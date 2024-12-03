@@ -17,9 +17,9 @@ int main(int argc, char *argv[]) {
 	}
 
 	int charCount = 0;
-    	char ch;
+    char ch;
 
-	for ( ch = getc(fp); ch != EOF; ch = getc(fp)){
+	while((ch = fgetc(fp)) != EOF) {
 		charCount++;
 	}
 	
