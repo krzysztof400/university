@@ -1,0 +1,142 @@
+-at&t
+    mov $123, %eax
+
+    add %eax, %ebx, %ecx
+
+    shows what actually happends, we move value to adress
+
+-intel
+    mov eax, 123
+
+    add ecx, eax, ebx
+
+    is more intuitive, looks like modern programming languages, moves modified value nearer function value
+
+
+add op1 op2     o1+op2->op2
+sub op1 op2
+neg reg
+inc reg     reg++
+dec reg     reg--
+imul op (signed or unsigned)
+
+
+imul dest, op                           edx :eax <- eax o op        keep the whole mathematical result
+imul dest, op immediate                 dest <- op x immediate      discard 32 bits
+
+idiv op (div unsigned)                  eax <- edx :eax/ op
+                                        edx <- edx :eax mod op      it will always do both instructions
+
+
+42*%ebx
+mov $42 %eax
+imul $ebx
+
+%ebx/13
+mov $1 %eax
+imul %ebx
+idiv 13
+// not like that
+
+%ebx / 13
+mov $0, %edx
+mov %ebx, %eax
+idiv, $13
+// like that
+
+mov $200, %al 
+mov $200, %bl
+
+add %al, %bl    // (200+200)% 256
+                // (200+200) AND 0b11111111
+                // results of addition will always fit in number of arg bits + 1
+                // BL = 144 CS = 1
+
+add %al, %bl    // (200+200)% 256
+                // (200+200) AND 0b11111111
+                // results of addition will always fit in number of arg bits + 1
+                // BL = 144 CS = 1
+
+-n = not(n)+1
+    10 = 0b00001010
+    not(10) = 0b11110101
+    -10 = not(10)+1 = 0b11110110
+
+Thats why we have add, addition is the same undependently of signed or unsigned arguemtns
+
+
+
+128 = 0b 1000 0000
+-128 = 0b 1000 0000
+thats why:
+int8_t c = -128;
+int8_t d = -c;
+printf("%d", d);
+
+00111101 32+16+8+4+1 =48+13=61
+
+shl reg, immediate
+
+AL: 0b1100011
+shl %al, $1
+AL: 0b1000010 <- we put zero at the end, so we multiply by two and cut higher bits of
+
+
+shl/r - unsigned
+sal/r -signed
+
+int8_t a =...; in AL
+int8_t b =...; in BL
+int16_t c = (((int16_t)a)<<8)+b;
+
+mov $a %al 
+mov $b %bl
+
+movw $0 %ah
+shlw %ax, $8
+mvw %ax, %cx
+movb $0, %bh
+addw %bx, %cx       or          addw %bl, %cl
+
+branching, depending on flags XF, OF, SF, PF 
+cmp - updating a flags
+j(e/ne/l/le/g/ge) op - branch to op if (equal/not equal/lesser/ lesser or equal/ greateer/ greateer or equal)
+
+
+IF IN ASM
+if(x ==5){
+    x = x +2;
+}
+else{
+    x = x- 4;
+}
+
+.data
+x: .int 10
+...
+.text
+...
+if:
+    cmpl $5, x 
+    jne else 
+    addl $2, x
+    jmp end_if
+else:
+    subl $4, x
+end_if:
+
+WHILE IN ASM
+
+int x = 10;
+...
+while(x>5){
+    x = x-1;
+}
+
+
+.data
+x: .int 10
+.text
+.global main
+main:
+...
