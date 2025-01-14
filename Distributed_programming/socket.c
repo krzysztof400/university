@@ -38,3 +38,26 @@ int main() {
 }
 
 // binding socket to an adress
+
+
+machine A: socket() -> bind() -> listen() -> accept() -> send() -> recv() -> close()
+
+machine B: socket() -> connect() -> send() -> recv() -> close()
+
+socket() - creates a socket and returns a file descriptor
+bind() - binds the socket to an adress
+listen() - listens for incoming connections
+accept() - accepts a connection
+connect() - connects to a socket
+send() - sends data
+recv() - receives data
+close() - closes the socket
+
+gethostbyname() - gets the IP adress of a host
+
+u_long htonl(u_long hostlong) - converts a long integer from host byte order to network byte order          4 bytes
+u_short htons(u_short hostshort) - converts a short integer from host byte order to network byte order      2 bytes
+
+ntohl - same as above
+ntohs - same as above
+
