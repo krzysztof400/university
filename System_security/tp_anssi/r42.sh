@@ -12,7 +12,6 @@ fi
 # Exclude comments and look for negations
 grep -E "^[^#]*!" "$SUDOERS_FILE" > /tmp/sudoers_negations.txt
 
-# check if the file is empty
 if [ -s /tmp/sudoers_negations.txt ]; then
     echo "KO: Negation policies found in the sudoers file."
 else
@@ -21,3 +20,4 @@ fi
 
 # Cleanup temporary file
 rm -f /tmp/sudoers_negations.txt
+

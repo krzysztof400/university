@@ -138,7 +138,8 @@ int main(int argc, char *argv[]) {
 
         // Close the server socket
         close(server_socket);
-    } 
+    }
+    
     // Writer option
     else if (strcmp(option, "-w") == 0) {
         printf("Chosen writer option\n");
