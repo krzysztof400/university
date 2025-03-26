@@ -1,0 +1,147 @@
+/* Body styling */
+body {
+    background-color: #2F3640; /* Semi-transparent dark background */
+    display: flex;
+    flex-direction: row; /* Default to row for desktop */
+    min-height: 100vh;
+    margin: 0;
+    color: #ABB2B9; /* Lighter grey text color */
+    font-family: Arial, sans-serif; /* A clean sans-serif font */
+}
+
+/* Styling for the anchor links */
+a {
+    color: white; /* Even lighter grey text color */
+    text-decoration: none;
+    margin: 10px 0; /* Adds space between the links */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth hover transition */
+}
+
+a:hover {
+    transform: scale(1.1);
+    color: lightblue;
+}
+
+/* Header Styling */
+header {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+    color: white;
+    width: 200vw; /* Fixed width for desktop */
+    overflow: hidden; /* Prevent scrolling */
+}
+
+/* Nav styling - positioned on the right for desktop */
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 30vw;
+    border-radius: 10px; /* Rounded corners */
+}
+
+nav ul {
+    list-style-type: none; /* Remove default bullets */
+    padding: 0;
+    text-align: center;
+}
+nav ul li {
+    margin: 20px 0; /* Space between list items */
+    position: relative; /* For positioning the lines */
+    font-family: Arial, sans-serif; /* Clean, modern font */
+    text-transform: uppercase; /* Uppercase text */
+    color: #b0c4de; /* Light blue-gray text color */
+    font-size: 18px; /* Adjust size as needed */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth hover transition */
+}
+nav ul li:hover {
+    color: #ffffff; /* Optional: Change text color on hover */
+    font-size: 20px; /* Optional: Increase font size on hover */
+}
+nav ul li::before,
+nav ul li::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40px; /* Default length of the horizontal line */
+    height: 1px; /* Thickness of the line */
+    background-color: #b0c4de; /* Match text color for line */
+    transition: width 0.3s ease, left 0.3s ease, right 0.3s ease; /* Smooth transition for line length and position */
+}
+nav ul li::before {
+    left: -50px; /* Position line to the left */
+}
+nav ul li::after {
+    right: -50px; /* Position line to the right */
+}
+/* Extend lines further on hover */
+nav ul li:hover::before {
+    width: 60px; /* Increase length on hover */
+    left: -70px; /* Push the line further left */
+}
+nav ul li:hover::after {
+    width: 60px; /* Increase length on hover */
+    right: -70px; /* Push the line further right */
+}
+
+/* Content styling - positioned on the left */
+.content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Take the remaining space */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    margin-left: 20px;
+}
+
+.links {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px; /* Add spacing between children */
+}
+
+.links img {
+    width: 5vh; /* Width is 10% of the viewport width */
+    max-height: 5vh; /* Max height is 10% of the viewport width (maintaining square aspect ratio) */
+    object-fit: cover; /* Ensure images maintain aspect ratio */
+    border-radius: 5%; /* Rounded corners relative to the size of the image */
+}
+
+.prof_pic {
+    width: 40%;
+    height: width;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow around the profile picture */
+    margin-bottom: 20px; /* Space below the profile picture */
+}
+
+/* Mobile Styles (for screens smaller than 768px) */
+@media (max-aspect-ratio: 1/1) {
+    body {
+        flex-direction: column; /* Switch to column layout on mobile */
+        align-items: center; /* Center everything on mobile */
+    }
+
+    nav {
+        display: none; /* Hide nav on mobile */
+    }
+
+    .content {
+        padding: 10px; /* Adjust content padding for smaller screens */
+        margin: 10px; /* Add margin for mobile screens */
+        width: 100%; /* Take full width */
+    }
+
+    header {
+        margin-bottom: 10px; /* Adjust space between header and content */
+        width: 100%; /* Full width for header */
+        text-align: center; /* Center header text */
+    }
+}

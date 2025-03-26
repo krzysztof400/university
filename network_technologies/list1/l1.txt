@@ -1,0 +1,97 @@
+ping:
+połączenie przez eduroam na systemie linux:
+
+PWR - cs.pwr.edu.pl: ttl=61, czas=2.05ms
+Wrocław - www.wroclaw.pl: ttl=53, czas=8.12ms
+Kraków - www.krakow.pl: ttl=54, czas=6.87ms
+Warszawa - um.warszawa.pl: ttl=244, czas=8.41ms
+Ukraina - ukraine.ua: ttl=53, czas=8.16ms
+Francja - esiee.fr: ttl=46, czas=33.9ms
+Rosja - www.gov.ru: Brak odpowiedzi
+Kirgistan - www.gov.kg: ttl=50, czas=208.0ms
+Nigeria - www.nigeria.gov.ng: ttl=53, czas=8.67ms
+Indie - mcdonline.nic.in: ttl=237, czas=313.0ms
+Chiny - www.gov.cn: ttl=54, czas=19.0ms
+Nowa Zelandia - www.govt.nz: ttl=50, czas=204.0ms
+Tongo - www.gov.to: ttl=48, czas=58.6ms
+Chile - www.gob.cl: ttl=53, czas=23.3ms
+RPA - www.gov.za: ttl=45, czas=312.0ms
+Wyspa św. Heleny - www.sainthelena.gov.sh: ttl=50, czas=37.4ms
+USA, Pentagon - www.defense.gov: ttl=47, czas=183.0ms
+USA Wschód - www.nyc.gov: ttl=48, czas=17.2ms
+USA Zachód - www.lacity.gov: ttl=51, czas=12.4ms
+Fiji - 183.81.128.116: ttl=229, czas=366.0ms
+
+pomiary czasu dla www.wroclaw.pl (rozmiar: czas z fragmentacją, czas bez fragmentacji)
+1: brak, brak
+32: 9, 10
+128: 10, 10
+1024: 11, 10
+2048: Request timed out, Packet needs to be fragmented but DF set.
+1472 (największy rozmiar, który przeszedł): 10, 10
+
+pomiary czasu dla 183.81.128.116 (najdalej oddalony skokami):
+1: 320, 320
+32: 347, 350
+128: 380, 382
+1024: 402, 403
+2048: Request timed out, Packet needs to be fragmented but DF set.
+1472 (największy rozmiar, który przeszedł): 420, 420
+
+pomiar drogi do serwera (wcześniejsze pomiary oznaczały drogę z serwera do mnie; ustawianie ttl i sprawdzanie kiedy pakiet nie dotrze do celu):
+www.wroclaw.pl - 8 skoków
+gov.fm - 31 skoków
+
+
+połączenie przez hotspot wifi operatora mobilnego na linuxie:
+
+PWR - cs.pwr.edu.pl: Brak odpowiedzi
+Wrocław - www.wroclaw.pl: ttl=53, czas=559.0ms
+Kraków - www.krakow.pl: Brak odpowiedzi
+Warszawa - um.warszawa.pl: ttl=243, czas=49.2ms
+Ukraina - ukraine.ua: ttl=53, czas=61.7ms
+Francja - esiee.fr: ttl=47, czas=190.0ms
+Rosja - www.gov.ru: Brak odpowiedzi
+Kirgistan - www.gov.kg: ttl=47, czas=195.0ms
+Nigeria - www.nigeria.gov.ng: ttl=53, czas=64.0ms
+Indie - mcdonline.nic.in: ttl=235, czas=350.0ms
+Chiny - www.gov.cn: ttl=50, czas=65.1ms
+Nowa Zelandia - www.govt.nz: ttl=43, czas=270.0ms
+Tongo - www.gov.to: ttl=47, czas=81.6ms
+Chile - www.gob.cl: ttl=53, czas=72.7ms
+RPA - www.gov.za: ttl=42, czas=406.0ms
+Wyspa św. Heleny - www.sainthelena.gov.sh: ttl=46, czas=485.0ms
+USA, Pentagon - www.defense.gov: ttl=48, czas=395.0ms
+USA Wschód - www.nyc.gov: ttl=53, czas=241.0ms
+USA Zachód - www.lacity.gov: ttl=48, czas=74.7ms
+Fiji - 183.81.128.116: ttl=219, czas=426.0ms
+
+pomiary czasu dla wroclaw.pl (rozmiar: czas z fragmentacją, czas bez fragmentacji)
+1: brak, brak
+32: 180, 200
+128: 300, 320
+1024: 360, 390
+2048: Request timed out, Packet needs to be fragmented but DF set.
+1472 (największy rozmiar, który przeszedł): 380, 400
+
+pomiary czasu dla gov.fm (najdalej oddalony skokami):
+1: brak, brak
+32: 485, 500
+128: 600, 620
+1024: 700, 1000
+2048: Request timed out, Packet needs to be fragmented but DF set.
+1472 (największy rozmiar, który przeszedł): 1100, 1200
+
+pomiar drogi do serwera (wcześniejsze pomiary oznaczały drogę z serwera do mnie; ustawianie ttl i sprawdzanie kiedy pakiet nie dotrze do celu):
+www.wroclaw.pl - 9 skoków
+183.81.128.116 - 37 skoków
+
+traceroute:
+wypisuje całą trasę do serwera (wszstkie serwery, przez któe przechodzi)
+*wyjaśnienie co znajduje się w wyniku na linuxie*
+*wyjaśnienie co znajduje się w wyniku na windowsie*
+
+wireshark:
+*krótki opis co robi i jakie rzeczy można w nim znaleźć*
+będąc połączony przez tą samą sieć z innym komputerem mogliśmy z kolegą wysłać do siebie pingi (poprzez wysłanie na adres ip) i je odbierać (filtr icmp)
+przez pinga można zmieniać rozmiar pakietu, ttl lub ustawić wiadomość (tylko na linuxie), a przez wiresharka można było takie wiadomości odczytywać
