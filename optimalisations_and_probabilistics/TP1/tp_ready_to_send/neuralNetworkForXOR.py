@@ -30,6 +30,7 @@ def relu_derivative(x):
 N=100000 # number of iteration
 alpha = 0.0001 # learning rate
 def fit_with_one_nureon_in_layer_with_activation_neural_net(input, label, N=10000, alpha = 0.0001):
+<<<<<<<< HEAD:optimalisations_and_probabilistics/TP1/tp_ready_to_send/neuralNetworkForXOR.py
     w = np.random.normal(size=(2,), loc=0.1, scale=0.1)
     b = np.random.normal(size=(1,), loc=0.1, scale=0.1)
     loss = []
@@ -92,6 +93,35 @@ def fit_with_n_nureon_in_layer_neural_net(input, label, n_neurons=2, N=10000, al
     
     return Z2, loss, w_list
 
+========
+    w = np.random.normal(size=(2,), loc=0.1, scale=0.1) # initial values of weights
+    b = np.random.normal(size=(1,), loc=0.1, scale=0.1)
+    output = np.zeros(len(input)) # initial value of output
+    error = np.zeros(len(input)) # error between output and label
+    loss = []
+    w_list = []
+    for i in range(N):
+        j = np.random.randint(len(input))
+
+        Z = sigmoid(np.dot(input, w) + b)
+
+        error = np.mean((label - Z)**2)
+
+        derror_dZ = 2.0 * (label[j] - Z[j])
+        dZ_dw = input[j] * sigmoid_derivative(Z[j])
+
+        w = w + alpha * derror_dZ * dZ_dw
+        b = b + alpha * derror_dZ
+
+
+        if i % 1000 == 0:
+            print("iteration: ", i, "loss: ", error)
+            w_list.append(w.copy())
+            loss.append(error)
+
+    return Z, loss, w_list
+
+>>>>>>>> 66f789f (after exchange push):ouap/TP1/neuralNetworkForANDandOR.py
 def plot_simulation(output, label, title=""):
     plt.plot(output)
     plt.plot(label)
@@ -125,8 +155,12 @@ fig, ax = plt.subplots(len(dataset), 3, figsize=(16, 12), sharex="col")
 for name, ds in dataset.items():
     input = dataset[name]["X"]
     label = dataset[name]["y"]
+<<<<<<<< HEAD:optimalisations_and_probabilistics/TP1/tp_ready_to_send/neuralNetworkForXOR.py
     output, loss, w_list = fit_with_n_nureon_in_layer_neural_net(input, label, N=100000, alpha = 0.01)
     # print(output, loss, w_list)
+========
+    output, loss, w_list = fit_with_one_nureon_in_layer_with_activation_neural_net(input, label, N=100000, alpha = 0.01)
+>>>>>>>> 66f789f (after exchange push):ouap/TP1/neuralNetworkForANDandOR.py
     plt.subplot(len(dataset), 3, i)
     i += 1
     plot_simulation(output, label, title=f"Simulation of {name}")
@@ -143,7 +177,16 @@ for name, ds in dataset.items():
             plt.plot(w_list[:, j, k])
     
     plt.legend(('w1_11', 'w1_12', 'w1_21', 'w1_22', 'w1_31', 'w1_32', 'b1_1', 'b1_2', 'b1_3',
+<<<<<<<< HEAD:optimalisations_and_probabilistics/TP1/tp_ready_to_send/neuralNetworkForXOR.py
                 'w2_11', 'w2_12', 'w2_13', 'b2_1'), loc='upper right')
+========
+                'w2_11', 'w2_12', 'w2_13', 'b2_1'),loc='upper right')
+
+    plt.savefig(f"./{name}_plot.png")
+
+    
+
+>>>>>>>> 66f789f (after exchange push):ouap/TP1/neuralNetworkForANDandOR.py
 
 fig.tight_layout(pad=1.0)
 plt.show()

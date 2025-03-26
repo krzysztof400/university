@@ -52,3 +52,5 @@ node_modules/
 
 # specific
 /mk1
+*.class
+.svn/
