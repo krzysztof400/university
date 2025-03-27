@@ -1,11 +1,51 @@
-# Ignore Python files
+# Python-specific ignores
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+*.so
+bin/
+lib/
+include/
+lib64/
 
-# Ignore macOS system files
-.DS_Store
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
 
-# Ignore VS Code settings
-.vscode/
+# Dependency directories
+*.egg-info/
+dist/
+build/
+*.egg
 
+# TensorFlow-specific ignores
+*.h5  # Model weights
+*.hdf5  # Model weights
+checkpoint  # Training checkpoints
+*.ckpt  # Checkpoints
+tensorboard/  # TensorBoard logs
+logs/  # General log directories
+
+# Dataset caches (TensorFlow Datasets)
+tensorflow_datasets/
+*.tfrecord  # TFRecord files
+*.tfevents  # TensorFlow event files
+
+# IDE and editor files
+.idea/  # PyCharm
+*.sublime-workspace
+.vscode/  # Visual Studio Code
+*.swp  # Vim swap files
+
+# OS-generated files
+.DS_Store  # macOS
+Thumbs.db  # Windows
+
+# Miscellaneous
+*.log
+*.csv
+*.json
+*.pkl
+*.img
