@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import re
 import subprocess
+import sys
+
 
 def parse_output(output):
     comparisons_match = re.search(r'Number of comparisons: (\d+)', output)
@@ -33,12 +35,16 @@ def sort_n_elements(n, generator_path, sort_path):
     else:
         print("Failed to parse output.")
 
+if len(sys.argv) > 1:
+    k = int(sys.argv[1])
+else:
+    k = 10
+
 generators = ["./random_generator", "./descending_generator", "./ascending_generator"]
 sorts = ["./quick_sort", "./insertion_sort"]
 
 comparisons = []
 swaps = []
-k = 10
 
 for i in range(1, 100):  # Loop up to 1000
     n = i * 10
