@@ -61,6 +61,8 @@ int main() {
     std::vector<int> sorted_array = insertion_sort(n, array);
 
     if (n < 40) {
+        std::cout << "Original array: " << std::endl;
+        print_array(array);
         std::cout << "Sorted array: " << std::endl;
         print_array(sorted_array);
     }

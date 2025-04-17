@@ -100,6 +100,8 @@ int main() {
     std::vector<int> sorted_array = quick_sort(n, array);
 
     if (small_array) {
+        std::cout << "Original array: " << std::endl;
+        print_array(array);
         std::cout << "Sorted array: " << std::endl;
         print_array(sorted_array);
     }
