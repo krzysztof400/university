@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+header {
+    position: relative;
+    padding: 5%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5%;
+}
+
+content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 80%;
+}
+
+canvas {
+    width: 80%;
+    height: 35%;
+    background-color: #f0f0f0;
+}
+
+/* 1. Kontener na pola litery */
+#word-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+/* pojedynczy slot */
+.letter-slot {
+width: 40px;
+height: 50px;
+margin: 0 5px;
+border-bottom: 3px solid #333;
+font-size: 32px;
+text-align: center;
+line-height: 50px;
+}
+
+/* 2. Kontener kafelków */
+#tiles-container {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+max-width: 400px; /* lub 90vw dla responsywności */
+margin: 0 auto;
+}
+
+/* pojedynczy kafelek‑przycisk */
+.tile {
+width: 40px;
+height: 40px;
+margin: 5px;
+border: 1px solid #666;
+border-radius: 4px;
+font-size: 18px;
+text-align: center;
+line-height: 40px;
+cursor: pointer;
+user-select: none;
+}
+
+.tile.disabled {
+background: #ddd;
+cursor: default;
+}
+.tile.correct {
+background: #a8e6cf; /* zielonkawy */
+}
+.tile.wrong {
+background: #ff8b94; /* różowawy */
+}
+  

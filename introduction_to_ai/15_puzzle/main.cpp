@@ -11,7 +11,6 @@
 #include <cmath>
 #include <string>
 
-// Struktura reprezentująca stan układanki
 class PuzzleState {
 public:
     std::vector<int> board;
@@ -58,13 +57,12 @@ namespace std {
     };
 }
 
-// Struktura węzła używanego w algorytmie A*
 struct Node {
     PuzzleState state;
-    int g_score;  // Koszt od stanu początkowego
-    int h_score;  // Wartość heurystyki
+    int g_score;  // Cost from start to current node
+    int h_score;  // Value of heuristic
     int f_score;  // g_score + h_score
-    int move;     // Kafelek, który został przesunięty (dla odtworzenia ścieżki)
+    int move;     // Move made to reach this state
     
     Node(const PuzzleState& s, int g, int h, int m)
         : state(s), g_score(g), h_score(h), f_score(g + h), move(m) {}
@@ -106,7 +104,7 @@ private:
     }
 
 public:
-    FifteenPuzzle(int s = 3) : size(s) {
+    FifteenPuzzle(int s = 4) : size(s) {
         // Inicjalizacja stanu docelowego
         std::vector<int> goal(size * size);
         std::iota(goal.begin(), goal.end() - 1, 1);  // 1, 2, 3, ..., 15
@@ -430,7 +428,7 @@ int main() {
     std::cin >> choice;
     if (choice != 'n' && choice != 'N') {
         std::cout << "\nUruchamianie eksperymentów (to może zająć kilka minut)..." << std::endl;
-        puzzle.runExperiments(10); // Używamy 10 prób zamiast domyślnych 50 dla szybszej demonstracji
+        puzzle.runExperiments(10);
     }
     
     return 0;
