@@ -18,15 +18,12 @@ public:
 
     PuzzleState(const std::vector<int>& b, int s) : board(b), size(s) {}
     
-    // Domyślny konstruktor potrzebny dla kontenerów STL
     PuzzleState() : size(0) {}
 
-    // Równość stanów do hashowania
     bool operator==(const PuzzleState& other) const {
         return board == other.board;
     }
 
-    // Wyświetlanie stanu układanki
     void print() const {
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
@@ -43,7 +40,6 @@ public:
     }
 };
 
-// Funkcja haszująca dla PuzzleState
 namespace std {
     template <>
     struct hash<PuzzleState> {
@@ -121,25 +117,45 @@ public:
         return inversions % 2 == 0;
     }
 
-    // Generuje losowy, rozwiązywalny stan początkowy
-    PuzzleState generateRandomSolvableState() const {
+    PuzzleState generateRandomSolvableState(int maxDistance = 0) const {
         std::random_device rd;
         std::mt19937 g(rd());
-
+    
         std::vector<int> board(size * size);
-        std::iota(board.begin(), board.end() - 1, 1);  // 1, 2, 3, ..., 15
-        board.back() = 0;  // Puste pole na końcu
-
-        do {
-            std::shuffle(board.begin(), board.end(), g);
-            
-            // Upewniamy się, że puste pole jest w prawym dolnym rogu
-            auto it = std::find(board.begin(), board.end(), 0);
-            std::swap(*it, board.back());
-            
-        } while (!isSolvable(board));
-
-        return PuzzleState(board, size);
+        std::iota(board.begin(), board.end() - 1, 1);
+        board.back() = 0;  // Solved state with blank at end
+    
+        if (maxDistance == 0) {
+            do {
+                std::shuffle(board.begin(), board.end(), g);
+                auto it = std::find(board.begin(), board.end(), 0);
+                std::swap(*it, board.back());  // Ensure blank is in bottom-right
+            } while (!isSolvable(board));
+            return PuzzleState(board, size);
+        } else {
+            PuzzleState current(board, size);
+            PuzzleState previous = current;
+    
+            for (int i = 0; i < maxDistance; ++i) {
+                auto neighborPairs = getNeighbors(current);
+                std::vector<PuzzleState> neighbors;
+    
+                // Filter out the previous state to avoid undoing the last move
+                for (const auto& [neighbor, movedTile] : neighborPairs) {
+                    if (neighbor.board != previous.board)
+                        neighbors.push_back(neighbor);
+                }
+    
+                if (neighbors.empty())
+                    break; // no move possible without undoing
+    
+                std::uniform_int_distribution<> dist(0, neighbors.size() - 1);
+                previous = current;
+                current = neighbors[dist(g)];
+            }
+    
+            return current;
+        }
     }
 
     // Zwraca wszystkie możliwe sąsiednie stany
@@ -311,7 +327,7 @@ private:
 
 public:
     // Przeprowadza eksperymenty porównujące różne heurystyki
-    void runExperiments(int num_trials = 10) {
+    void runExperiments(int num_trials = 10, int max_distance = 0) {
         std::vector<int> misplaced_steps, manhattan_steps;
         std::vector<int> misplaced_visited, manhattan_visited;
         std::vector<double> misplaced_time, manhattan_time;
@@ -320,7 +336,7 @@ public:
             std::cout << "Próba " << (i + 1) << "/" << num_trials << std::endl;
             
             // Generujemy losowy stan początkowy
-            PuzzleState initial_state = generateRandomSolvableState();
+            PuzzleState initial_state = generateRandomSolvableState(max_distance);
             
             // Rozwiązujemy używając heurystyki "misplaced tiles"
             auto start_time = std::chrono::high_resolution_clock::now();
@@ -373,11 +389,19 @@ public:
     }
 };
 
-int main() {
+int main(int argc, char* argv[]) {
+    int max_distance = 0;
+    if (argc > 1) {
+        try {
+            max_distance = std::stoi(argv[1]);
+        } catch (const std::exception& e) {
+            std::cerr << "Invalid argument for maxDistance. Using default value of 0." << std::endl;
+        }
+    }
     FifteenPuzzle puzzle;
     
     // Generujemy losowy stan początkowy
-    PuzzleState initial_state = puzzle.generateRandomSolvableState();
+    PuzzleState initial_state = puzzle.generateRandomSolvableState(max_distance);
     
     std::cout << "Stan początkowy:" << std::endl;
     initial_state.print();
@@ -428,7 +452,7 @@ int main() {
     std::cin >> choice;
     if (choice != 'n' && choice != 'N') {
         std::cout << "\nUruchamianie eksperymentów (to może zająć kilka minut)..." << std::endl;
-        puzzle.runExperiments(10);
+        puzzle.runExperiments(100, max_distance);
     }
     
     return 0;
