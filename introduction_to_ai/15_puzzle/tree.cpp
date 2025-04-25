@@ -10,6 +10,7 @@
 #include <numeric>
 #include <cmath>
 #include <string>
+# include <climits>
 
 class PuzzleState {
 public:
@@ -230,99 +231,73 @@ public:
         return solveWithHeuristic(initial_state, 1); // 1 oznacza manhattanDistance
     }
     
-private:
-    // Wewnętrzna implementacja algorytmu A*
     std::pair<std::vector<int>, int> solveWithHeuristic(const PuzzleState& initial_state, int heuristic_type) {
         int visited_states = 0;
-        
-        // Kolejka priorytetowa dla A*
-        std::priority_queue<Node, std::vector<Node>, std::greater<Node>> open_set;
-        
-        // Zbiór zamkniętych stanów
-        std::unordered_set<PuzzleState> closed_set;
-        
-        // Mapa poprzednich stanów dla odtworzenia ścieżki
-        std::unordered_map<PuzzleState, std::pair<PuzzleState, int>> came_from;
-        
-        // Mapa kosztów G dla każdego stanu
-        std::unordered_map<PuzzleState, int> g_score;
-        
-        // Obliczamy wartość heurystyki dla stanu początkowego
-        int h_value;
-        if (heuristic_type == 0) {
-            h_value = misplacedTiles(initial_state);
-        } else {
-            h_value = manhattanDistance(initial_state);
-        }
-        
-        // Dodajemy stan początkowy
-        open_set.push(Node(initial_state, 0, h_value, -1));
-        g_score[initial_state] = 0;
-        
-        while (!open_set.empty()) {
-            // Pobieramy stan o najniższej ocenie F
-            Node current_node = open_set.top();
-            open_set.pop();
+    
+        struct TreeNode {
+            PuzzleState state;
+            int g_score;
+            int h_score;
+            int moved_tile;
+            TreeNode* parent;
+    
+            TreeNode(const PuzzleState& s, int g, int h, int move, TreeNode* p)
+                : state(s), g_score(g), h_score(h), moved_tile(move), parent(p) {}
+    
+            int f_score() const { return g_score + h_score; }
+        };
+    
+        // Priority queue for frontier, sorted by f_score
+        auto cmp = [](const TreeNode* a, const TreeNode* b) { return a->f_score() > b->f_score(); };
+        std::priority_queue<TreeNode*, std::vector<TreeNode*>, decltype(cmp)> frontier(cmp);
+        std::vector<TreeNode*> all_nodes;
+    
+        // Create and add root node
+        int h_value = (heuristic_type == 0) ? misplacedTiles(initial_state) : manhattanDistance(initial_state);
+        TreeNode* root = new TreeNode(initial_state, 0, h_value, -1, nullptr);
+        all_nodes.push_back(root);
+        frontier.push(root);
+    
+        TreeNode* solution_node = nullptr;
+    
+        while (!frontier.empty()) {
+            // Get node with lowest f_score
+            TreeNode* current = frontier.top();
+            frontier.pop();
             visited_states++;
-            
-            // Jeśli znaleźliśmy rozwiązanie
-            if (current_node.state == goal_state) {
-                // Odtwarzamy ścieżkę
-                std::vector<int> moves;
-                PuzzleState current = current_node.state;
-                
-                while (came_from.find(current) != came_from.end()) {
-                    auto [prev_state, move] = came_from[current];
-                    if (move != -1) {  // -1 oznacza stan początkowy
-                        moves.push_back(move);
-                    }
-                    current = prev_state;
-                }
-                
-                // Odwracamy ścieżkę
-                std::reverse(moves.begin(), moves.end());
-                
-                return {moves, visited_states};
+    
+            // Check if goal state
+            if (current->h_score == 0) {
+                solution_node = current;
+                break;
             }
-            
-            // Dodajemy bieżący stan do zamkniętego zbioru
-            closed_set.insert(current_node.state);
-            
-            // Sprawdzamy wszystkie sąsiednie stany
-            for (const auto& [neighbor_state, moved_tile] : getNeighbors(current_node.state)) {
-                // Pomijamy stany już sprawdzone
-                if (closed_set.find(neighbor_state) != closed_set.end()) {
-                    continue;
-                }
-                
-                // Obliczamy nowy koszt G
-                int tentative_g_score = g_score[current_node.state] + 1;
-                
-                // Sprawdzamy, czy sąsiad jest już w open_set
-                bool in_open_set = g_score.find(neighbor_state) != g_score.end();
-                
-                // Jeśli sąsiedni stan nie był jeszcze odwiedzony lub znaleźliśmy lepszą ścieżkę
-                if (!in_open_set || tentative_g_score < g_score[neighbor_state]) {
-                    // Aktualizujemy ścieżkę
-                    came_from[neighbor_state] = {current_node.state, moved_tile};
-                    g_score[neighbor_state] = tentative_g_score;
-                    
-                    // Obliczamy nową ocenę H
-                    int h_value;
-                    if (heuristic_type == 0) {
-                        h_value = misplacedTiles(neighbor_state);
-                    } else {
-                        h_value = manhattanDistance(neighbor_state);
-                    }
-                    
-                    // Dodajemy do kolejki priorytetowej
-                    open_set.push(Node(neighbor_state, tentative_g_score, h_value, moved_tile));
-                }
+    
+            // Explore neighbors
+            for (const auto& [neighbor, moved_tile] : getNeighbors(current->state)) {
+                int h = (heuristic_type == 0) ? misplacedTiles(neighbor) : manhattanDistance(neighbor);
+                TreeNode* child = new TreeNode(neighbor, current->g_score + 1, h, moved_tile, current);
+                all_nodes.push_back(child);
+                frontier.push(child);
             }
         }
-        
-        // Jeśli nie znaleziono rozwiązania
-        return {{}, visited_states};
+    
+        // Reconstruct path if solution found
+        std::vector<int> moves;
+        if (solution_node) {
+            TreeNode* current = solution_node;
+            while (current->parent != nullptr) {
+                moves.push_back(current->moved_tile);
+                current = current->parent;
+            }
+            std::reverse(moves.begin(), moves.end());
+        }
+    
+        // Clean up memory
+        for (TreeNode* node : all_nodes) {
+            delete node;
+        }
+    
+        return {moves, visited_states};
     }
 
 public:
