@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hangman Game</title>
+    <title>Gra Wisielec</title>
+    <script src="hangman.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <header>
-        <h1>Hangman Game</h1>
-    </header>
-    <content>
-        <canvas>
-
-        </canvas>
-        <div id="word-container"></div>
-        <div id="tiles-container"></div>
-    </content>
-    <div id="message"></div>
-    <div id="attempts"></div>
-    <div id="score"></div>
-    <div id="play-again">
-        <button id="play-again-button">Play Again</button>
+    <div class="container">
+        <h1>Gra Wisielec</h1>
+        <div class="game-area">
+            <canvas id="hangman-canvas" class="hangman-drawing" width="200" height="200"></canvas>
+            <div id="word-display" class="word-display"></div>
+            <div id="keyboard" class="keyboard"></div>
+            <div id="message" class="message" style="display: none;"></div>
+            <div class="game-controls">
+                <button id="new-game" class="btn btn-primary">Nowa gra</button>
+                <button id="cancel-game" class="btn btn-secondary">Anuluj grę</button>
+            </div>
+        </div>
     </div>
-    <script src="hangman.js"></script>
+
+    <script>
+        
+    </script>
 </body>
 </html>
