@@ -5,7 +5,7 @@ class HangmanGame {
       this.words = [
         'HISTORIA', 'WIEK', 'CYWILIZACJA', 'REWOLUCJA', 'WOJNA', 
         'IMPERYUM', 'MONARCHIA', 'DEMOKRACJA', 'NARÓD', 'KULTURA', 
-        'WYNALAZEK', 'ZABYTKI', 'TRADYCJA', 'WIELKA WYPRAWA', 'ŚREDNIOWIECZE',
+        'WYNALAZEK', 'ZABYTKI', 'TRADYCJA', 'ŚREDNIOWIECZE',
         'RENESANS', 'OŚWIECENIE', 'WOJNA ŚWIATOWA', 'PAŃSTWO', 'RZĄDY',
         'MARCHIA', 'REFORMACJA', 'ZJEDNOCZENIE', 'KRÓLESTWO'
     ];
@@ -63,7 +63,7 @@ class HangmanGame {
               
               // Sprawdzenie stanu gry
               if (!this.gameActive) {
-                  this.showResult();
+                  this.checkGameStatus();
               }
           } catch (e) {
               console.error('Błąd podczas wczytywania stanu gry:', e);
@@ -146,7 +146,7 @@ class HangmanGame {
   }
   
   updateKeyboard() {
-      // Aktualizacja klawiatury (bez ponownego tworzenia)
+      // Aktualizacja klawiatury
       this.createKeyboard();
   }
   
@@ -213,18 +213,18 @@ class HangmanGame {
       });
   }
   
-  showResult() {
-      // Wyświetlenie wyniku gry
-      if (!this.displayWord.includes('_')) {
-          this.message.textContent = 'Gratulacje! Odgadłeś słowo: ' + this.currentWord;
-          this.message.className = 'message win';
-      } else {
-          this.message.textContent = 'Przegrałeś! Prawidłowe słowo to: ' + this.currentWord;
-          this.message.className = 'message lose';
-      }
-      this.message.style.display = 'block';
-      this.disableKeyboard();
-  }
+//   showResult() {
+//       // Wyświetlenie wyniku gry
+//       if (!this.displayWord.includes('_')) {
+//           this.message.textContent = 'Gratulacje! Odgadłeś słowo: ' + this.currentWord;
+//           this.message.className = 'message win';
+//       } else {
+//           this.message.textContent = 'Przegrałeś! Prawidłowe słowo to: ' + this.currentWord;
+//           this.message.className = 'message lose';
+//       }
+//       this.message.style.display = 'block';
+//       this.disableKeyboard();
+//   }
   
   saveGameState() {
       // Zapisanie stanu gry w localStorage
