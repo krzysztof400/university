@@ -1,4 +1,4 @@
-module W8 (SimpleTree (Leaf, Node), tree1, tree2, tree3) where
+module W8a (SimpleTree (Leaf, Node), tree1, tree2, tree3) where
 
 import qualified Data.Tree as T hiding (Tree)
 
@@ -30,3 +30,7 @@ balancedTreeQuestion :: SimpleTree a -> Bool
 balancedTreeQuestion (Leaf _) = True
 balancedTreeQuestion (Node l r) = abs (height l - height r) <= 1 && balancedTreeQuestion l && balancedTreeQuestion r
 
+-- toDatatree (Leaf x) = T.Node x []
+-- toDatatree (Node l r) = T.Node undefined [toDatatree l, toDatatree r]
+
+-- showTree t = putStrLn $ T.drawTree (toDatatree (fmap show t))
