@@ -33,6 +33,7 @@ int randomized_partition(int size, int low, int high, int array[]) {
 }
 
 int randomized_select(int size, int value, int array[]) {
+    print_if_small(array, size, "Array before randomized select");
     if (size == 1) {
         return array[0];
     }
@@ -89,5 +90,5 @@ int main(int argc, char *argv[]) {
     std::cout << "Comparisons: " << comparisons << std::endl;
     std::cout << "Assignments: " << assigns << std::endl;
 
-    return 1;
+    return 0;
 }

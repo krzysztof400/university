@@ -38,6 +38,7 @@ int select(int size, int value, int array[]) {
         insertion_sort(array, size);
         return array[value - 1];
     }
+    print_if_small(array, size, "Array before select");
 
     int group_count = (size + 4) / 5;
     int* medians = new int[group_count];
@@ -135,5 +136,5 @@ int main(int argc, char *argv[]) {
     std::cout << "Comparisons: " << comparisons << std::endl;
     std::cout << "Assignments: " << assigns << std::endl;
 
-    return 1;
+    return 0;
 }
