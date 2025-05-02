@@ -21,7 +21,6 @@ int main(int argc, char *argv[]){
     for(int i=0; i<size; i++){
         array[i] = dis(gen);
     }
-    std::sort(array, array + size);
 
     std::cout << size << std::endl;
     for(int i=0; i<size; i++){

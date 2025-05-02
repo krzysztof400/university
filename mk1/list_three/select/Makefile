@@ -5,7 +5,7 @@ CXXFLAGS = -Wall -Wextra -O2 -std=c++17
 UTIL = utils.cpp
 
 # Source files and executable names
-SOURCES = array_generator.cpp binary_search.cpp
+SOURCES = generator_random.cpp randomized_select.cpp select.cpp 
 EXECUTABLES = $(SOURCES:.cpp=)
 
 # Default rule: build all executables
