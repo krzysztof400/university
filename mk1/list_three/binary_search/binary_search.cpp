@@ -6,14 +6,17 @@
 int binary_search(int size, int value, int array[]){
     int low = 0;
     int high = size-1;
-    int mid;
+    int mid, temp;
     while(compare(high, low)){
-        mid = (low + high) / 2;
+        temp = (low + high) / 2;
+        assign(mid, temp);
         if(compare(array[mid], value)){
-            high = mid-1;
+            temp = mid-1;
+            assign(high, temp);
         }
         else if(compare(value, array[mid])){
-            low = mid+1;
+            temp = mid+1;
+            assign(low, temp);
         }
         else{
             return 1;
@@ -37,9 +40,11 @@ int main(int argc, char *argv[]) {
     int array[size];
     for(int i=0; i<size; i++){
         std::cin >> array[i];
-        // std::cout << array[i] << " ";
+        if(size < 100){
+            std::cout << array[i] << " ";
+        }
     }
-    // std::cout << std::endl;
+    std::cout << std::endl;
 
     int result = binary_search(size, value, array);
     if(result == 0){
