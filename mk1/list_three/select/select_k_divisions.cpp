@@ -30,24 +30,24 @@ int get_median(int* array, int size) {
     return array[size / 2];
 }
 
-int select(int size, int value, int array[]) {
-    if (!compare(size, 5)) {  
+int select(int size, int value, int array[], int group_size) {
+    if (!compare(size, group_size)) {  
         // std::cout << "Using insertion sort" << std::endl;
         insertion_sort(array, size);
         return array[value - 1];
     }
     print_if_small(array, size, "Array before select");
 
-    int group_count = (size + 4) / 5;
+    int group_count = (size + group_size - 1) / group_size;
     int* medians = new int[group_count];
 
     for (int i = 0; i < group_count; ++i) {
-        int start = i * 5;
-        int end = start + 5;
+        int start = i * group_size;
+        int end = start + group_size;
         if (compare(end, size)) {
             assign(end, size);
         }
-        int temp[5];
+        int temp[group_size];
         for (int j = start; j < end; ++j) {
             assign(temp[j - start], array[j]);
         }
@@ -55,7 +55,7 @@ int select(int size, int value, int array[]) {
         assign(medians[i], temp2);
     }
 
-    int pivot = select(group_count, (group_count + 1) / 2, medians);
+    int pivot = select(group_count, (group_count + 1) / 2, medians, group_size);
     delete[] medians;
 
     int* left = new int[size];
@@ -78,11 +78,11 @@ int select(int size, int value, int array[]) {
 
     int result;
     if (!compare(value, l)) {  // value <= l
-        result = select(l, value, left);
+        result = select(l, value, left, group_size);
     } else if (!compare(value, l + e)) {  // value <= l + e
         assign(result, pivot);
     } else {
-        result = select(r, value - l - e, right);
+        result = select(r, value - l - e, right, group_size);
     }
 
     delete[] left;
@@ -93,12 +93,13 @@ int select(int size, int value, int array[]) {
 }
 
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
+    if (argc != 3) {
         std::cout << "Incorrect amount of arguments" << std::endl;
-        std::cout << "./array_generator <selected value>" << std::endl;
+        std::cout << "./array_generator <selected value> <size of divided groups>" << std::endl;
         return 0;
     }
     int value = std::stoi(argv[1]);
+    int group_size = std::stoi(argv[2]);
 
     int size;
     std::cin >> size;
@@ -118,7 +119,7 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     print_if_small(array, size, "Input array");
-    int position = select(size, value, array);
+    int position = select(size, value, array, group_size);
     print_if_small(array, size, "After randomized select");
 
     std::sort(array, array + size);
