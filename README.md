@@ -1,38 +1,40 @@
-# 👋 Hi, I'm Krzysztof Zając
+# 🎓 University Projects by Krzysztof Zając
 
-🎓 Algorithmic Computer Science student at Wrocław University of Science and Technology  
-🌍 Currently on an exchange program at ESIEE Paris  
-💻 Passionate about software development, algorithms, and building impactful projects
+Welcome to my collection of university coursework and projects developed during my studies in Algorithmic Computer Science at Wrocław University of Science and Technology. This repository reflects my academic journey, showcasing practical applications of theoretical concepts across various domains in computer science.
 
-## 🚀 About Me
+## 📁 Repository Structure
 
-I'm a dedicated computer science student with a strong foundation in algorithms and a keen interest in developing efficient and scalable software solutions. My academic journey has equipped me with problem-solving skills and a deep understanding of computational theory, which I apply to real-world projects.
+The repository is organized into directories corresponding to specific courses:
 
-## 🛠️ Skills
+- **Advanced Linux Operating System**: In-depth exploration of Linux internals, shell scripting, and system-level programming.
+- **Algorithms and Data Structures**: Implementation of classic and advanced algorithms, emphasizing efficiency and optimization.
+- **Distributed Programming**: Projects focusing on concurrency, parallelism, and distributed system architectures.
+- **Introduction to Computer Science and Programming**: Foundational programming assignments covering basic concepts and problem-solving techniques.
+- **Programming Course**: Diverse programming tasks aimed at enhancing coding proficiency and understanding of software development principles.
+- **Software Security**: Studies on software vulnerabilities, secure coding practices, and threat mitigation strategies.
+- **System Security**: Examination of operating system security mechanisms, access controls, and system hardening techniques.
+- **Haskell**: Functional programming assignments utilizing Haskell to solve computational problems.
+- **Introduction to AI**: Projects exploring fundamental artificial intelligence concepts, including search algorithms and basic machine learning models.
+- **Network Technologies**: Practical exercises related to networking protocols, socket programming, and network configuration.
+- **WWW Technologies**: Development of web applications using HTML, CSS, JavaScript, and backend technologies.
 
-- **Languages:** C++, Python, JavaScript
-- **Frameworks & Libraries:** React, Node.js, Express
-- **Tools & Platforms:** Git, GitHub, Linux, Visual Studio Code
-- **Other:** Algorithm design, Data structures, Problem-solving
+## 🧠 Highlights
 
-## 📂 Projects
+- **Algorithmic Implementations**: Efficient solutions to complex problems, demonstrating a strong grasp of data structures and algorithm design.
+- **System-Level Programming**: Hands-on experience with low-level programming, process management, and inter-process communication.
+- **Security Projects**: Analysis and implementation of security measures to protect software and systems against vulnerabilities.
+- **Functional Programming**: Application of functional paradigms to develop concise and robust code in Haskell.
+- **Web Development**: Creation of dynamic web applications, showcasing both frontend and backend development skills.
 
-Here are some of the projects I've worked on:
-- [**A-star for 15 puzzle**](https://github.com/krzysztof400/university/tree/main/introduction_to_ai/15_puzzle): Implementation of A-star algorithm for solving 15 puzzle, with lot of memory optimalisation - numbers of searched states exceeds 1e12
-- [**Leetcode**](https://github.com/krzysztof400/Leetcode): A collection of algorithmic problems and solutions, showcasing my problem-solving skills.
-- [**Portfolio Website**](https://github.com/krzysztof400/portfolio-website): My personal portfolio website built with HTML, CSS, and JavaScript.
-
-Feel free to explore more of my repositories to see the breadth of my work.
-
-## 📫 Let's Connect
+## 🔗 Connect with Me
 
 - 🌐 [Portfolio Website](https://krzysztof400.github.io/portfolio-website/)
 - 💼 [LinkedIn](https://www.linkedin.com/in/krzysztof-zaj%C4%85c-459362241/)
-- 📧 Email: [Your Email Address]
+- 📧 Email: [krzysztofzajac.official@gmail.com]
 - 📍 Based in Wrocław, Poland
 
-I'm always open to discussing new opportunities, collaborations, or just chatting about tech and development. Don't hesitate to reach out!
+I'm always eager to discuss new opportunities, collaborations, or delve into conversations about technology and development. Feel free to reach out!
 
 ---
 
-*This README was generated to provide an overview of my background and projects. For more detailed information, please visit my [portfolio website](https://krzysztof400.github.io/portfolio-website/).*
+*Note: This repository is intended for educational purposes, reflecting my academic work and growth as a computer science student.*
