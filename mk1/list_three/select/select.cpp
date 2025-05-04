@@ -121,15 +121,17 @@ int main(int argc, char *argv[]) {
     int position = select(size, value, array);
     print_if_small(array, size, "After randomized select");
 
-    std::sort(array, array + size);
-    print_if_small(array, size, "Sorted array");
+    if (small_array) {
+        std::sort(array, array + size);
+        print_if_small(array, size, "Sorted array");
 
-    std::cout << "The " << value << "th smallest element is: " << position << std::endl;
-    if(array[value-1] != position){
-        std::cout << "WARNING: The " << value << "th smallest element is not the same as the " << position << "th element in sorted array" << std::endl;
-    }
-    else{
-        std::cout << "CORRECT: The " << value << "th smallest element is the same as the " << position << "th element in sorted array" << std::endl;
+        std::cout << "The " << value << "th smallest element is: " << position << std::endl;
+        if(array[value-1] != position){
+            std::cout << "WARNING: The " << value << "th smallest element is not the same as the " << position << "th element in sorted array" << std::endl;
+        }
+        else{
+            std::cout << "CORRECT: The " << value << "th smallest element is the same as the " << position << "th element in sorted array" << std::endl;
+        }
     }
     std::cout << "Comparisons: " << comparisons << std::endl;
     std::cout << "Assignments: " << assigns << std::endl;
