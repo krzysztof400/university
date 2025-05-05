@@ -1,0 +1,444 @@
+krzysztof400@legion:~$ #=================KRZYSZTOF ZAJAC, 279757===========
+krzysztof400@legion:~$ #===ZADANIE 1====
+krzysztof400@legion:~$ #===KOMPILACJA===
+krzysztof400@legion:~$ cd Desktop/university/mk1/list_three/select/
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ make
+g++ -Wall -Wextra -O2 -std=c++17 -o generator_random generator_random.cpp utils.cpp
+g++ -Wall -Wextra -O2 -std=c++17 -o randomized_select randomized_select.cpp utils.cpp
+randomized_select.cpp: In function ‘int randomized_partition(int, int, int, int*)’:
+randomized_select.cpp:29:30: warning: unused parameter ‘size’ [-Wunused-parameter]
+   29 | int randomized_partition(int size, int low, int high, int array[]) {
+      |                          ~~~~^~~~
+g++ -Wall -Wextra -O2 -std=c++17 -o select select.cpp utils.cpp
+g++ -Wall -Wextra -O2 -std=c++17 -o generator_ascending generator_ascending.cpp utils.cpp
+g++ -Wall -Wextra -O2 -std=c++17 -o generator_descending generator_descending.cpp utils.cpp
+
+g++ -Wall -Wextra -O2 -std=c++17 -o select_k_divisions select_k_divisions.cpp utils.cpp
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ #===TESTOWANIE===
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ python3 exercise1.py
+Generator: ./generator_random, Algorithm: ./select, Size: 1, Kth: 1
+Input array: 1
+After randomized select: 1
+Sorted array: 1
+The 1th smallest element is: 1
+CORRECT: The 1th smallest element is the same as the 1th element in sorted array
+Comparisons: 1
+Assignments: 0
+
+Generator: ./generator_random, Algorithm: ./select, Size: 10, Kth: 3
+Input array: 1 3 4 6 4 4 19 19 5 2
+Array before select: 1 3 4 6 4 4 19 19 5 2
+After randomized select: 1 3 4 6 4 4 19 19 5 2
+Sorted array: 1 2 3 4 4 4 5 6 19 19
+The 3th smallest element is: 3
+CORRECT: The 3th smallest element is the same as the 3th element in sorted array
+Comparisons: 40
+Assignments: 77
+
+Generator: ./generator_random, Algorithm: ./select, Size: 30, Kth: 1
+Input array: 55 11 24 7 30 57 10 51 34 38 49 23 38 55 31 1 49 22 37 11 55 56 48 21 23 25 6
+17 31 13
+Array before select: 55 11 24 7 30 57 10 51 34 38 49 23 38 55 31 1 49 22 37 11 55 56 48 21
+23 25 6 17 31 13
+Array before select: 24 51 38 22 48 17
+Array before select: 11 7 10 23 1 22 11 21 23 6 17 13
+Array before select: 11 7 10 1 11 6
+After randomized select: 55 11 24 7 30 57 10 51 34 38 49 23 38 55 31 1 49 22 37 11 55 56 48
+ 21 23 25 6 17 31 13
+Sorted array: 1 6 7 10 11 11 13 17 21 22 23 23 24 25 30 31 31 34 37 38 38 48 49 49 51 55 55
+ 55 56 57
+The 1th smallest element is: 1
+CORRECT: The 1th smallest element is the same as the 1th element in sorted array
+Comparisons: 209
+Assignments: 392
+
+Generator: ./generator_ascending, Algorithm: ./select, Size: 1, Kth: 1
+Input array: 0
+After randomized select: 0
+Sorted array: 0
+The 1th smallest element is: 0
+CORRECT: The 1th smallest element is the same as the 0th element in sorted array
+Comparisons: 1
+Assignments: 0
+
+Generator: ./generator_ascending, Algorithm: ./select, Size: 10, Kth: 5
+Input array: 1 3 7 14 15 16 16 16 17 19
+Array before select: 1 3 7 14 15 16 16 16 17 19
+Array before select: 14 15 16 16 16 17 19
+After randomized select: 1 3 7 14 15 16 16 16 17 19
+Sorted array: 1 3 7 14 15 16 16 16 17 19
+The 5th smallest element is: 15
+CORRECT: The 5th smallest element is the same as the 15th element in sorted array
+Comparisons: 61
+Assignments: 121
+
+Generator: ./generator_ascending, Algorithm: ./select, Size: 30, Kth: 28
+Input array: 2 3 4 8 13 14 15 17 17 20 23 23 24 30 31 31 32 37 40 40 45 50 51 51 54 55 57 5
+9 59 59
+Array before select: 2 3 4 8 13 14 15 17 17 20 23 23 24 30 31 31 32 37 40 40 45 50 51 51 54
+ 55 57 59 59 59
+Array before select: 4 17 24 37 51 59
+Array before select: 30 31 31 32 37 40 40 45 50 51 51 54 55 57 59 59 59
+Array before select: 50 51 51 54 55 57 59 59 59
+Array before select: 54 55 57 59 59 59
+After randomized select: 2 3 4 8 13 14 15 17 17 20 23 23 24 30 31 31 32 37 40 40 45 50 51 5
+1 54 55 57 59 59 59
+Sorted array: 2 3 4 8 13 14 15 17 17 20 23 23 24 30 31 31 32 37 40 40 45 50 51 51 54 55 57
+59 59 59
+The 28th smallest element is: 59
+CORRECT: The 28th smallest element is the same as the 59th element in sorted array
+Comparisons: 221
+Assignments: 481
+
+Generator: ./generator_descending, Algorithm: ./select, Size: 1, Kth: 1
+Input array: 0
+After randomized select: 0
+Sorted array: 0
+The 1th smallest element is: 0
+CORRECT: The 1th smallest element is the same as the 0th element in sorted array
+Comparisons: 1
+Assignments: 0
+
+Generator: ./generator_descending, Algorithm: ./select, Size: 10, Kth: 2
+Input array: 15 15 10 9 6 5 2 2 1 0
+Array before select: 15 15 10 9 6 5 2 2 1 0
+After randomized select: 15 15 10 9 6 5 2 2 1 0
+Sorted array: 0 1 2 2 5 6 9 10 15 15
+The 2th smallest element is: 1
+CORRECT: The 2th smallest element is the same as the 1th element in sorted array
+Comparisons: 41
+Assignments: 76
+
+Generator: ./generator_descending, Algorithm: ./select, Size: 30, Kth: 4
+Input array: 59 59 56 55 55 52 51 49 48 47 41 40 36 36 35 34 34 34 27 27 21 20 18 13 9 8 8
+7 4 0
+Array before select: 59 59 56 55 55 52 51 49 48 47 41 40 36 36 35 34 34 34 27 27 21 20 18 1
+3 9 8 8 7 4 0
+Array before select: 56 49 36 34 18 7
+Array before select: 27 27 21 20 18 13 9 8 8 7 4 0
+After randomized select: 59 59 56 55 55 52 51 49 48 47 41 40 36 36 35 34 34 34 27 27 21 20
+18 13 9 8 8 7 4 0
+Sorted array: 0 4 7 8 8 9 13 18 20 21 27 27 34 34 34 35 36 36 40 41 47 48 49 51 52 55 55 56
+ 59 59
+The 4th smallest element is: 8
+CORRECT: The 4th smallest element is the same as the 8th element in sorted array
+Comparisons: 182
+Assignments: 358
+
+Generator: ./generator_random, Algorithm: ./randomized_select, Size: 1, Kth: 1
+Input array: 0
+Array before randomized select: 0
+After randomized select: 0
+Sorted array: 0
+The 1th smallest element is: 0
+CORRECT: The 1th smallest element is the same as the 0th element in sorted array
+Comparisons: 0
+Assignments: 0
+
+Generator: ./generator_random, Algorithm: ./randomized_select, Size: 10, Kth: 4
+Input array: 4 4 7 5 17 8 8 6 10 15
+Array before randomized select: 4 4 7 5 17 8 8 6 10 15
+Array before randomized select: 15 17 8 8 6 10 7
+After randomized select: 4 4 5 6 17 8 8 7 10 15
+Sorted array: 4 4 5 6 7 8 8 10 15 17
+The 4th smallest element is: 6
+CORRECT: The 4th smallest element is the same as the 6th element in sorted array
+Comparisons: 15
+Assignments: 18
+
+Generator: ./generator_random, Algorithm: ./randomized_select, Size: 30, Kth: 30
+Input array: 4 49 33 36 8 19 34 38 26 55 1 5 5 23 51 17 13 32 52 9 42 7 30 38 22 55 27 41 1
+4 3
+Array before randomized select: 4 49 33 36 8 19 34 38 26 55 1 5 5 23 51 17 13 32 52 9 42 7
+30 38 22 55 27 41 14 3
+Array before randomized select: 51 38 26 32 52 55 42 36 30 38 49 55 27 41 33 34
+Array before randomized select: 55 52 55 51 49
+Array before randomized select: 55
+After randomized select: 4 8 19 1 5 5 3 17 13 9 7 22 14 23 38 26 32 34 36 30 38 27 41 33 42
+ 52 49 51 55 55
+Sorted array: 1 3 4 5 5 7 8 9 13 14 17 19 22 23 26 27 30 32 33 34 36 38 38 41 42 49 51 52 5
+5 55
+The 30th smallest element is: 55
+CORRECT: The 30th smallest element is the same as the 55th element in sorted array
+Comparisons: 48
+Assignments: 96
+
+Generator: ./generator_ascending, Algorithm: ./randomized_select, Size: 1, Kth: 1
+Input array: 1
+Array before randomized select: 1
+After randomized select: 1
+Sorted array: 1
+The 1th smallest element is: 1
+CORRECT: The 1th smallest element is the same as the 1th element in sorted array
+Comparisons: 0
+Assignments: 0
+
+Generator: ./generator_ascending, Algorithm: ./randomized_select, Size: 10, Kth: 7
+Input array: 1 5 5 6 8 8 12 13 16 19
+Array before randomized select: 1 5 5 6 8 8 12 13 16 19
+Array before randomized select: 8 8 12 13 16 19
+Array before randomized select: 8 8 12 13
+Array before randomized select: 13 12 8
+After randomized select: 1 5 5 6 8 8 12 13 16 19
+Sorted array: 1 5 5 6 8 8 12 13 16 19
+The 7th smallest element is: 12
+CORRECT: The 7th smallest element is the same as the 12th element in sorted array
+Comparisons: 19
+Assignments: 48
+
+Generator: ./generator_ascending, Algorithm: ./randomized_select, Size: 30, Kth: 12
+Input array: 3 4 16 16 16 19 20 22 25 31 34 34 35 36 37 37 46 46 47 48 49 49 50 51 55 58 58
+ 59 59 59
+Array before randomized select: 3 4 16 16 16 19 20 22 25 31 34 34 35 36 37 37 46 46 47 48 4
+9 49 50 51 55 58 58 59 59 59
+Array before randomized select: 3 4 16 16 16 19 20 22 25 31 34 34 35
+Array before randomized select: 34 34 35
+Array before randomized select: 34 35
+Array before randomized select: 34
+After randomized select: 3 4 16 16 16 19 20 22 25 31 34 34 35 36 37 37 46 46 47 48 49 49 50
+ 51 55 58 58 59 59 59
+Sorted array: 3 4 16 16 16 19 20 22 25 31 34 34 35 36 37 37 46 46 47 48 49 49 50 51 55 58 5
+8 59 59 59
+The 12th smallest element is: 34
+CORRECT: The 12th smallest element is the same as the 34th element in sorted array
+Comparisons: 44
+Assignments: 93
+
+Generator: ./generator_descending, Algorithm: ./randomized_select, Size: 1, Kth: 1
+Input array: 0
+Array before randomized select: 0
+After randomized select: 0
+Sorted array: 0
+The 1th smallest element is: 0
+CORRECT: The 1th smallest element is the same as the 0th element in sorted array
+Comparisons: 0
+Assignments: 0
+
+Generator: ./generator_descending, Algorithm: ./randomized_select, Size: 10, Kth: 10
+Input array: 17 14 13 13 13 10 8 4 3 2
+Array before randomized select: 17 14 13 13 13 10 8 4 3 2
+Array before randomized select: 13 17 13 14
+Array before randomized select: 17 14 13
+After randomized select: 2 10 8 4 3 13 13 13 14 17
+Sorted array: 2 3 4 8 10 13 13 13 14 17
+The 10th smallest element is: 17
+CORRECT: The 10th smallest element is the same as the 17th element in sorted array
+Comparisons: 14
+Assignments: 39
+
+Generator: ./generator_descending, Algorithm: ./randomized_select, Size: 30, Kth: 14
+Input array: 58 57 53 48 48 45 45 43 43 40 37 32 31 28 28 27 25 19 14 12 10 9 9 8 7 7 5 2 1
+ 1
+Array before randomized select: 58 57 53 48 48 45 45 43 43 40 37 32 31 28 28 27 25 19 14 12
+ 10 9 9 8 7 7 5 2 1 1
+Array before randomized select: 1 27 25 19 14 12 10 9 9 8 7 7 5 2 1
+Array before randomized select: 1 1 25 19 14 12 10 9 9 8 7 7 5 2
+Array before randomized select: 9 9 25 19 14 12 10
+Array before randomized select: 14 25 19
+Array before randomized select: 25
+After randomized select: 1 1 2 7 7 5 8 9 9 10 12 14 19 25 27 28 53 48 48 45 45 43 43 40 37
+32 31 58 28 57
+Sorted array: 1 1 2 5 7 7 8 9 9 10 12 14 19 25 27 28 28 31 32 37 40 43 43 45 45 48 48 53 57
+ 58
+The 14th smallest element is: 25
+CORRECT: The 14th smallest element is the same as the 25th element in sorted array
+Comparisons: 64
+Assignments: 147
+
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ #===ZADANIE 2===
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ python3 exercise2.py
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ #wykresy zostaly wygenerowa
+ne i zapisane w pliku
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ #===ZADANIE 3===
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ python exercise3.py
+Command 'python' not found, did you mean:
+  command 'python3' from deb python3
+  command 'python' from deb python-is-python3
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ python3 exercise3.py
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ #===ZADANIE 4===
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ cd ..
+krzysztof400@legion:~/Desktop/university/mk1/list_three$ cd binary_search/
+krzysztof400@legion:~/Desktop/university/mk1/list_three/binary_search$ #==KOMPILACJA==
+krzysztof400@legion:~/Desktop/university/mk1/list_three/binary_search$ make
+g++ -Wall -Wextra -O2 -std=c++17 -o generator_sorted_array generator_sorted_array.cpp utils
+.cpp
+g++ -Wall -Wextra -O2 -std=c++17 -o binary_search binary_search.cpp utils.cpp
+krzysztof400@legion:~/Desktop/university/mk1/list_three/binary_search$ ==TESTOWANIE==
+==TESTOWANIE==: command not found
+krzysztof400@legion:~/Desktop/university/mk1/list_three/binary_search$ python3 exercise4.py
+
+
+Demonstrating correctness on small data:
+Array: [1, 3, 5, 7, 9], Search for 3: Found=1, Comparisons=5
+Array: [1, 3, 5, 7, 9], Search for 8: Found=0, Comparisons=6
+krzysztof400@legion:~/Desktop/university/mk1/list_three/binary_search$ #===ZADANIE 5===
+krzysztof400@legion:~/Desktop/university/mk1/list_three/binary_search$ cd ..
+krzysztof400@legion:~/Desktop/university/mk1/list_three$ cd quick_sort_with_select/
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ make
+g++ -Wall -Wextra -O2 -std=c++17 -o generator_random generator_random.cpp utils.cpp
+g++ -Wall -Wextra -O2 -std=c++17 -o quick_sort quick_sort.cpp utils.cpp
+g++ -Wall -Wextra -O2 -std=c++17 -o quick_sort_with_select quick_sort_with_select.cpp utils
+.cpp
+g++ -Wall -Wextra -O2 -std=c++17 -o DP_quick_sort DP_quick_sort.cpp utils.cpp
+g++ -Wall -Wextra -O2 -std=c++17 -o DP_quick_sort_with_select DP_quick_sort_with_select.cpp
+ utils.cpp
+g++ -Wall -Wextra -O2 -std=c++17 -o generator_descending generator_descending.cpp utils.cpp
+
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ python3 exe
+rices5.py
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 10
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): d
+Using generator(s): generator_descending
+Plot saved as plot_max100_k10_DP_quick_with_select_DP_quick_quick_with_select_quick.png
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ python3 exe
+rices5.py
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 10
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): d
+Using generator(s): generator_descending
+Plot saved as plot_max100_k10_DP_quick_with_select_DP_quick_quick_with_select_quick.png
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ python3 exe
+rices5.py
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 10
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): generator_random
+Plot saved as plot_max100_k10_DP_quick_with_select_DP_quick_quick_with_select_quick.png
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ #===SVN===
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ cd..
+cd..: command not found
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ cd ..
+krzysztof400@legion:~/Desktop/university/mk1/list_three$ cd select/
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ make clean
+rm -f generator_random randomized_select select generator_ascending generator_descending se
+lect_k_divisions
+krzysztof400@legion:~/Desktop/university/mk1/list_three/select$ cd ..
+krzysztof400@legion:~/Desktop/university/mk1/list_three$ cd quick_sort_with_select/
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ make clean
+rm -f generator_random quick_sort quick_sort_with_select DP_quick_sort DP_quick_sort_with_s
+elect generator_descending
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ cd .
+krzysztof400@legion:~/Desktop/university/mk1/list_three/quick_sort_with_select$ cd ..
+krzysztof400@legion:~/Desktop/university/mk1/list_three$ cd binary_search/
+krzysztof400@legion:~/Desktop/university/mk1/list_three/binary_search$ make clean
+rm -f generator_sorted_array binary_search
+krzysztof400@legion:~/Desktop/university/mk1/list_three/binary_search$ cd ..
+krzysztof400@legion:~/Desktop/university/mk1/list_three$ svn status
+?       .
+krzysztof400@legion:~/Desktop/university/mk1/list_three$ svn add .
+A         .
+A         select
+A         select/randomized_select.cpp
+A  (bin)  select/assignments_plot.png
+A         select/Makefile
+A  (bin)  select/comparisons_plot.png
+A  (bin)  select/all_metrics_plot.png
+A         select/exercise1.py
+A         select/select.cpp
+A         select/exercise2.py
+A         select/utils.cpp
+A         select/select_k_divisions.cpp
+A         select/exercise3.py
+A         select/generator_ascending.cpp
+A         select/utils.hpp
+A         select/generator_random.cpp
+A         select/generator_descending.cpp
+A         .vscode
+A         .vscode/settings.json
+A         binary_search
+A         binary_search/Makefile
+A         binary_search/utils.cpp
+A         binary_search/exercise4.py
+A  (bin)  binary_search/comparisons_vs_size.png
+A  (bin)  binary_search/time_vs_size.png
+A         binary_search/generator_sorted_array.cpp
+A         binary_search/utils.hpp
+A  (bin)  binary_search/constant_factor_comparisons.png
+A  (bin)  binary_search/constant_factor_time.png
+A         binary_search/binary_search.cpp
+A         quick_sort_with_select
+A         quick_sort_with_select/utils.hpp
+A         quick_sort_with_select/DP_quick_sort.cpp
+A         quick_sort_with_select/generator_random.cpp
+A         quick_sort_with_select/generator_descending.cpp
+A  (bin)  quick_sort_with_select/plot_max100_k10_DP_quick_with_select_DP_quick_quick_with_s
+elect_quick.png
+A         quick_sort_with_select/Makefile
+A         quick_sort_with_select/quick_sort_with_select.cpp
+A         quick_sort_with_select/utils.cpp
+A         quick_sort_with_select/DP_quick_sort_with_select.cpp
+A         quick_sort_with_select/exerices5.py
+A         quick_sort_with_select/quick_sort.cpp
+krzysztof400@legion:~/Desktop/university/mk1/list_three$ svn commit
+
+Log message unchanged or not specified
+(a)bort, (c)ontinue, (e)dit:
+a
+krzysztof400@legion:~/Desktop/university/mk1/list_three$ svn commit -m "list three"
+Adding         .
+Adding         .vscode
+Adding         .vscode/settings.json
+Adding         binary_search
+Adding         binary_search/Makefile
+Adding         binary_search/binary_search.cpp
+Adding  (bin)  binary_search/comparisons_vs_size.png
+Adding  (bin)  binary_search/constant_factor_comparisons.png
+Adding  (bin)  binary_search/constant_factor_time.png
+Adding         binary_search/exercise4.py
+Adding         binary_search/generator_sorted_array.cpp
+Adding  (bin)  binary_search/time_vs_size.png
+Adding         binary_search/utils.cpp
+Adding         binary_search/utils.hpp
+Adding         quick_sort_with_select
+Adding         quick_sort_with_select/DP_quick_sort.cpp
+Adding         quick_sort_with_select/DP_quick_sort_with_select.cpp
+Adding         quick_sort_with_select/Makefile
+Adding         quick_sort_with_select/exerices5.py
+Adding         quick_sort_with_select/generator_descending.cpp
+Adding         quick_sort_with_select/generator_random.cpp
+Adding  (bin)  quick_sort_with_select/plot_max100_k10_DP_quick_with_select_DP_quick_quick_w
+ith_select_quick.png
+Adding         quick_sort_with_select/quick_sort.cpp
+Adding         quick_sort_with_select/quick_sort_with_select.cpp
+Adding         quick_sort_with_select/utils.cpp
+Adding         quick_sort_with_select/utils.hpp
+Adding         select
+Adding         select/Makefile
+Adding  (bin)  select/all_metrics_plot.png
+Adding  (bin)  select/assignments_plot.png
+Adding  (bin)  select/comparisons_plot.png
+Adding         select/exercise1.py
+Adding         select/exercise2.py
+Adding         select/exercise3.py
+Adding         select/generator_ascending.cpp
+Adding         select/generator_descending.cpp
+Adding         select/generator_random.cpp
+Adding         select/randomized_select.cpp
+Adding         select/select.cpp
+Adding         select/select_k_divisions.cpp
+Adding         select/utils.cpp
+Adding         select/utils.hpp
+Transmitting file data .svn: E000002: Commit failed (details follow):
+svn: E000002: Unable to create pristine install stream
+svn: E000002: Can't create temporary file from template '/home/krzysztof400/Desktop/univers
+ity/mk1/.svn/tmp/svn-XXXXXX': No such file or directory
+krzysztof400@legion:~/Desktop/university/mk1/list_three$
