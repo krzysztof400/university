@@ -12,7 +12,24 @@
 #define ALPHA -100000
 #define BETA 100000
 
+static const int directions[4][2] = {{0,1},{1,0},{1,1},{1,-1}};
+
 int evaluate(int player) {
+    // Heuristic weights
+    const int winScore = 100000;
+    const int weight4[5] = {0, 1, 10, 100, winScore};    // for len=4 windows
+    const int open3Score = 500;
+    const int open2Score = 20;
+
+    // Positional heatmap (favor center)
+    const int posW[5][5] = {
+        {3, 4, 5, 4, 3},
+        {4, 6, 8, 6, 4},
+        {5, 8,10, 8, 5},
+        {4, 6, 8, 6, 4},
+        {3, 4, 5, 4, 3}
+    };
+
     int opponent = 3 - player;
     int score = 0;
     
