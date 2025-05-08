@@ -2,7 +2,7 @@ SOURCES = $(wildcard *.c)
 BINARY = $(patsubst %.c, %, $(SOURCES))
 
 FLAGS = -W -pedantic -std=c2x -O3
-LIBS = -lgsl
+# LIBS = -lgsl
 .PHONY = all clean
 
 all: $(BINARY)
