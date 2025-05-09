@@ -15,71 +15,11 @@
 int evaluate(int player) {
     int opponent = 3 - player;
     int score = 0;
-    
-    // Check for winning patterns (four in a row)
-    for (int i = 0; i < 28; i++) {
-        int playerCount = 0;
-        int opponentCount = 0;
-        int emptyCount = 0;
-        
-        for (int j = 0; j < 4; j++) {
-            int row = win[i][j][0];
-            int col = win[i][j][1];
-            
-            if (board[row][col] == player) playerCount++;
-            else if (board[row][col] == opponent) opponentCount++;
-            else emptyCount++;
-        }
-        
-        // If player has four in a row, it's a win
-        if (playerCount == 4) return 1000;
-        
-        // If opponent has four in a row, it's a loss
-        if (opponentCount == 4) return -1000;
-        
-        // Evaluate potential winning positions
-        if (opponentCount == 0) {
-            // Player has potential to win in this line
-            if (playerCount == 3 && emptyCount == 1) score += 100;
-            else if (playerCount == 2 && emptyCount == 2) score += 10;
-            else if (playerCount == 1 && emptyCount == 3) score += 1;
-        }
-        
-        if (playerCount == 0) {
-            // Opponent has potential to win in this line
-            if (opponentCount == 3 && emptyCount == 1) score -= 100;
-            else if (opponentCount == 2 && emptyCount == 2) score -= 10;
-            else if (opponentCount == 1 && emptyCount == 3) score -= 1;
-        }
-    }
-    
-    // Check for losing patterns (three in a row)
-    for (int i = 0; i < 48; i++) {
-        int playerCount = 0;
-        int opponentCount = 0;
-        int emptyCount = 0;
-        bool isPartOfFour = false;
-        
-        for (int j = 0; j < 3; j++) {
-            int row = lose[i][j][0];
-            int col = lose[i][j][1];
-            
-            if (board[row][col] == player) playerCount++;
-            else if (board[row][col] == opponent) opponentCount++;
-            else emptyCount++;
-        }
-        
-        // Check if this three-in-a-row is part of a potential four-in-a-row
-        // This requires checking if adding one more piece could make a four
-        // For simplicity, we'll just check if all three are the same player
-        
-        // If player has three in a row that isn't part of a four-in-a-row strategy,
-        // it's a losing position (unless it's already part of a four)
-        if (playerCount == 3 && !isPartOfFour) return -1000;
-        
-        // If opponent has three in a row, it's a win for player
-        if (opponentCount == 3 && !isPartOfFour) return 1000;
-    }
+
+    if(winCheck(player) == 1) return 1000;
+    if(winCheck(opponent) == 1) return -1000;
+    if(loseCheck(player) == 1) return -1000;
+    if(loseCheck(opponent) == 1) return 1000;
     
     // Center control bonus
     if (board[2][2] == player) score += 5;
@@ -140,7 +80,10 @@ int minimax(int depth, int alpha, int beta, int player, int isMax) {
 
                     best = (val < best) ? val : best;
                     beta = (beta < best) ? beta : best;
-                    if (beta <= alpha) return best;
+                    if (beta <= alpha) {
+                        // printf("Beta cut-off at depth %d\n", depth);
+                        return best;
+                    }
                 }
             }
         }
