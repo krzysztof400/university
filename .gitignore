@@ -49,3 +49,6 @@ Thumbs.db  # Windows
 *.json
 *.pkl
 *.img
+
+# npm specific
+node_modules/
