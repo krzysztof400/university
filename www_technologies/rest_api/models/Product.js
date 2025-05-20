@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const ReviewSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -61,7 +60,14 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     min: [1, 'Ocena musi być co najmniej 1'],
     max: [5, 'Ocena może być maksymalnie 5'],
-    default: 0
+    default: null, // Changed default to null instead of 0
+    validate: {
+      validator: function(v) {
+        // Only validate if there are reviews
+        return this.reviews.length === 0 || (v >= 1 && v <= 5);
+      },
+      message: props => `${props.value} nie jest poprawną oceną! Ocena musi być pomiędzy 1 a 5.`
+    }
   },
   createdAt: {
     type: Date,
@@ -69,15 +75,21 @@ const ProductSchema = new mongoose.Schema({
   }
 });
 
-// Metoda do obliczania średniej oceny
+// Modified method to handle the case of no reviews
 ProductSchema.methods.calculateAverageRating = function() {
   if (this.reviews.length === 0) {
-    this.averageRating = 0;
+    this.averageRating = 5; // Set to null when no reviews
     return;
   }
-  
   const totalRating = this.reviews.reduce((sum, review) => sum + review.rating, 0);
-  this.averageRating = totalRating / this.reviews.length;
+  this.averageRating = (totalRating / this.reviews.length).toFixed(1); // Round to 1 decimal place
 };
+
+// Add a pre-save hook to ensure averageRating is properly set
+ProductSchema.pre('save', function(next) {
+  // Calculate average rating before saving
+  this.calculateAverageRating();
+  next();
+});
 
 module.exports = mongoose.model('Product', ProductSchema);

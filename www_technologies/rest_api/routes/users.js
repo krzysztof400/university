@@ -13,32 +13,32 @@ const { protect, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Wszystkie trasy potrzebują uwierzytelnienia i uprawnienia administratora
+// All routes require authentication and admin authorization
 router.use(protect);
 router.use(authorize('admin'));
 
-// Pobierz wszystkich użytkowników i utwórz nowego użytkownika
+// Get all users and create a new user
 router
   .route('/')
   .get(getUsers)
   .post(
     [
-      check('name', 'Imię i nazwisko jest wymagane').not().isEmpty(),
-      check('email', 'Proszę podać prawidłowy adres email').isEmail(),
-      check('password', 'Hasło musi mieć co najmniej 6 znaków').isLength({ min: 6 })
+      check('name', 'Name is required').not().isEmpty(),
+      check('email', 'Please provide a valid email address').isEmail(),
+      check('password', 'Password must be at least 6 characters long').isLength({ min: 6 })
     ],
     createUser
   );
 
-// Pobierz, zaktualizuj i usuń pojedynczego użytkownika
+// Get, update, and delete a single user
 router
   .route('/:id')
   .get(getUser)
   .put(
     [
-      check('name', 'Imię i nazwisko jest wymagane').optional().not().isEmpty(),
-      check('email', 'Proszę podać prawidłowy adres email').optional().isEmail(),
-      check('password', 'Hasło musi mieć co najmniej 6 znaków').optional().isLength({ min: 6 })
+      check('name', 'Name is required').optional().not().isEmpty(),
+      check('email', 'Please provide a valid email address').optional().isEmail(),
+      check('password', 'Password must be at least 6 characters long').optional().isLength({ min: 6 })
     ],
     updateUser
   )

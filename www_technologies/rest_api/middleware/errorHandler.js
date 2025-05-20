@@ -1,37 +1,37 @@
 // middleware/errorHandler.js
 const errorHandler = (err, req, res, next) => {
-    console.error(err);
+  console.error(err);
   
-    // Błąd MongoDB - duplikat klucza
-    if (err.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: 'Podana wartość już istnieje w bazie danych'
-      });
-    }
-  
-    // Błędy walidacji Mongoose
-    if (err.name === 'ValidationError') {
-      const messages = Object.values(err.errors).map(val => val.message);
-      return res.status(400).json({
-        success: false,
-        message: messages.join(', ')
-      });
-    }
-  
-    // Błąd MongoDB - nieprawidłowy ID
-    if (err.name === 'CastError') {
-      return res.status(404).json({
-        success: false,
-        message: `Zasób z ID ${err.value} nie został znaleziony`
-      });
-    }
-  
-    // Domyślna odpowiedź dla wszystkich innych błędów
-    res.status(err.statusCode || 500).json({
-      success: false,
-      message: err.message || 'Błąd serwera'
+  // MongoDB error - duplicate key
+  if (err.code === 11000) {
+    return res.status(400).json({
+    success: false,
+    message: 'The provided value already exists in the database'
     });
+  }
+  
+  // Mongoose validation errors
+  if (err.name === 'ValidationError') {
+    const messages = Object.values(err.errors).map(val => val.message);
+    return res.status(400).json({
+    success: false,
+    message: messages.join(', ')
+    });
+  }
+  
+  // MongoDB error - invalid ID
+  if (err.name === 'CastError') {
+    return res.status(404).json({
+    success: false,
+    message: `Resource with ID ${err.value} was not found`
+    });
+  }
+  
+  // Default response for all other errors
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: err.message || 'Server error'
+  });
   };
   
   module.exports = errorHandler;

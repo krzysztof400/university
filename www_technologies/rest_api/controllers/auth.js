@@ -14,7 +14,6 @@ exports.register = async (req, res, next) => {
 
     const { name, email, password, address } = req.body;
 
-    // Sprawdzenie, czy użytkownik już istnieje
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({
@@ -23,12 +22,20 @@ exports.register = async (req, res, next) => {
       });
     }
 
-    // Utworzenie nowego użytkownika
+    // Domyślnie każdy to "user"
+    let role = 'user';
+
+    // Jeśli rejestrujesz admina wg e-maila (zdefiniowanego w .env)
+    if (email === process.env.ADMIN_EMAIL) {
+      role = 'admin';
+    }
+
     user = await User.create({
       name,
       email,
       password,
-      address
+      address,
+      role
     });
 
     sendTokenResponse(user, 201, res);
@@ -36,6 +43,7 @@ exports.register = async (req, res, next) => {
     next(err);
   }
 };
+
 
 // @desc    Logowanie użytkownika
 // @route   POST /api/auth/login

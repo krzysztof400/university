@@ -14,49 +14,49 @@ const { protect, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Wszystkie trasy potrzebują uwierzytelnienia
+// All routes require authentication
 router.use(protect);
 
-// Pobierz wszystkie zamówienia (tylko admin)
+// Get all orders (admin only)
 router.get('/', authorize('admin'), getOrders);
 
-// Pobierz zamówienia zalogowanego użytkownika
+// Get orders of the logged-in user
 router.get('/myorders', getMyOrders);
 
-// Utwórz nowe zamówienie
+// Create a new order
 router.post(
   '/',
   [
-    check('items', 'Produkty są wymagane').isArray({ min: 1 }),
-    check('items.*.product', 'ID produktu jest wymagane').not().isEmpty(),
-    check('items.*.quantity', 'Ilość musi być liczbą dodatnią').isInt({ min: 1 }),
-    check('shippingAddress.street', 'Ulica jest wymagana').not().isEmpty(),
-    check('shippingAddress.city', 'Miasto jest wymagane').not().isEmpty(),
-    check('shippingAddress.postalCode', 'Kod pocztowy jest wymagany').not().isEmpty(),
-    check('shippingAddress.country', 'Kraj jest wymagany').not().isEmpty(),
-    check('paymentMethod', 'Metoda płatności jest wymagana').not().isEmpty()
+    check('items', 'Products are required').isArray({ min: 1 }),
+    check('items.*.product', 'Product ID is required').not().isEmpty(),
+    check('items.*.quantity', 'Quantity must be a positive number').isInt({ min: 1 }),
+    check('shippingAddress.street', 'Street is required').not().isEmpty(),
+    check('shippingAddress.city', 'City is required').not().isEmpty(),
+    check('shippingAddress.postalCode', 'Postal code is required').not().isEmpty(),
+    check('shippingAddress.country', 'Country is required').not().isEmpty(),
+    check('paymentMethod', 'Payment method is required').not().isEmpty()
   ],
   createOrder
 );
 
-// Pobierz pojedyncze zamówienie, zaktualizuj status i anuluj zamówienie
+// Get a single order, update its status, and cancel the order
 router
   .route('/:id')
   .get(getOrder)
   .put(
     authorize('admin'),
     [
-      check('orderStatus', 'Status zamówienia jest wymagany').optional().isIn([
-        'Przyjęte',
-        'W realizacji',
-        'Wysłane',
-        'Dostarczone',
-        'Anulowane'
+      check('orderStatus', 'Order status is required').optional().isIn([
+        'Accepted',
+        'Processing',
+        'Shipped',
+        'Delivered',
+        'Cancelled'
       ]),
-      check('paymentStatus', 'Status płatności jest wymagany').optional().isIn([
-        'Oczekująca',
-        'Opłacona',
-        'Anulowana'
+      check('paymentStatus', 'Payment status is required').optional().isIn([
+        'Pending',
+        'Paid',
+        'Cancelled'
       ])
     ],
     updateOrderStatus

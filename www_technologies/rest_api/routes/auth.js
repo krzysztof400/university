@@ -6,31 +6,31 @@ const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Rejestracja użytkownika
+// User registration
 router.post(
   '/register',
   [
-    check('name', 'Imię i nazwisko jest wymagane').not().isEmpty(),
-    check('email', 'Proszę podać prawidłowy adres email').isEmail(),
-    check('password', 'Hasło musi mieć co najmniej 6 znaków').isLength({ min: 6 })
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Please provide a valid email address').isEmail(),
+    check('password', 'Password must be at least 6 characters long').isLength({ min: 6 })
   ],
   register
 );
 
-// Logowanie użytkownika
+// User login
 router.post(
   '/login',
   [
-    check('email', 'Proszę podać prawidłowy adres email').isEmail(),
-    check('password', 'Hasło jest wymagane').exists()
+    check('email', 'Please provide a valid email address').isEmail(),
+    check('password', 'Password is required').exists()
   ],
   login
 );
 
-// Pobieranie profilu zalogowanego użytkownika
+// Get the profile of the logged-in user
 router.get('/me', protect, getMe);
 
-// Wylogowanie użytkownika
+// User logout
 router.get('/logout', protect, logout);
 
 module.exports = router;
