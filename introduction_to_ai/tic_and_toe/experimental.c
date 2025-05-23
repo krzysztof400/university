@@ -7,20 +7,14 @@
 #include <limits.h>
 
 #include "./board.h"
+#include "./heurestics_utils.h"
+#include "./openings.h"
 
 #define SIZE 5
 #define ALPHA -100000
 #define BETA 100000
 
 static const int directions[4][2] = {{0,1},{1,0},{1,1},{1,-1}};
-
-static const int heat_map[5][5] = {
-    { 3, 2, 1, 2, 3 },
-    { 2, 1, 0, 1, 2 },
-    { 1, 0, -1, 0, 1 },
-    { 2, 1, 0, 1, 2 },
-    { 3, 2, 1, 2, 3 }
-};
 
 int evaluate(int player) {
     int opponent = 3 - player;
@@ -31,17 +25,21 @@ int evaluate(int player) {
     if(loseCheck(player) == 1) return -1000;
     if(loseCheck(opponent) == 1) return 1000;
 
-    // Check heat_map
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            if (board[i][j] == player) {
-                score += heat_map[i][j];
-            } else if (board[i][j] == opponent) {
-                score -= heat_map[i][j];
-            }
+    // Check triangles
+    for (int i = 0; i < 8; i++) {
+        int p1 = board[triangle_patterns[i][0][0]][triangle_patterns[i][0][1]];
+        int p2 = board[triangle_patterns[i][1][0]][triangle_patterns[i][1][1]];
+        int p3 = board[triangle_patterns[i][2][0]][triangle_patterns[i][2][1]];
+
+        if (p1 == player && p2 == player && p3 == player) {
+            score += 100;
+        } else if (p1 == opponent && p2 == opponent && p3 == opponent) {
+            score -= 100;
         }
     }
-    
+
+    // Check for one empty in between
+    score += one_empty_in_beetween_patern(player, opponent);
     
     return score;
 }
@@ -98,6 +96,11 @@ int minimax(int depth, int alpha, int beta, int player, int isMax) {
 }
 
 int findBestMove(int player, int depth) {
+    int opponent = 3 - player;
+    if((getOpeningMove(player, depth) != -1)) {
+        printf("Opening move found\n");
+        return getOpeningMove(player, depth);
+    }
     int bestVal = INT_MIN;
     int bestMove = -1;
     for (int i = 0; i < SIZE; i++) {

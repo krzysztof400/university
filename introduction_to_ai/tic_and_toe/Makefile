@@ -13,4 +13,3 @@ $(BINARY): %: %.c
 
 clean:
 	rm -f $(BINARY)
-
