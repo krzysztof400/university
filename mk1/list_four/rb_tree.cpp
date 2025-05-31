@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <algorithm> 
+#include <algorithm>
 
 int assignments = 0;
 int comparisons = 0;
@@ -18,78 +18,296 @@ class RB_Tree {
 private:
     struct Node {
         int data;
-        bool red;
+        bool red;     // true = red, false = black
         Node* left;
         Node* right;
         Node* parent;
 
-        Node(int value) : data(value), left(nullptr), right(nullptr), parent(nullptr) {}
+        Node(int value)
+            : data(value), red(true),
+              left(nullptr), right(nullptr), parent(nullptr)
+        {}
     };
 
     Node* root = nullptr;
 
+    // Help for ASCII-art print
     char* left_trace;
     char* right_trace;
-    const static int MAX_DEPTH = 1000000;
+    static const int MAX_DEPTH = 1000000;
 
-    void printHelper(Node* root, int depth, char prefix) {
-        if (root == nullptr) return;
-        if (root->left != nullptr) {
-            printHelper(root->left, depth + 1, '/');
+    // ------------------------
+    // ROTATIONS
+    // ------------------------
+    void rotateLeft(Node* pt) {
+        Node* R = pt->right;
+        pt->right = R->left;
+        if (R->left) R->left->parent = pt;
+
+        R->parent = pt->parent;
+        if (!pt->parent)
+            root = R;
+        else if (pt == pt->parent->left)
+            pt->parent->left = R;
+        else
+            pt->parent->right = R;
+
+        R->left = pt;
+        pt->parent = R;
+    }
+
+    void rotateRight(Node* pt) {
+        Node* L = pt->left;
+        pt->left = L->right;
+        if (L->right) L->right->parent = pt;
+
+        L->parent = pt->parent;
+        if (!pt->parent)
+            root = L;
+        else if (pt == pt->parent->left)
+            pt->parent->left = L;
+        else
+            pt->parent->right = L;
+
+        L->right = pt;
+        pt->parent = L;
+    }
+
+    // ------------------------
+    // FIX INSERTION
+    // ------------------------
+    void fixInsertion(Node* pt) {
+        Node* parent = nullptr;
+        Node* grand = nullptr;
+
+        while (pt != root && pt->red && pt->parent && pt->parent->red) {
+            parent = pt->parent;
+            grand = parent->parent;
+
+            // parent is left child of grandparent
+            if (parent == grand->left) {
+                Node* uncle = grand->right;
+                // case 1: uncle is red
+                if (uncle && uncle->red) {
+                    grand->red  = true;
+                    parent->red = false;
+                    uncle->red  = false;
+                    pt = grand;
+                } else {
+                    // case 2: pt is right child
+                    if (pt == parent->right) {
+                        rotateLeft(parent);
+                        pt = parent;
+                        parent = pt->parent;
+                    }
+                    // case 3: pt is left child
+                    rotateRight(grand);
+                    std::swap(parent->red, grand->red);
+                    pt = parent;
+                }
+            }
+            // parent is right child of grandparent
+            else {
+                Node* uncle = grand->left;
+                // case 1: uncle is red
+                if (uncle && uncle->red) {
+                    grand->red  = true;
+                    parent->red = false;
+                    uncle->red  = false;
+                    pt = grand;
+                } else {
+                    // case 2: pt is left child
+                    if (pt == parent->left) {
+                        rotateRight(parent);
+                        pt = parent;
+                        parent = pt->parent;
+                    }
+                    // case 3: pt is right child
+                    rotateLeft(grand);
+                    std::swap(parent->red, grand->red);
+                    pt = parent;
+                }
+            }
         }
-        if (prefix == '/') left_trace[depth - 1] = '|';
-        if (prefix == '\\') right_trace[depth - 1] = ' ';
-        if (depth == 0) printf("-");
-        if (depth > 0) printf(" ");
-        for (int i = 0; i < depth - 1; i++) {
-            if (left_trace[i] == '|' || right_trace[i] == '|') {
-                printf("| ");
+        root->red = false;
+    }
+
+    // ------------------------
+    // BST INSERT, returns inserted node
+    // ------------------------
+    Node* insertHelper(Node*& node, Node* parent, int value) {
+        if (!node) {
+            Node* newNode = new Node(value);
+            newNode->parent = parent;
+            node = newNode;
+            return newNode;
+        }
+        
+        if (value < node->data) {
+            return insertHelper(node->left, node, value);
+        } else if (value > node->data) {
+            return insertHelper(node->right, node, value);
+        }
+        // duplicate: do nothing
+        return nullptr;
+    }
+
+    // ------------------------
+    // FIND MINIMUM NODE
+    // ------------------------
+    Node* findMin(Node* node) {
+        while (node && node->left) {
+            node = node->left;
+        }
+        return node;
+    }
+
+    // ------------------------
+    // REPLACE NODE IN PARENT
+    // ------------------------
+    void replaceNode(Node* oldNode, Node* newNode) {
+        if (!oldNode->parent) {
+            root = newNode;
+        } else if (oldNode == oldNode->parent->left) {
+            oldNode->parent->left = newNode;
+        } else {
+            oldNode->parent->right = newNode;
+        }
+        if (newNode) {
+            newNode->parent = oldNode->parent;
+        }
+    }
+
+    // ------------------------
+    // FIX DELETION
+    // ------------------------
+    void fixDeletion(Node* pt) {
+        while (pt != root && (!pt || !pt->red)) {
+            if (pt == pt->parent->left) {
+                Node* sibling = pt->parent->right;
+                
+                // Case 1: sibling is red
+                if (sibling && sibling->red) {
+                    sibling->red = false;
+                    pt->parent->red = true;
+                    rotateLeft(pt->parent);
+                    sibling = pt->parent->right;
+                }
+                
+                // Case 2: sibling's children are both black
+                if ((!sibling->left || !sibling->left->red) && 
+                    (!sibling->right || !sibling->right->red)) {
+                    if (sibling) sibling->red = true;
+                    pt = pt->parent;
+                } else {
+                    // Case 3: sibling's right child is black
+                    if (!sibling->right || !sibling->right->red) {
+                        if (sibling->left) sibling->left->red = false;
+                        sibling->red = true;
+                        rotateRight(sibling);
+                        sibling = pt->parent->right;
+                    }
+                    
+                    // Case 4: sibling's right child is red
+                    if (sibling) sibling->red = pt->parent->red;
+                    pt->parent->red = false;
+                    if (sibling && sibling->right) sibling->right->red = false;
+                    rotateLeft(pt->parent);
+                    pt = root;
+                }
             } else {
-                printf("  ");
+                Node* sibling = pt->parent->left;
+                
+                // Case 1: sibling is red
+                if (sibling && sibling->red) {
+                    sibling->red = false;
+                    pt->parent->red = true;
+                    rotateRight(pt->parent);
+                    sibling = pt->parent->left;
+                }
+                
+                // Case 2: sibling's children are both black
+                if ((!sibling->left || !sibling->left->red) && 
+                    (!sibling->right || !sibling->right->red)) {
+                    if (sibling) sibling->red = true;
+                    pt = pt->parent;
+                } else {
+                    // Case 3: sibling's left child is black
+                    if (!sibling->left || !sibling->left->red) {
+                        if (sibling->right) sibling->right->red = false;
+                        sibling->red = true;
+                        rotateLeft(sibling);
+                        sibling = pt->parent->left;
+                    }
+                    
+                    // Case 4: sibling's left child is red
+                    if (sibling) sibling->red = pt->parent->red;
+                    pt->parent->red = false;
+                    if (sibling && sibling->left) sibling->left->red = false;
+                    rotateRight(pt->parent);
+                    pt = root;
+                }
             }
         }
-        if (depth > 0) printf("%c-", prefix);
-        printf("[%d]\n", root->data);
-        left_trace[depth] = ' ';
-        if (root->right != nullptr) {
-            right_trace[depth] = '|';
-            printHelper(root->right, depth + 1, '\\');
-        }
+        if (pt) pt->red = false;
     }
 
-    void insertHelper(Node*& node, int value) {
-        if (node == nullptr) {
-            node = new Node(value);
-        } else if (value < node->data) {
-            if (!compare(value, node->data) && value != node->data) {
-                insertHelper(node->left, value);
-            }
-        } else if (compare(value, node->data)) {
-            insertHelper(node->right, value);
-        }
-        // If value == node->data, we don't insert (no duplicates)
-    }
-
+    // ------------------------
+    // HEIGHT
+    // ------------------------
     int getHeightHelper(Node* node) {
-        if (node == nullptr) return 0;
-        return 1 + std::max(getHeightHelper(node->left), getHeightHelper(node->right));
+        if (!node) return 0;
+        return 1 + std::max(getHeightHelper(node->left),
+                            getHeightHelper(node->right));
     }
 
+    // ------------------------
+    // DELETE TREE (destructor)
+    // ------------------------
     void deleteTree(Node* node) {
-        if (node == nullptr) return;
+        if (!node) return;
         deleteTree(node->left);
         deleteTree(node->right);
         delete node;
     }
 
+    // ------------------------
+    // PRINT (ASCII-art)
+    // ------------------------
+    void printHelper(Node* node, int depth, char prefix) {
+        if (!node) return;
+        if (node->left)
+            printHelper(node->left, depth+1, '/');
+
+        if (prefix == '/') left_trace[depth-1] = '|';
+        if (prefix == '\\') right_trace[depth-1] = ' ';
+
+        if (depth == 0) printf("-");
+        if (depth > 0) printf(" ");
+        for (int i = 0; i < depth-1; i++) {
+            if (left_trace[i]=='|' || right_trace[i]=='|')
+                printf("| ");
+            else
+                printf("  ");
+        }
+        if (depth>0) printf("%c-", prefix);
+        printf("[%d:%c]\n",
+               node->data,
+               node->red ? 'R' : 'B');
+
+        left_trace[depth] = ' ';
+        if (node->right) {
+            right_trace[depth] = '|';
+            printHelper(node->right, depth+1, '\\');
+        }
+    }
+
 public:
     RB_Tree() {
-        left_trace = new char[MAX_DEPTH];
+        left_trace  = new char[MAX_DEPTH];
         right_trace = new char[MAX_DEPTH];
-        for (int i = 0; i < MAX_DEPTH; i++) {
-            left_trace[i] = ' ';
-            right_trace[i] = ' ';
-        }
+        std::fill(left_trace,  left_trace+MAX_DEPTH,  ' ');
+        std::fill(right_trace, right_trace+MAX_DEPTH, ' ');
     }
 
     ~RB_Tree() {
@@ -98,67 +316,86 @@ public:
         deleteTree(root);
     }
 
-    void deleteNode(int value) {
-        Node* parent = nullptr;
-        Node* current = root;
-    
-        while (current != nullptr && current->data != value) {
-            parent = current;
-            if (!compare(value, current->data) && value != current->data) {
-                current = current->left;
-            } else if (compare(value, current->data)) {
-                current = current->right;
-            } else {
-                break; // Found the node
-            }
-        }
-    
-        if (current == nullptr) {
-            printf("Value %d not found in the tree.\n", value);
-            return;
-        }
-    
-        // Node with one child or no child
-        if (current->left == nullptr || current->right == nullptr) {
-            Node* newCurrent = (current->left != nullptr) ? current->left : current->right;
-    
-            if (parent == nullptr) {
-                root = newCurrent;
-            } else if (parent->left == current) {
-                parent->left = newCurrent;
-            } else {
-                parent->right = newCurrent;
-            }
-    
-            delete current; 
-        } else { // Node with two children
-            Node* successorParent = current;
-            Node* successor = current->right;
-    
-            while (successor->left != nullptr) {
-                successorParent = successor;
-                successor = successor->left;
-            }
-            assign(current->data, successor->data);
-            if (successorParent->left == successor) {
-                successorParent->left = successor->right;
-            } else {
-                successorParent->right = successor->right;
-            }
-    
-            delete successor; 
-        }
-    }    
-
+    // ------------------------
+    // PUBLIC INSERT
+    // ------------------------
     void insertNode(int value) {
-        insertHelper(root, value);
+        Node* inserted = insertHelper(root, nullptr, value);
+        if (inserted) {
+            fixInsertion(inserted);
+        }
     }
 
+    // ------------------------
+    // PUBLIC DELETE (with RB fix-up)
+    // ------------------------
+    void deleteNode(int value) {
+        Node* nodeToDelete = root;
+        
+        // Find the node to delete
+        while (nodeToDelete && nodeToDelete->data != value) {
+            if (value < nodeToDelete->data) {
+                nodeToDelete = nodeToDelete->left;
+            } else {
+                nodeToDelete = nodeToDelete->right;
+            }
+        }
+        
+        if (!nodeToDelete) {
+            printf("Value %d not found.\n", value);
+            return;
+        }
+
+        Node* deletedNode = nodeToDelete;
+        Node* replacementNode;
+        bool deletedOriginalColor = deletedNode->red;
+
+        if (!nodeToDelete->left) {
+            replacementNode = nodeToDelete->right;
+            replaceNode(nodeToDelete, nodeToDelete->right);
+        } else if (!nodeToDelete->right) {
+            replacementNode = nodeToDelete->left;
+            replaceNode(nodeToDelete, nodeToDelete->left);
+        } else {
+            // Node has two children - find successor
+            deletedNode = findMin(nodeToDelete->right);
+            deletedOriginalColor = deletedNode->red;
+            replacementNode = deletedNode->right;
+
+            if (deletedNode->parent == nodeToDelete) {
+                if (replacementNode) replacementNode->parent = deletedNode;
+            } else {
+                replaceNode(deletedNode, deletedNode->right);
+                deletedNode->right = nodeToDelete->right;
+                if (deletedNode->right) deletedNode->right->parent = deletedNode;
+            }
+
+            replaceNode(nodeToDelete, deletedNode);
+            deletedNode->left = nodeToDelete->left;
+            if (deletedNode->left) deletedNode->left->parent = deletedNode;
+            deletedNode->red = nodeToDelete->red;
+        }
+
+        delete nodeToDelete;
+
+        // Fix Red-Black properties if a black node was deleted
+        if (!deletedOriginalColor && replacementNode) {
+            fixDeletion(replacementNode);
+        }
+    }
+
+    // ------------------------
+    // OTHER UTILITIES
+    // ------------------------
     int getHeight() {
         return getHeightHelper(root);
     }
 
     void printTree() {
+        if (!root) {
+            printf("Tree is empty.\n");
+            return;
+        }
         printHelper(root, 0, '-');
     }
 
@@ -168,56 +405,50 @@ public:
     }
 
     void resetStats() {
-        assignments = 0;
-        comparisons = 0;
+        assignments = comparisons = 0;
     }
 };
 
 int main(int argc, char* argv[]) {
-    RB_Tree myRB_Tree;
+    RB_Tree myTree;
+    bool printsHelp = (argc>1 && argv[1][0]=='h');
 
-    bool printsHelp = false;
-    if (argc > 1 && argv[1][0] == 'h') {
-        printsHelp = true;
+    if (printsHelp) {
+        printf("Commands:\n"
+               " i<n>  Insert n\n"
+               " d<n>  Delete n\n"
+               " p     Print tree\n"
+               " h     Height\n"
+               " s     Stats\n"
+               " r     Reset stats\n"
+               " q     Quit\n");
     }
 
     while (true) {
-        int value;
-        if(printsHelp) {
-            printf("Choose operation:\n");
-            printf("i - Insert a node\n");
-            printf("d - Delete a node\n");
-            printf("p - Print the tree\n");
-            printf("h - Get the height of the tree\n");
-            printf("s - Show statistics (assignments/comparisons)\n");
-            printf("r - Reset statistics\n");
-            printf("q - Quit\n");
-            printf("example: i5\n");
-            printf("Enter command: ");
-        }
-        char command;
-        scanf(" %c", &command);
-        if (command == 'q') {
-            break;
-        } else if (command == 'i') {
-            scanf("%d", &value);
-            myRB_Tree.insertNode(value);
-        } else if (command == 'd') {
-            scanf("%d", &value);
-            myRB_Tree.deleteNode(value);
-        } else if (command == 'p') {
-            myRB_Tree.printTree();
-        } else if (command == 'h') {
-            printf("Height of the tree: %d\n", myRB_Tree.getHeight());
-        } else if (command == 's') {
-            myRB_Tree.printStats();
-        } else if (command == 'r') {
-            myRB_Tree.resetStats();
-            printf("Statistics reset.\n");
-        } else {
-            printf("Unknown command. Please try again.\n");
+        if (printsHelp) printf("Cmd> ");
+        char cmd;
+        if (scanf(" %c", &cmd)!=1) break;
+        if (cmd=='q') break;
+
+        int v;
+        switch (cmd) {
+            case 'i': 
+                if (scanf("%d",&v)==1) {
+                    myTree.insertNode(v); 
+                    if (printsHelp) printf("Inserted %d\n", v);
+                }
+                break;
+            case 'd': 
+                if (scanf("%d",&v)==1) {
+                    myTree.deleteNode(v);
+                }
+                break;
+            case 'p': myTree.printTree(); break;
+            case 'h': printf("Height: %d\n", myTree.getHeight()); break;
+            case 's': myTree.printStats(); break;
+            case 'r': myTree.resetStats(); printf("Stats reset.\n"); break;
+            default: printf("Unknown cmd '%c'\n", cmd);
         }
     }
-
     return 0;
 }
