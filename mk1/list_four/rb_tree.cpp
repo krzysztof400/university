@@ -138,18 +138,23 @@ private:
     Node* insertHelper(Node*& node, Node* parent, int value) {
         if (!node) {
             Node* newNode = new Node(value);
+            assign(newNode->data, value);  // Track assignment
             newNode->parent = parent;
             node = newNode;
             return newNode;
         }
         
-        if (value < node->data) {
+        // Use compare function for all comparisons
+        if (!compare(node->data, value) && !compare(value, node->data)) {
+            // Equal values - duplicate, do nothing
+            return nullptr;
+        } else if (compare(node->data, value)) {
+            // node->data > value, go left
             return insertHelper(node->left, node, value);
-        } else if (value > node->data) {
+        } else {
+            // value > node->data, go right
             return insertHelper(node->right, node, value);
         }
-        // duplicate: do nothing
-        return nullptr;
     }
 
     // ------------------------
@@ -332,11 +337,16 @@ public:
     void deleteNode(int value) {
         Node* nodeToDelete = root;
         
-        // Find the node to delete
-        while (nodeToDelete && nodeToDelete->data != value) {
-            if (value < nodeToDelete->data) {
+        // Find the node to delete using compare function
+        while (nodeToDelete) {
+            if (!compare(nodeToDelete->data, value) && !compare(value, nodeToDelete->data)) {
+                // Found the node
+                break;
+            } else if (compare(nodeToDelete->data, value)) {
+                // nodeToDelete->data > value, go left
                 nodeToDelete = nodeToDelete->left;
             } else {
+                // value > nodeToDelete->data, go right
                 nodeToDelete = nodeToDelete->right;
             }
         }
@@ -374,6 +384,9 @@ public:
             deletedNode->left = nodeToDelete->left;
             if (deletedNode->left) deletedNode->left->parent = deletedNode;
             deletedNode->red = nodeToDelete->red;
+            
+            // Use assign function to copy data
+            assign(deletedNode->data, nodeToDelete->data);
         }
 
         delete nodeToDelete;

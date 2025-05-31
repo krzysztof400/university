@@ -110,49 +110,57 @@ private:
     }
 
     // ------------------------
-    // BST SEARCH (with splay)
-    // ------------------------
-    Node* searchHelper(int value) {
-        Node* current = root;
-        Node* lastNode = nullptr;
-
-        while (current) {
-            lastNode = current;
-            if (value == current->data) {
-                splay(current);
-                return current;
-            } else if (value < current->data) {
-                current = current->left;
-            } else {
-                current = current->right;
-            }
-        }
-
-        // Value not found, splay the last accessed node
-        if (lastNode) {
-            splay(lastNode);
-        }
-        return nullptr;
-    }
-
-    // ------------------------
     // BST INSERT (with splay)
     // ------------------------
     Node* insertHelper(Node*& node, Node* parent, int value) {
         if (!node) {
             Node* newNode = new Node(value);
+            assign(newNode->data, value);  // Track assignment
             newNode->parent = parent;
             node = newNode;
             return newNode;
         }
         
-        if (value < node->data) {
+        // Use compare function for all comparisons
+        if (!compare(node->data, value) && !compare(value, node->data)) {
+            // Equal values - return existing node to splay it
+            return node;
+        } else if (compare(node->data, value)) {
+            // node->data > value, go left
             return insertHelper(node->left, node, value);
-        } else if (value > node->data) {
+        } else {
+            // value > node->data, go right
             return insertHelper(node->right, node, value);
         }
-        // duplicate: return existing node to splay it
-        return node;
+    }
+
+    // ------------------------
+    // SEARCH HELPER (with splay)
+    // ------------------------
+    Node* searchHelper(int value) {
+        Node* current = root;
+        Node* lastNode = nullptr;
+        
+        while (current) {
+            lastNode = current;
+            if (!compare(current->data, value) && !compare(value, current->data)) {
+                // Found the value
+                splay(current);
+                return current;
+            } else if (compare(current->data, value)) {
+                // current->data > value, go left
+                current = current->left;
+            } else {
+                // value > current->data, go right
+                current = current->right;
+            }
+        }
+        
+        // Value not found, but splay the last accessed node
+        if (lastNode) {
+            splay(lastNode);
+        }
+        return nullptr;
     }
 
     // ------------------------
@@ -218,7 +226,7 @@ private:
     }
 
     // ------------------------
-    // PRINT (ASCII-art)
+    // PRINT
     // ------------------------
     void printHelper(Node* node, int depth, char prefix) {
         if (!node) return;
@@ -271,15 +279,7 @@ public:
     }
 
     // ------------------------
-    // PUBLIC SEARCH
-    // ------------------------
-    bool searchNode(int value) {
-        Node* found = searchHelper(value);
-        return found != nullptr;
-    }
-
-    // ------------------------
-    // PUBLIC DELETE (with splay)
+    // PUBLIC DELETE
     // ------------------------
     void deleteNode(int value) {
         Node* nodeToDelete = searchHelper(value);
@@ -305,36 +305,22 @@ public:
     }
 
     // ------------------------
-    // PUBLIC ACCESS (splay without searching)
+    // PUBLIC SEARCH
     // ------------------------
-    void accessNode(int value) {
-        searchHelper(value);
+    bool search(int value) {
+        Node* found = searchHelper(value);
+        return found != nullptr;
     }
 
     // ------------------------
-    // GET MINIMUM (with splay)
+    // PRINT ROOT
     // ------------------------
-    int getMin() {
-        if (!root) {
+    void printRoot() {
+        if (root) {
+            printf("Root: %d\n", root->data);
+        } else {
             printf("Tree is empty.\n");
-            return -1;
         }
-        Node* minNode = findMin(root);
-        splay(minNode);
-        return minNode->data;
-    }
-
-    // ------------------------
-    // GET MAXIMUM (with splay)
-    // ------------------------
-    int getMax() {
-        if (!root) {
-            printf("Tree is empty.\n");
-            return -1;
-        }
-        Node* maxNode = findMax(root);
-        splay(maxNode);
-        return maxNode->data;
     }
 
     // ------------------------
@@ -360,95 +346,48 @@ public:
     void resetStats() {
         assignments = comparisons = 0;
     }
-
-    void printRoot() {
-        if (root) {
-            printf("Root: %d\n", root->data);
-        } else {
-            printf("Tree is empty.\n");
-        }
-    }
 };
 
 int main(int argc, char* argv[]) {
     Splay_Tree myTree;
     bool printsHelp = (argc>1 && argv[1][0]=='h');
 
+
     if (printsHelp) {
-        printf("Splay Tree Commands:\n"
+        printf("Commands:\n"
                " i<n>  Insert n\n"
                " d<n>  Delete n\n"
-               " s<n>  Search n (access)\n"
-               " a<n>  Access n (splay to root)\n"
                " p     Print tree\n"
                " h     Height\n"
-               " r     Show root\n"
-               " min   Get minimum\n"
-               " max   Get maximum\n"
-               " stat  Show stats\n"
-               " rst   Reset stats\n"
+               " s     Stats\n"
+               " r     Reset stats\n"
                " q     Quit\n");
     }
 
     while (true) {
         if (printsHelp) printf("Cmd> ");
-        char cmd[10];
-        if (scanf("%s", cmd) != 1) break;
-        if (cmd[0] == 'q') break;
+        char cmd;
+        if (scanf(" %c", &cmd)!=1) break;
+        if (cmd=='q') break;
 
         int v;
-        switch (cmd[0]) {
+        switch (cmd) {
             case 'i': 
-                if (scanf("%d", &v) == 1) {
+                if (scanf("%d",&v)==1) {
                     myTree.insertNode(v); 
                     if (printsHelp) printf("Inserted %d\n", v);
                 }
                 break;
             case 'd': 
-                if (scanf("%d", &v) == 1) {
+                if (scanf("%d",&v)==1) {
                     myTree.deleteNode(v);
-                }
-                break;
-            case 's':
-                if (cmd[1] == 't' && cmd[2] == 'a' && cmd[3] == 't') {
-                    // "stat" command
-                    myTree.printStats();
-                } else {
-                    // "s<n>" search command
-                    if (scanf("%d", &v) == 1) {
-                        bool found = myTree.searchNode(v);
-                        if (printsHelp) {
-                            printf("Value %d %s\n", v, found ? "found" : "not found");
-                        }
-                    }
-                }
-                break;
-            case 'a': 
-                if (scanf("%d", &v) == 1) {
-                    myTree.accessNode(v);
-                    if (printsHelp) printf("Accessed %d\n", v);
                 }
                 break;
             case 'p': myTree.printTree(); break;
             case 'h': printf("Height: %d\n", myTree.getHeight()); break;
-            case 'r': 
-                if (cmd[1] == 's' && cmd[2] == 't') {
-                    // "rst" reset command
-                    myTree.resetStats(); 
-                    printf("Stats reset.\n");
-                } else {
-                    // "r" root command
-                    myTree.printRoot();
-                }
-                break;
-            case 'm':
-                if (cmd[1] == 'i' && cmd[2] == 'n') {
-                    printf("Minimum: %d\n", myTree.getMin());
-                } else if (cmd[1] == 'a' && cmd[2] == 'x') {
-                    printf("Maximum: %d\n", myTree.getMax());
-                }
-                break;
-            default: printf("Unknown cmd '%s'\n", cmd);
+            case 's': myTree.printStats(); break;
+            case 'r': myTree.resetStats(); printf("Stats reset.\n"); break;
+            default: printf("Unknown cmd '%c'\n", cmd);
         }
     }
     return 0;
