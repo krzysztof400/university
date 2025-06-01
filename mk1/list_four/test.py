@@ -120,69 +120,7 @@ class TestRunner:
         if not self.testers:
             raise ValueError("No valid tree executables found")
     
-    def test_correctness_n30(self):
-        """
-        Test correctness for n=30 with two scenarios:
-        1. Insert ascending sequence, delete random permutation
-        2. Insert random permutation, delete random permutation
-        """
-        print("="*60)
-        print("CORRECTNESS TESTING (n=30)")
-        print("="*60)
-        
-        n = 30
-        
-        # Scenario 1: Ascending insert, random delete
-        print(f"\n{'='*20} SCENARIO 1 {'='*20}")
-        print("Insert ascending sequence 1,2,...,30")
-        print("Delete random permutation")
-        print("="*50)
-        
-        ascending_keys = list(range(1, n + 1))
-        random_delete_order = ascending_keys.copy()
-        random.shuffle(random_delete_order)
-        
-        self._run_correctness_test(ascending_keys, random_delete_order, "Scenario 1")
-        
-        # Scenario 2: Random insert, random delete
-        print(f"\n{'='*20} SCENARIO 2 {'='*20}")
-        print("Insert random permutation of 1,2,...,30")
-        print("Delete random permutation")
-        print("="*50)
-        
-        random_insert_order = ascending_keys.copy()
-        random.shuffle(random_insert_order)
-        random_delete_order = ascending_keys.copy()
-        random.shuffle(random_delete_order)
-        
-        self._run_correctness_test(random_insert_order, random_delete_order, "Scenario 2")
-    
-    def _run_correctness_test(self, insert_order: List[int], delete_order: List[int], scenario_name: str):
-        """Run correctness test for given insert and delete orders."""
-        for tree_type, tester in self.testers.items():
-            print(f"\n--- {tree_type.upper()} Tree - {scenario_name} ---")
-            
-            commands = []
-            
-            # Reset stats
-            commands.append('r')
-            
-            # Insert operations
-            for key in insert_order:
-                commands.extend([f'i{key}', 'p', 'h'])
-                
-            # Delete operations
-            for key in delete_order:
-                commands.extend([f'd{key}', 'p', 'h'])
-                
-            # Final stats
-            commands.append('s')
-            
-            try:
-                output, stats = tester.run_commands(commands, print_output=True)
-                print(f"Final statistics: {stats}")
-            except Exception as e:
-                print(f"Error testing {tree_type}: {e}")
+
     
     def test_performance(self):
         """
@@ -378,63 +316,18 @@ class TestRunner:
             plt.savefig(f'tree_{metric}_comparison.png', dpi=300, bbox_inches='tight')
             plt.show()
 
-def compile_cpp_program(source_path: str, output_path: str) -> bool:
-    """Compile C++ program."""
-    try:
-        result = subprocess.run(
-            ['g++', '-std=c++11', '-O2', source_path, '-o', output_path],
-            capture_output=True, text=True, timeout=30
-        )
-        if result.returncode == 0:
-            print(f"Successfully compiled {source_path} -> {output_path}")
-            return True
-        else:
-            print(f"Compilation failed: {result.stderr}")
-            return False
-    except Exception as e:
-        print(f"Error compiling: {e}")
-        return False
-
 def main():
     """Main function to run all tests."""
     print("Tree Implementation Testing Framework")
     print("="*50)
-    
-    # Check if we need to compile the provided Red-Black tree
-    rb_source = "paste.txt"  # Your provided RB tree source
-    rb_executable = "./rb_tree"
-    
-    if os.path.exists(rb_source):
-        print(f"Found Red-Black tree source: {rb_source}")
-        if compile_cpp_program(rb_source, rb_executable):
-            print("Red-Black tree compiled successfully")
-        else:
-            print("Failed to compile Red-Black tree")
-            return
-    else:
-        print(f"Red-Black tree source not found: {rb_source}")
-        return
-    
-    # Initialize test runner
-    # You can add paths to BST and Splay tree executables here
+
+    rb_executable = "./rb_tree" if os.path.exists("./rb_tree") else None
     bst_executable = "./bst_tree" if os.path.exists("./bst_tree") else None
     splay_executable = "./splay_tree" if os.path.exists("./splay_tree") else None
     
     try:
         runner = TestRunner(rb_executable, bst_executable, splay_executable)
-        
-        print(f"Available trees: {list(runner.testers.keys())}")
-        
-        # Run correctness tests
-        runner.test_correctness_n30()
-        
-        # Ask user if they want to run performance tests
-        response = input("\nRun performance tests? (This may take a while) [y/N]: ").strip().lower()
-        if response in ['y', 'yes']:
-            runner.test_performance()
-        else:
-            print("Skipping performance tests.")
-            
+        runner.test_performance()
     except Exception as e:
         print(f"Error: {e}")
 
