@@ -4,12 +4,12 @@
 int assignments = 0;
 int comparisons = 0;
 
-void assign(int &a, int &b){
+void assign(int &a, int b){
     a = b;
     assignments++;
 }
 
-bool compare(int &a, int &b){
+bool compare(int a, int b){
     comparisons++;
     return a > b;
 }
@@ -34,12 +34,14 @@ private:
     // Help for ASCII-art print
     char* left_trace;
     char* right_trace;
-    static const int MAX_DEPTH = 1000000;
+    static const int MAX_DEPTH = 1000;
 
     // ------------------------
     // ROTATIONS
     // ------------------------
     void rotateLeft(Node* pt) {
+        if (!pt || !pt->right) return;  // Safety check
+        
         Node* R = pt->right;
         pt->right = R->left;
         if (R->left) R->left->parent = pt;
@@ -57,6 +59,8 @@ private:
     }
 
     void rotateRight(Node* pt) {
+        if (!pt || !pt->left) return;  // Safety check
+        
         Node* L = pt->left;
         pt->left = L->right;
         if (L->right) L->right->parent = pt;
@@ -77,12 +81,16 @@ private:
     // FIX INSERTION
     // ------------------------
     void fixInsertion(Node* pt) {
+        if (!pt) return;  // Safety check
+        
         Node* parent = nullptr;
         Node* grand = nullptr;
 
         while (pt != root && pt->red && pt->parent && pt->parent->red) {
             parent = pt->parent;
             grand = parent->parent;
+            
+            if (!grand) break;  // Safety check
 
             // parent is left child of grandparent
             if (parent == grand->left) {
@@ -129,7 +137,7 @@ private:
                 }
             }
         }
-        root->red = false;
+        if (root) root->red = false;  // Safety check
     }
 
     // ------------------------
@@ -161,7 +169,8 @@ private:
     // FIND MINIMUM NODE
     // ------------------------
     Node* findMin(Node* node) {
-        while (node && node->left) {
+        if (!node) return nullptr;  // Safety check
+        while (node->left) {
             node = node->left;
         }
         return node;
@@ -171,6 +180,8 @@ private:
     // REPLACE NODE IN PARENT
     // ------------------------
     void replaceNode(Node* oldNode, Node* newNode) {
+        if (!oldNode) return;  // Safety check
+        
         if (!oldNode->parent) {
             root = newNode;
         } else if (oldNode == oldNode->parent->left) {
@@ -187,7 +198,11 @@ private:
     // FIX DELETION
     // ------------------------
     void fixDeletion(Node* pt) {
+        if (!pt) return;  // Safety check
+        
         while (pt != root && (!pt || !pt->red)) {
+            if (!pt->parent) break;  // Safety check
+            
             if (pt == pt->parent->left) {
                 Node* sibling = pt->parent->right;
                 
@@ -199,10 +214,12 @@ private:
                     sibling = pt->parent->right;
                 }
                 
+                if (!sibling) break;  // Safety check
+                
                 // Case 2: sibling's children are both black
                 if ((!sibling->left || !sibling->left->red) && 
                     (!sibling->right || !sibling->right->red)) {
-                    if (sibling) sibling->red = true;
+                    sibling->red = true;
                     pt = pt->parent;
                 } else {
                     // Case 3: sibling's right child is black
@@ -214,10 +231,12 @@ private:
                     }
                     
                     // Case 4: sibling's right child is red
-                    if (sibling) sibling->red = pt->parent->red;
-                    pt->parent->red = false;
-                    if (sibling && sibling->right) sibling->right->red = false;
-                    rotateLeft(pt->parent);
+                    if (sibling) {
+                        sibling->red = pt->parent->red;
+                        pt->parent->red = false;
+                        if (sibling->right) sibling->right->red = false;
+                        rotateLeft(pt->parent);
+                    }
                     pt = root;
                 }
             } else {
@@ -231,10 +250,12 @@ private:
                     sibling = pt->parent->left;
                 }
                 
+                if (!sibling) break;  // Safety check
+                
                 // Case 2: sibling's children are both black
                 if ((!sibling->left || !sibling->left->red) && 
                     (!sibling->right || !sibling->right->red)) {
-                    if (sibling) sibling->red = true;
+                    sibling->red = true;
                     pt = pt->parent;
                 } else {
                     // Case 3: sibling's left child is black
@@ -246,10 +267,12 @@ private:
                     }
                     
                     // Case 4: sibling's left child is red
-                    if (sibling) sibling->red = pt->parent->red;
-                    pt->parent->red = false;
-                    if (sibling && sibling->left) sibling->left->red = false;
-                    rotateRight(pt->parent);
+                    if (sibling) {
+                        sibling->red = pt->parent->red;
+                        pt->parent->red = false;
+                        if (sibling->left) sibling->left->red = false;
+                        rotateRight(pt->parent);
+                    }
                     pt = root;
                 }
             }
@@ -280,7 +303,8 @@ private:
     // PRINT (ASCII-art)
     // ------------------------
     void printHelper(Node* node, int depth, char prefix) {
-        if (!node) return;
+        if (!node || depth >= MAX_DEPTH-1) return;  // Safety check for depth
+        
         if (node->left)
             printHelper(node->left, depth+1, '/');
 
@@ -357,7 +381,7 @@ public:
         }
 
         Node* deletedNode = nodeToDelete;
-        Node* replacementNode;
+        Node* replacementNode = nullptr;
         bool deletedOriginalColor = deletedNode->red;
 
         if (!nodeToDelete->left) {
@@ -369,6 +393,11 @@ public:
         } else {
             // Node has two children - find successor
             deletedNode = findMin(nodeToDelete->right);
+            if (!deletedNode) {
+                delete nodeToDelete;
+                return;  // Safety check
+            }
+            
             deletedOriginalColor = deletedNode->red;
             replacementNode = deletedNode->right;
 
@@ -385,7 +414,7 @@ public:
             if (deletedNode->left) deletedNode->left->parent = deletedNode;
             deletedNode->red = nodeToDelete->red;
             
-            // Use assign function to copy data
+            // Use assign for data replacement
             assign(deletedNode->data, nodeToDelete->data);
         }
 

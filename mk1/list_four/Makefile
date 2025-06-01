@@ -1,14 +1,14 @@
-# Makefile for building all C programs in the current directory
+# Makefile for building all C++ programs in the current directory
 
-CC = gcc
-CFLAGS = -Wall -Wextra -O2
-SOURCES = $(wildcard *.c)
-EXECUTABLES = $(SOURCES:.c=)
+CXX = g++
+CXXFLAGS = -Wall -Wextra -O2
+SOURCES = $(wildcard *.cpp)
+EXECUTABLES = $(SOURCES:.cpp=)
 
 all: $(EXECUTABLES)
 
-%: %.c
-	$(CC) $(CFLAGS) $< -o $@
+%: %.cpp
+	$(CXX) $(CXXFLAGS) $< -o $@
 
 clean:
 	rm -f $(EXECUTABLES) *.o

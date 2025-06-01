@@ -1,15 +1,15 @@
 #include <stdio.h>
-#include <algorithm> 
+#include <algorithm>
 
-int assignments = 0;
-int comparisons = 0;
+long long assignments = 0;
+long long comparisons = 0;
 
-void assign(int &a, int &b){
+void assign(int &a, int b){
     a = b;
     assignments++;
 }
 
-bool compare(int &a, int &b){
+bool compare(int a, int b){
     comparisons++;
     return a > b;
 }
@@ -28,17 +28,21 @@ private:
 
     char* left_trace;
     char* right_trace;
-    const static int MAX_DEPTH = 1000000;
+    const static int MAX_DEPTH = 1000;
 
-    void printHelper(Node* root, int depth, char prefix) {
-        if (root == nullptr) return;
-        if (root->left != nullptr) {
-            printHelper(root->left, depth + 1, '/');
+    void printHelper(Node* node, int depth, char prefix) {
+        if (!node || depth >= MAX_DEPTH-1) return;
+        
+        if (node->left) {
+            printHelper(node->left, depth + 1, '/');
         }
+        
         if (prefix == '/') left_trace[depth - 1] = '|';
         if (prefix == '\\') right_trace[depth - 1] = ' ';
+        
         if (depth == 0) printf("-");
         if (depth > 0) printf(" ");
+        
         for (int i = 0; i < depth - 1; i++) {
             if (left_trace[i] == '|' || right_trace[i] == '|') {
                 printf("| ");
@@ -46,26 +50,31 @@ private:
                 printf("  ");
             }
         }
+        
         if (depth > 0) printf("%c-", prefix);
-        printf("[%d]\n", root->data);
+        printf("[%d]\n", node->data);
+        
         left_trace[depth] = ' ';
-        if (root->right != nullptr) {
+        if (node->right) {
             right_trace[depth] = '|';
-            printHelper(root->right, depth + 1, '\\');
+            printHelper(node->right, depth + 1, '\\');
         }
     }
 
     void insertHelper(Node*& node, int value) {
         if (node == nullptr) {
             node = new Node(value);
-        } else if (value < node->data) {
-            if (!compare(value, node->data) && value != node->data) {
-                insertHelper(node->left, value);
-            }
-        } else if (compare(value, node->data)) {
+            assign(node->data, value);  // Track assignment
+        } else if (!compare(node->data, value) && !compare(value, node->data)) {
+            // Equal values - do nothing (no duplicates)
+            return;
+        } else if (compare(node->data, value)) {
+            // node->data > value, go left
+            insertHelper(node->left, value);
+        } else {
+            // value > node->data, go right
             insertHelper(node->right, value);
         }
-        // If value == node->data, we don't insert (no duplicates)
     }
 
     int getHeightHelper(Node* node) {
@@ -84,10 +93,8 @@ public:
     BST() {
         left_trace = new char[MAX_DEPTH];
         right_trace = new char[MAX_DEPTH];
-        for (int i = 0; i < MAX_DEPTH; i++) {
-            left_trace[i] = ' ';
-            right_trace[i] = ' ';
-        }
+        std::fill(left_trace, left_trace + MAX_DEPTH, ' ');
+        std::fill(right_trace, right_trace + MAX_DEPTH, ' ');
     }
 
     ~BST() {
@@ -100,19 +107,24 @@ public:
         Node* parent = nullptr;
         Node* current = root;
     
-        while (current != nullptr && current->data != value) {
+        // Find the node to delete
+        while (current != nullptr) {
+            if (!compare(current->data, value) && !compare(value, current->data)) {
+                // Found the node
+                break;
+            }
             parent = current;
-            if (!compare(value, current->data) && value != current->data) {
+            if (compare(current->data, value)) {
+                // current->data > value, go left
                 current = current->left;
-            } else if (compare(value, current->data)) {
-                current = current->right;
             } else {
-                break; // Found the node
+                // value > current->data, go right
+                current = current->right;
             }
         }
     
         if (current == nullptr) {
-            printf("Value %d not found in the tree.\n", value);
+            printf("Value %d not found.\n", value);
             return;
         }
     
@@ -129,7 +141,8 @@ public:
             }
     
             delete current; 
-        } else { // Node with two children
+        } else { 
+            // Node with two children
             Node* successorParent = current;
             Node* successor = current->right;
     
@@ -137,7 +150,9 @@ public:
                 successorParent = successor;
                 successor = successor->left;
             }
+            
             assign(current->data, successor->data);
+            
             if (successorParent->left == successor) {
                 successorParent->left = successor->right;
             } else {
@@ -157,12 +172,16 @@ public:
     }
 
     void printTree() {
+        if (!root) {
+            printf("Tree is empty.\n");
+            return;
+        }
         printHelper(root, 0, '-');
     }
 
     void printStats() {
-        printf("Total assignments: %d\n", assignments);
-        printf("Total comparisons: %d\n", comparisons);
+        printf("Total assignments: %lld\n", assignments);
+        printf("Total comparisons: %lld\n", comparisons);
     }
 
     void resetStats() {
@@ -172,50 +191,45 @@ public:
 };
 
 int main(int argc, char* argv[]) {
-    BST myBST;
+    BST myTree;
+    bool printsHelp = (argc>1 && argv[1][0]=='h');
 
-    bool printsHelp = false;
-    if (argc > 1 && argv[1][0] == 'h') {
-        printsHelp = true;
+    if (printsHelp) {
+        printf("Commands:\n"
+               " i<n>  Insert n\n"
+               " d<n>  Delete n\n"
+               " p     Print tree\n"
+               " h     Height\n"
+               " s     Stats\n"
+               " r     Reset stats\n"
+               " q     Quit\n");
     }
 
     while (true) {
-        int value;
-        if(printsHelp) {
-            printf("Choose operation:\n");
-            printf("i - Insert a node\n");
-            printf("d - Delete a node\n");
-            printf("p - Print the tree\n");
-            printf("h - Get the height of the tree\n");
-            printf("s - Show statistics (assignments/comparisons)\n");
-            printf("r - Reset statistics\n");
-            printf("q - Quit\n");
-            printf("example: i5\n");
-            printf("Enter command: ");
-        }
-        char command;
-        scanf(" %c", &command);
-        if (command == 'q') {
-            break;
-        } else if (command == 'i') {
-            scanf("%d", &value);
-            myBST.insertNode(value);
-        } else if (command == 'd') {
-            scanf("%d", &value);
-            myBST.deleteNode(value);
-        } else if (command == 'p') {
-            myBST.printTree();
-        } else if (command == 'h') {
-            printf("Height of the tree: %d\n", myBST.getHeight());
-        } else if (command == 's') {
-            myBST.printStats();
-        } else if (command == 'r') {
-            myBST.resetStats();
-            printf("Statistics reset.\n");
-        } else {
-            printf("Unknown command. Please try again.\n");
+        if (printsHelp) printf("Cmd> ");
+        char cmd;
+        if (scanf(" %c", &cmd)!=1) break;
+        if (cmd=='q') break;
+
+        int v;
+        switch (cmd) {
+            case 'i': 
+                if (scanf("%d",&v)==1) {
+                    myTree.insertNode(v); 
+                    if (printsHelp) printf("Inserted %d\n", v);
+                }
+                break;
+            case 'd': 
+                if (scanf("%d",&v)==1) {
+                    myTree.deleteNode(v);
+                }
+                break;
+            case 'p': myTree.printTree(); break;
+            case 'h': printf("Height: %d\n", myTree.getHeight()); break;
+            case 's': myTree.printStats(); break;
+            case 'r': myTree.resetStats(); printf("Stats reset.\n"); break;
+            default: printf("Unknown cmd '%c'\n", cmd);
         }
     }
-
     return 0;
 }

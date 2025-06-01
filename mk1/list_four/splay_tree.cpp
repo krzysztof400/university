@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <algorithm>
+#include <queue>
 
 int assignments = 0;
 int comparisons = 0;
@@ -209,10 +210,27 @@ private:
     // ------------------------
     // HEIGHT
     // ------------------------
+
     int getHeightHelper(Node* node) {
         if (!node) return 0;
-        return 1 + std::max(getHeightHelper(node->left),
-                            getHeightHelper(node->right));
+    
+        std::queue<std::pair<Node*, int>> q;
+        q.push({node, 1});
+        int maxHeight = 0;
+    
+        while (!q.empty()) {
+            Node* current = q.front().first;
+            int depth = q.front().second;
+            q.pop();
+    
+            if (current) {
+                maxHeight = std::max(maxHeight, depth);
+                if (current->left) q.push({current->left, depth + 1});
+                if (current->right) q.push({current->right, depth + 1});
+            }
+        }
+    
+        return maxHeight;
     }
 
     // ------------------------
@@ -351,7 +369,6 @@ public:
 int main(int argc, char* argv[]) {
     Splay_Tree myTree;
     bool printsHelp = (argc>1 && argv[1][0]=='h');
-
 
     if (printsHelp) {
         printf("Commands:\n"
