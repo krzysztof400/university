@@ -1,0 +1,2 @@
+# About
+This is project which implements simple data structures and builds functions for them. We test our data structures and functions. Each folder contains diffrent data structure, folder FIFO_and_LIFO contains two datas structures.

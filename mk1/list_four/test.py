@@ -152,7 +152,7 @@ class TestRunner:
         print("PERFORMANCE TESTING")
         print("="*60)
 
-        n_values = list(range(10000, 20001, 10000))
+        n_values = list(range(10000, 100001, 10000))
         num_tests = 5
 
         results = {

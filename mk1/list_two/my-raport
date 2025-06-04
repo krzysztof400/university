@@ -1,0 +1,1049 @@
+krzysztof400@legion:~$ # Krzysztof Zając
+krzysztof400@legion:~$ # 279757     
+krzysztof400@legion:~$ 
+krzysztof400@legion:~$ cd Documents/code/university/mk1/list_two/
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ svn status
+M       zad1/Makefile
+?       zad1/hybrid_sort.cpp
+M       zad1/insertion_sort.cpp
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ svn add .
+svn: warning: W150002: '/home/krzysztof400/Documents/code/university/mk1/list_two' is already under version control
+svn: E200009: Could not add all targets because some targets are already versioned
+svn: E200009: Illegal target for the requested operation
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ svn zad1/hybrid_sort.cpp 
+Unknown subcommand: 'zad1/hybrid_sort.cpp'
+Type 'svn help' for usage.
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ svn add zad1/hybrid_sort.cpp A         zad1/hybrid_sort.cpp
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ svn commit -m ""
+Sending        zad1/Makefile
+Adding         zad1/hybrid_sort.cpp
+Sending        zad1/insertion_sort.cpp
+Transmitting file data ...done
+Committing transaction...
+Committed revision 7.
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ #======ZADANIE 1========
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ #===HYBRID SORT=== 
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ #===KOMPILACJA===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ make
+make: *** No targets specified and no makefile found.  Stop.
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ cd zad1
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ make
+g++ -Wall -Wextra -O2 -std=c++17 -o random_generator random_generator.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o merge_sort merge_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o quick_sort quick_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o insertion_sort insertion_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o DP_quick_sort DP_quick_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o descending_generator descending_generator.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o ascending_generator ascending_generator.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o tim_sort tim_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o hybrid_sort hybrid_sort.cpp utils.cpp 
+^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[Bkrzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ #===HYBRID SORT===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 4 | ./hybrid_sort 
+Original array: [ 5 2 4 4 ]
+After inserting 2: [ 2 5 4 4 ]
+After inserting 4: [ 2 4 5 4 ]
+After inserting 4: [ 2 4 4 5 ]
+Original array: [ 5 2 4 4 ]
+Sorted array: [ 2 4 4 5 ]
+Is sorted: Yes
+Number of comparisons: 5
+Number of swaps: 13
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 6 | ./hybrid_sort                                                                               
+Original array: [ 8 8 11 10 8 5 ]
+Before partition: [ 8 8 11 10 8 5 ]
+After partition: [ 5 8 11 10 8 8 ]
+Before partition: [ 5 8 11 10 8 ]
+After partition: [ 5 8 11 10 8 ]
+Before partition: [ 5 8 11 10 ]
+After partition: [ 5 8 8 10 ]
+Before partition: [ 5 8 8 ]
+After partition: [ 5 8 8 ]
+Before partition: [ 5 8 ]
+After partition: [ 5 8 ]
+Original array: [ 8 8 11 10 8 5 ]
+Sorted array: [ 5 8 8 8 10 11 ]
+Is sorted: Yes
+Number of comparisons: 15
+Number of swaps: 26
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ # w dalszych testach nie bede uzywal hybrid sort - to bedzie po prostu quick sort
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ #===RANDOM NUMBERS===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 20 | ./insertion_sort 
+Original array: [ 11 35 29 27 12 18 23 12 38 31 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 35: [ 11 35 29 27 12 18 23 12 38 31 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 29: [ 11 29 35 27 12 18 23 12 38 31 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 27: [ 11 27 29 35 12 18 23 12 38 31 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 12: [ 11 12 27 29 35 18 23 12 38 31 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 18: [ 11 12 18 27 29 35 23 12 38 31 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 23: [ 11 12 18 23 27 29 35 12 38 31 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 12: [ 11 12 12 18 23 27 29 35 38 31 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 38: [ 11 12 12 18 23 27 29 35 38 31 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 31: [ 11 12 12 18 23 27 29 31 35 38 25 6 4 36 31 25 30 5 36 28 ]
+After inserting 25: [ 11 12 12 18 23 25 27 29 31 35 38 6 4 36 31 25 30 5 36 28 ]
+After inserting 6: [ 6 11 12 12 18 23 25 27 29 31 35 38 4 36 31 25 30 5 36 28 ]
+After inserting 4: [ 4 6 11 12 12 18 23 25 27 29 31 35 38 36 31 25 30 5 36 28 ]
+After inserting 36: [ 4 6 11 12 12 18 23 25 27 29 31 35 36 38 31 25 30 5 36 28 ]
+After inserting 31: [ 4 6 11 12 12 18 23 25 27 29 31 31 35 36 38 25 30 5 36 28 ]
+After inserting 25: [ 4 6 11 12 12 18 23 25 25 27 29 31 31 35 36 38 30 5 36 28 ]
+After inserting 30: [ 4 6 11 12 12 18 23 25 25 27 29 30 31 31 35 36 38 5 36 28 ]
+After inserting 5: [ 4 5 6 11 12 12 18 23 25 25 27 29 30 31 31 35 36 38 36 28 ]
+After inserting 36: [ 4 5 6 11 12 12 18 23 25 25 27 29 30 31 31 35 36 36 38 28 ]
+After inserting 28: [ 4 5 6 11 12 12 18 23 25 25 27 28 29 30 31 31 35 36 36 38 ]
+Original array: [ 11 35 29 27 12 18 23 12 38 31 25 6 4 36 31 25 30 5 36 28 ]
+Sorted array: [ 11 35 29 27 12 18 23 12 38 31 25 6 4 36 31 25 30 5 36 28 ]
+Array is sorted
+Number of comparisons: 105
+Number of swaps: 146
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 2000 | ./insertion_sort
+Array is sorted
+Number of comparisons: 1009878
+Number of swaps: 1013885
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 20 | ./quick_sort                                                                              
+Original array: [ 18 18 14 19 14 34 9 12 1 29 37 14 34 31 9 16 36 36 18 4 ]
+Before partition: [ 18 18 14 19 14 34 9 12 1 29 37 14 34 31 9 16 36 36 18 4 ]
+After partition: [ 1 4 14 19 14 34 9 12 18 29 37 14 34 31 9 16 36 36 18 18 ]
+Before partition: [ 1 4 14 19 14 34 9 12 18 29 37 14 34 31 9 16 36 36 ]
+After partition: [ 1 4 14 14 9 12 14 9 16 18 37 19 34 31 34 18 36 36 ]
+Before partition: [ 1 4 14 14 9 12 14 ]
+After partition: [ 1 4 14 14 9 12 14 ]
+Before partition: [ 1 4 14 14 9 12 ]
+After partition: [ 1 4 9 14 9 12 ]
+Before partition: [ 1 4 9 14 9 ]
+After partition: [ 1 4 9 9 12 ]
+Before partition: [ 1 4 ]
+After partition: [ 1 4 ]
+Before partition: [ 1 4 ]
+After partition: [ 1 4 ]
+Before partition: [ 1 4 9 9 12 14 14 14 16 18 ]
+After partition: [ 1 4 9 9 12 14 14 14 16 18 ]
+Before partition: [ 1 4 9 ]
+After partition: [ 1 4 9 ]
+Before partition: [ 1 4 ]
+After partition: [ 1 4 ]
+Before partition: [ 1 4 9 9 12 14 ]
+After partition: [ 1 4 9 9 12 14 ]
+Before partition: [ 1 4 9 9 12 ]
+After partition: [ 1 4 9 9 12 ]
+Before partition: [ 1 4 9 9 ]
+After partition: [ 1 4 9 9 ]
+Before partition: [ 1 4 9 ]
+After partition: [ 1 4 9 ]
+Before partition: [ 1 4 ]
+After partition: [ 1 4 ]
+Original array: [ 18 18 14 19 14 34 9 12 1 29 37 14 34 31 9 16 36 36 18 4 ]
+Sorted array: [ 1 4 9 9 12 14 14 14 16 18 18 18 19 29 31 34 34 36 36 37 ]
+Is sorted: Yes
+Number of comparisons: 80
+Number of swaps: 132
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 2000 | ./quick_sort                                                                             
+Is sorted: Yes
+Number of comparisons: 24616
+Number of swaps: 47486
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 20 | ./DP_quick_sort                                                                           
+Sorting: [ 15 14 25 35 9 31 38 20 38 32 2 14 0 24 38 34 12 20 39 23 ]
+Before partition: [ 15 14 25 35 9 31 38 20 38 32 2 14 0 24 38 34 12 20 39 23 ]
+After partition: [ 2 14 12 9 0 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+Sorting: [ 2 14 12 9 0 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+Before partition: [ 2 14 12 9 0 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+After partition: [ 0 2 12 9 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+Sorting: [ 0 2 12 9 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+Before partition: [ 0 2 12 9 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+After partition: [ 0 2 9 12 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+After recursion: [ 0 2 9 12 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+After recursion: [ 0 2 9 12 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+Sorting: [ 0 2 9 12 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+Before partition: [ 0 2 9 12 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+After partition: [ 0 2 9 12 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+After recursion: [ 0 2 9 12 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+Sorting: [ 0 2 9 12 14 14 15 20 20 23 38 38 24 38 34 31 35 39 25 32 ]
+Before partition: [ 0 2 9 12 14 14 15 20 20 23 32 38 24 38 34 31 35 39 25 38 ]
+After partition: [ 0 2 9 12 14 14 15 20 20 23 25 24 31 32 34 38 35 38 38 39 ]
+Sorting: [ 0 2 9 12 14 14 15 20 20 23 25 24 31 32 34 38 35 38 38 39 ]
+Before partition: [ 0 2 9 12 14 14 15 20 20 23 25 24 31 32 34 38 35 38 38 39 ]
+After partition: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 38 35 38 38 39 ]
+After recursion: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 38 35 38 38 39 ]
+Sorting: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 38 35 38 38 39 ]
+Before partition: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 38 35 38 38 39 ]
+After partition: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 38 35 38 38 39 ]
+Sorting: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 38 35 38 38 39 ]
+Before partition: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 35 38 38 38 39 ]
+After partition: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 35 38 38 38 39 ]
+After recursion: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 35 38 38 38 39 ]
+After recursion: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 35 38 38 38 39 ]
+After recursion: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 35 38 38 38 39 ]
+After recursion: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 35 38 38 38 39 ]
+Original array: [ 15 14 25 35 9 31 38 20 38 32 2 14 0 24 38 34 12 20 39 23 ]
+Sorted array: [ 0 2 9 12 14 14 15 20 20 23 24 25 31 32 34 35 38 38 38 39 ]
+Is sorted: Yes
+Number of comparisons: 98
+Number of swaps: 139
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 2000 | ./DP_quick_sort                                                                          
+Is sorted: Yes
+Number of comparisons: 39142
+Number of swaps: 38738
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 20 | ./merge_sort                                                                              
+Original array: [ 2 7 29 3 20 31 28 34 33 36 10 11 18 38 24 29 31 0 3 21 ]
+Sorted array 1: [ 2 ]
+Sorted array 2: [ 7 ]
+Sorted array 1: [ 3 ]
+Sorted array 2: [ 20 ]
+Sorted array 1: [ 29 ]
+Sorted array 2: [ 3 20 ]
+Sorted array 1: [ 2 7 ]
+Sorted array 2: [ 3 20 29 ]
+Sorted array 1: [ 31 ]
+Sorted array 2: [ 28 ]
+Sorted array 1: [ 33 ]
+Sorted array 2: [ 36 ]
+Sorted array 1: [ 34 ]
+Sorted array 2: [ 33 36 ]
+Sorted array 1: [ 28 31 ]
+Sorted array 2: [ 33 34 36 ]
+Sorted array 1: [ 2 3 7 20 29 ]
+Sorted array 2: [ 28 31 33 34 36 ]
+Sorted array 1: [ 10 ]
+Sorted array 2: [ 11 ]
+Sorted array 1: [ 38 ]
+Sorted array 2: [ 24 ]
+Sorted array 1: [ 18 ]
+Sorted array 2: [ 24 38 ]
+Sorted array 1: [ 10 11 ]
+Sorted array 2: [ 18 24 38 ]
+Sorted array 1: [ 29 ]
+Sorted array 2: [ 31 ]
+Sorted array 1: [ 3 ]
+Sorted array 2: [ 21 ]
+Sorted array 1: [ 0 ]
+Sorted array 2: [ 3 21 ]
+Sorted array 1: [ 29 31 ]
+Sorted array 2: [ 0 3 21 ]
+Sorted array 1: [ 10 11 18 24 38 ]
+Sorted array 2: [ 0 3 21 29 31 ]
+Sorted array 1: [ 2 3 7 20 28 29 31 33 34 36 ]
+Sorted array 2: [ 0 3 10 11 18 21 24 29 31 38 ]
+Original array: [ 2 7 29 3 20 31 28 34 33 36 10 11 18 38 24 29 31 0 3 21 ]
+Sorted array: [ 2 7 29 3 20 31 28 34 33 36 10 11 18 38 24 29 31 0 3 21 ]
+Array is sorted
+Number of comparisons: 58
+Number of swaps: 176
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 2000 | ./merge_sort                                                                             
+Array is sorted
+Number of comparisons: 19407
+Number of swaps: 43904
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 20 | ./tim_sort                                                                                
+Original array: [ 39 37 37 24 19 13 35 4 8 5 15 10 39 17 29 11 0 25 38 33 ]
+Found 12 runs: [0,1) [1,3) [3,4) [4,5) [5,7) [7,9) [9,11) [11,13) [13,15) [15,16) [16,19) [19,20) 
+After merging [0,1) with [1,3): Current array: [ 37 37 39 24 19 13 35 4 8 5 15 10 39 17 29 11 0 25 38 33 ]
+After merging [3,4) with [4,5): Current array: [ 37 37 39 19 24 13 35 4 8 5 15 10 39 17 29 11 0 25 38 33 ]
+After merging [5,7) with [7,9): Current array: [ 37 37 39 19 24 4 8 13 35 5 15 10 39 17 29 11 0 25 38 33 ]
+After merging [9,11) with [11,13): Current array: [ 37 37 39 19 24 4 8 13 35 5 10 15 39 17 29 11 0 25 38 33 ]
+After merging [13,15) with [15,16): Current array: [ 37 37 39 19 24 4 8 13 35 5 10 15 39 11 17 29 0 25 38 33 ]
+After merging [16,19) with [19,20): Current array: [ 37 37 39 19 24 4 8 13 35 5 10 15 39 11 17 29 0 25 33 38 ]
+After merging [0,3) with [3,5): Current array: [ 19 24 37 37 39 4 8 13 35 5 10 15 39 11 17 29 0 25 33 38 ]
+After merging [5,9) with [9,13): Current array: [ 19 24 37 37 39 4 5 8 10 13 15 35 39 11 17 29 0 25 33 38 ]
+After merging [13,16) with [16,20): Current array: [ 19 24 37 37 39 4 5 8 10 13 15 35 39 0 11 17 25 29 33 38 ]
+After merging [0,5) with [5,13): Current array: [ 4 5 8 10 13 15 19 24 35 37 37 39 39 0 11 17 25 29 33 38 ]
+After merging [0,13) with [13,20): Current array: [ 0 4 5 8 10 11 13 15 17 19 24 25 29 33 35 37 37 38 39 39 ]
+Original array: [ 39 37 37 24 19 13 35 4 8 5 15 10 39 17 29 11 0 25 38 33 ]
+Sorted array: [ 0 4 5 8 10 11 13 15 17 19 24 25 29 33 35 37 37 38 39 39 ]
+Is sorted: Yes
+Number of comparisons: 75
+Number of swaps: 146
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./random_generator 2000 | ./tim_sort                                                                               
+Is sorted: Yes
+Number of comparisons: 20448
+Number of swaps: 39988
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ #===ASCENDING NUMBERS===krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 20| ./insertion_sort 
+Original array: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 3: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 5: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 5: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 6: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 6: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 7: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 8: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 8: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 12: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 13: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 15: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 23: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 25: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 30: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 31: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 32: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 35: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 37: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+After inserting 39: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+Original array: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+Sorted array: [ 1 3 5 5 6 6 7 8 8 12 13 15 23 25 30 31 32 35 37 39 ]
+Array is sorted
+Number of comparisons: 19
+Number of swaps: 58
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 2000| ./insertion_sort                                                                       
+Array is sorted
+Number of comparisons: 1999
+Number of swaps: 5998
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 20| ./quick_sort                                                                            
+Original array: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 34 36 36 36 39 ]
+Before partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 34 36 36 36 39 ]
+After partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 34 36 36 36 39 ]
+Before partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 34 36 36 36 ]
+After partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 34 36 36 36 ]
+Before partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 34 ]
+After partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 34 ]
+Before partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 ]
+After partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 ]
+Before partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 ]
+After partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 ]
+Before partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 ]
+After partition: [ 0 1 2 5 12 14 15 17 18 21 25 26 ]
+Before partition: [ 0 1 2 5 12 14 15 17 18 21 25 ]
+After partition: [ 0 1 2 5 12 14 15 17 18 21 25 ]
+Before partition: [ 0 1 2 5 12 14 15 17 18 21 ]
+After partition: [ 0 1 2 5 12 14 15 17 18 21 ]
+Before partition: [ 0 1 2 5 12 14 15 17 18 ]
+After partition: [ 0 1 2 5 12 14 15 17 18 ]
+Before partition: [ 0 1 2 5 12 14 15 17 ]
+After partition: [ 0 1 2 5 12 14 15 17 ]
+Before partition: [ 0 1 2 5 12 14 15 ]
+After partition: [ 0 1 2 5 12 14 15 ]
+Before partition: [ 0 1 2 5 12 14 ]
+After partition: [ 0 1 2 5 12 14 ]
+Before partition: [ 0 1 2 5 12 ]
+After partition: [ 0 1 2 5 12 ]
+Before partition: [ 0 1 2 5 ]
+After partition: [ 0 1 2 5 ]
+Before partition: [ 0 1 2 ]
+After partition: [ 0 1 2 ]
+Before partition: [ 0 1 ]
+After partition: [ 0 1 ]
+Before partition: [ 0 1 ]
+After partition: [ 0 1 ]
+Original array: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 34 36 36 36 39 ]
+Sorted array: [ 0 1 2 5 12 14 15 17 18 21 25 26 28 28 30 34 36 36 36 39 ]
+Is sorted: Yes
+Number of comparisons: 146
+Number of swaps: 494
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 2000| ./quick_sort                                                                           
+Is sorted: Yes
+Number of comparisons: 1606995
+Number of swaps: 4826165
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 20| ./DP_quick_sort                                                                          
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorting: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Before partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After partition: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+After recursion: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Original array: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Sorted array: [ 0 0 0 1 1 9 9 11 11 13 16 18 26 28 29 31 32 34 35 39 ]
+Is sorted: Yes
+Number of comparisons: 280
+Number of swaps: 80
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 2000| ./DP_quick_sort                                                                        
+Is sorted: Yes
+Number of comparisons: 2998000
+Number of swaps: 8000
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 20| ./merge_sort                                                                            
+Original array: [ 1 3 6 7 13 13 19 21 22 22 26 27 29 32 32 36 36 36 37 38 ]
+Sorted array 1: [ 1 ]
+Sorted array 2: [ 3 ]
+Sorted array 1: [ 7 ]
+Sorted array 2: [ 13 ]
+Sorted array 1: [ 6 ]
+Sorted array 2: [ 7 13 ]
+Sorted array 1: [ 1 3 ]
+Sorted array 2: [ 6 7 13 ]
+Sorted array 1: [ 13 ]
+Sorted array 2: [ 19 ]
+Sorted array 1: [ 22 ]
+Sorted array 2: [ 22 ]
+Sorted array 1: [ 21 ]
+Sorted array 2: [ 22 22 ]
+Sorted array 1: [ 13 19 ]
+Sorted array 2: [ 21 22 22 ]
+Sorted array 1: [ 1 3 6 7 13 ]
+Sorted array 2: [ 13 19 21 22 22 ]
+Sorted array 1: [ 26 ]
+Sorted array 2: [ 27 ]
+Sorted array 1: [ 32 ]
+Sorted array 2: [ 32 ]
+Sorted array 1: [ 29 ]
+Sorted array 2: [ 32 32 ]
+Sorted array 1: [ 26 27 ]
+Sorted array 2: [ 29 32 32 ]
+Sorted array 1: [ 36 ]
+Sorted array 2: [ 36 ]
+Sorted array 1: [ 37 ]
+Sorted array 2: [ 38 ]
+Sorted array 1: [ 36 ]
+Sorted array 2: [ 37 38 ]
+Sorted array 1: [ 36 36 ]
+Sorted array 2: [ 36 37 38 ]
+Sorted array 1: [ 26 27 29 32 32 ]
+Sorted array 2: [ 36 36 36 37 38 ]
+Sorted array 1: [ 1 3 6 7 13 13 19 21 22 22 ]
+Sorted array 2: [ 26 27 29 32 32 36 36 36 37 38 ]
+Original array: [ 1 3 6 7 13 13 19 21 22 22 26 27 29 32 32 36 36 36 37 38 ]
+Sorted array: [ 1 3 6 7 13 13 19 21 22 22 26 27 29 32 32 36 36 36 37 38 ]
+Array is sorted
+Number of comparisons: 40
+Number of swaps: 176
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 2000| ./merge_sort                                                                           
+Array is sorted
+Number of comparisons: 10864
+Number of swaps: 43904
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 20| ./tim_sort                                                                              
+Original array: [ 4 8 10 10 10 10 11 14 15 16 16 20 24 24 25 30 32 32 38 39 ]
+Found 1 runs: [0,20) 
+Original array: [ 4 8 10 10 10 10 11 14 15 16 16 20 24 24 25 30 32 32 38 39 ]
+Sorted array: [ 4 8 10 10 10 10 11 14 15 16 16 20 24 24 25 30 32 32 38 39 ]
+Is sorted: Yes
+Number of comparisons: 19
+Number of swaps: 0
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./ascending_generator 2000 | ./tim_sort                                                                            
+Is sorted: Yes
+Number of comparisons: 1999
+Number of swaps: 0
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ #===DESCENDING NUMBERS===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 20 | ./insertion_sort 
+Original array: [ 31 30 30 26 26 25 22 16 14 11 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 30: [ 30 31 30 26 26 25 22 16 14 11 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 30: [ 30 30 31 26 26 25 22 16 14 11 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 26: [ 26 30 30 31 26 25 22 16 14 11 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 26: [ 26 26 30 30 31 25 22 16 14 11 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 25: [ 25 26 26 30 30 31 22 16 14 11 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 22: [ 22 25 26 26 30 30 31 16 14 11 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 16: [ 16 22 25 26 26 30 30 31 14 11 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 14: [ 14 16 22 25 26 26 30 30 31 11 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 11: [ 11 14 16 22 25 26 26 30 30 31 10 10 8 6 5 5 3 2 0 0 ]
+After inserting 10: [ 10 11 14 16 22 25 26 26 30 30 31 10 8 6 5 5 3 2 0 0 ]
+After inserting 10: [ 10 10 11 14 16 22 25 26 26 30 30 31 8 6 5 5 3 2 0 0 ]
+After inserting 8: [ 8 10 10 11 14 16 22 25 26 26 30 30 31 6 5 5 3 2 0 0 ]
+After inserting 6: [ 6 8 10 10 11 14 16 22 25 26 26 30 30 31 5 5 3 2 0 0 ]
+After inserting 5: [ 5 6 8 10 10 11 14 16 22 25 26 26 30 30 31 5 3 2 0 0 ]
+After inserting 5: [ 5 5 6 8 10 10 11 14 16 22 25 26 26 30 30 31 3 2 0 0 ]
+After inserting 3: [ 3 5 5 6 8 10 10 11 14 16 22 25 26 26 30 30 31 2 0 0 ]
+After inserting 2: [ 2 3 5 5 6 8 10 10 11 14 16 22 25 26 26 30 30 31 0 0 ]
+After inserting 0: [ 0 2 3 5 5 6 8 10 10 11 14 16 22 25 26 26 30 30 31 0 ]
+After inserting 0: [ 0 0 2 3 5 5 6 8 10 10 11 14 16 22 25 26 26 30 30 31 ]
+Original array: [ 31 30 30 26 26 25 22 16 14 11 10 10 8 6 5 5 3 2 0 0 ]
+Sorted array: [ 31 30 30 26 26 25 22 16 14 11 10 10 8 6 5 5 3 2 0 0 ]
+Array is sorted
+Number of comparisons: 190
+Number of swaps: 243
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 2000 | ./insertion_sort 
+Array is sorted
+Number of comparisons: 1998932
+Number of swaps: 2004524
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 20 | ./quick_sort       
+Original array: [ 39 38 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 3 1 1 ]
+Before partition: [ 39 38 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 3 1 1 ]
+After partition: [ 1 38 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 3 1 39 ]
+Before partition: [ 1 38 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 3 1 ]
+After partition: [ 1 38 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 3 1 ]
+Before partition: [ 1 38 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 3 ]
+After partition: [ 1 1 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 3 ]
+Before partition: [ 1 1 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 ]
+After partition: [ 1 1 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 ]
+Before partition: [ 1 1 35 26 25 21 20 19 16 16 9 7 7 7 6 4 ]
+After partition: [ 1 1 3 26 25 21 20 19 16 16 9 7 7 7 6 4 ]
+Before partition: [ 1 1 3 26 25 21 20 19 16 16 9 7 7 7 6 ]
+After partition: [ 1 1 3 26 25 21 20 19 16 16 9 7 7 7 6 ]
+Before partition: [ 1 1 3 26 25 21 20 19 16 16 9 7 7 7 ]
+After partition: [ 1 1 3 4 25 21 20 19 16 16 9 7 7 7 ]
+Before partition: [ 1 1 3 4 25 21 20 19 16 16 9 7 7 ]
+After partition: [ 1 1 3 4 25 21 20 19 16 16 9 7 7 ]
+Before partition: [ 1 1 3 4 25 21 20 19 16 16 9 7 ]
+After partition: [ 1 1 3 4 4 21 20 19 16 16 9 7 ]
+Before partition: [ 1 1 3 4 4 21 20 19 16 16 9 ]
+After partition: [ 1 1 3 4 4 21 20 19 16 16 9 ]
+Before partition: [ 1 1 3 4 4 21 20 19 16 16 ]
+After partition: [ 1 1 3 4 4 6 20 19 16 16 ]
+Before partition: [ 1 1 3 4 4 6 20 19 16 ]
+After partition: [ 1 1 3 4 4 6 20 19 16 ]
+Before partition: [ 1 1 3 4 4 6 20 19 ]
+After partition: [ 1 1 3 4 4 6 7 19 ]
+Before partition: [ 1 1 3 4 4 6 7 ]
+After partition: [ 1 1 3 4 4 6 7 ]
+Before partition: [ 1 1 3 4 4 6 ]
+After partition: [ 1 1 3 4 4 6 ]
+Before partition: [ 1 1 3 4 4 ]
+After partition: [ 1 1 3 4 4 ]
+Before partition: [ 1 1 3 4 ]
+After partition: [ 1 1 3 4 ]
+Before partition: [ 1 1 3 ]
+After partition: [ 1 1 3 ]
+Original array: [ 39 38 35 26 25 21 20 19 16 16 9 7 7 7 6 4 4 3 1 1 ]
+Sorted array: [ 1 1 3 4 4 6 7 7 7 9 16 16 19 20 21 25 26 35 38 39 ]
+Is sorted: Yes
+Number of comparisons: 189
+Number of swaps: 339
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 2000 | ./quick_sort                                                                         
+Is sorted: Yes
+Number of comparisons: 1740139
+Number of swaps: 2615201
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 20 | ./DP_quick_sort                                                                       
+Sorting: [ 36 31 29 29 27 26 25 24 23 17 16 14 10 8 7 7 6 5 4 2 ]
+Before partition: [ 2 31 29 29 27 26 25 24 23 17 16 14 10 8 7 7 6 5 4 36 ]
+After partition: [ 2 31 29 29 27 26 25 24 23 17 16 14 10 8 7 7 6 5 4 36 ]
+Sorting: [ 2 31 29 29 27 26 25 24 23 17 16 14 10 8 7 7 6 5 4 36 ]
+Before partition: [ 2 4 29 29 27 26 25 24 23 17 16 14 10 8 7 7 6 5 31 36 ]
+After partition: [ 2 4 29 29 27 26 25 24 23 17 16 14 10 8 7 7 6 5 31 36 ]
+Sorting: [ 2 4 29 29 27 26 25 24 23 17 16 14 10 8 7 7 6 5 31 36 ]
+Before partition: [ 2 4 5 29 27 26 25 24 23 17 16 14 10 8 7 7 6 29 31 36 ]
+After partition: [ 2 4 5 29 27 26 25 24 23 17 16 14 10 8 7 7 6 29 31 36 ]
+Sorting: [ 2 4 5 29 27 26 25 24 23 17 16 14 10 8 7 7 6 29 31 36 ]
+Before partition: [ 2 4 5 6 27 26 25 24 23 17 16 14 10 8 7 7 29 29 31 36 ]
+After partition: [ 2 4 5 6 27 26 25 24 23 17 16 14 10 8 7 7 29 29 31 36 ]
+Sorting: [ 2 4 5 6 27 26 25 24 23 17 16 14 10 8 7 7 29 29 31 36 ]
+Before partition: [ 2 4 5 6 7 26 25 24 23 17 16 14 10 8 7 27 29 29 31 36 ]
+After partition: [ 2 4 5 6 7 26 25 24 23 17 16 14 10 8 7 27 29 29 31 36 ]
+Sorting: [ 2 4 5 6 7 26 25 24 23 17 16 14 10 8 7 27 29 29 31 36 ]
+Before partition: [ 2 4 5 6 7 7 25 24 23 17 16 14 10 8 26 27 29 29 31 36 ]
+After partition: [ 2 4 5 6 7 7 25 24 23 17 16 14 10 8 26 27 29 29 31 36 ]
+Sorting: [ 2 4 5 6 7 7 25 24 23 17 16 14 10 8 26 27 29 29 31 36 ]
+Before partition: [ 2 4 5 6 7 7 8 24 23 17 16 14 10 25 26 27 29 29 31 36 ]
+After partition: [ 2 4 5 6 7 7 8 24 23 17 16 14 10 25 26 27 29 29 31 36 ]
+Sorting: [ 2 4 5 6 7 7 8 24 23 17 16 14 10 25 26 27 29 29 31 36 ]
+Before partition: [ 2 4 5 6 7 7 8 10 23 17 16 14 24 25 26 27 29 29 31 36 ]
+After partition: [ 2 4 5 6 7 7 8 10 23 17 16 14 24 25 26 27 29 29 31 36 ]
+Sorting: [ 2 4 5 6 7 7 8 10 23 17 16 14 24 25 26 27 29 29 31 36 ]
+Before partition: [ 2 4 5 6 7 7 8 10 14 17 16 23 24 25 26 27 29 29 31 36 ]
+After partition: [ 2 4 5 6 7 7 8 10 14 17 16 23 24 25 26 27 29 29 31 36 ]
+Sorting: [ 2 4 5 6 7 7 8 10 14 17 16 23 24 25 26 27 29 29 31 36 ]
+Before partition: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After partition: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+After recursion: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+Original array: [ 36 31 29 29 27 26 25 24 23 17 16 14 10 8 7 7 6 5 4 2 ]
+Sorted array: [ 2 4 5 6 7 7 8 10 14 16 17 23 24 25 26 27 29 29 31 36 ]
+Is sorted: Yes
+Number of comparisons: 280
+Number of swaps: 110
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 2000 | ./DP_quick_sort                                                                      
+Is sorted: Yes
+Number of comparisons: 2998000
+Number of swaps: 11000
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 20 | ./merge_sort                                                                          
+Original array: [ 39 37 37 36 31 29 27 23 22 15 13 12 12 8 8 8 3 1 0 0 ]
+Sorted array 1: [ 39 ]
+Sorted array 2: [ 37 ]
+Sorted array 1: [ 36 ]
+Sorted array 2: [ 31 ]
+Sorted array 1: [ 37 ]
+Sorted array 2: [ 31 36 ]
+Sorted array 1: [ 37 39 ]
+Sorted array 2: [ 31 36 37 ]
+Sorted array 1: [ 29 ]
+Sorted array 2: [ 27 ]
+Sorted array 1: [ 22 ]
+Sorted array 2: [ 15 ]
+Sorted array 1: [ 23 ]
+Sorted array 2: [ 15 22 ]
+Sorted array 1: [ 27 29 ]
+Sorted array 2: [ 15 22 23 ]
+Sorted array 1: [ 31 36 37 37 39 ]
+Sorted array 2: [ 15 22 23 27 29 ]
+Sorted array 1: [ 13 ]
+Sorted array 2: [ 12 ]
+Sorted array 1: [ 8 ]
+Sorted array 2: [ 8 ]
+Sorted array 1: [ 12 ]
+Sorted array 2: [ 8 8 ]
+Sorted array 1: [ 12 13 ]
+Sorted array 2: [ 8 8 12 ]
+Sorted array 1: [ 8 ]
+Sorted array 2: [ 3 ]
+Sorted array 1: [ 0 ]
+Sorted array 2: [ 0 ]
+Sorted array 1: [ 1 ]
+Sorted array 2: [ 0 0 ]
+Sorted array 1: [ 3 8 ]
+Sorted array 2: [ 0 0 1 ]
+Sorted array 1: [ 8 8 12 12 13 ]
+Sorted array 2: [ 0 0 1 3 8 ]
+Sorted array 1: [ 15 22 23 27 29 31 36 37 37 39 ]
+Sorted array 2: [ 0 0 1 3 8 8 8 12 12 13 ]
+Original array: [ 39 37 37 36 31 29 27 23 22 15 13 12 12 8 8 8 3 1 0 0 ]
+Sorted array: [ 39 37 37 36 31 29 27 23 22 15 13 12 12 8 8 8 3 1 0 0 ]
+Array is sorted
+Number of comparisons: 52
+Number of swaps: 176
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 200 | ./merge_sort                                                                          
+Array is sorted
+Number of comparisons: 820
+Number of swaps: 3088
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 2000 | ./merge_sort                                                                         
+Array is sorted
+Number of comparisons: 11315
+Number of swaps: 43904
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 20 | ./tim_sort                                                                            
+Original array: [ 35 35 31 30 28 28 26 26 22 22 22 20 18 15 14 7 6 6 1 1 ]
+Found 13 runs: [0,2) [2,3) [3,4) [4,6) [6,8) [8,11) [11,12) [12,13) [13,14) [14,15) [15,16) [16,18) [18,20) 
+After merging [0,2) with [2,3): Current array: [ 31 35 35 30 28 28 26 26 22 22 22 20 18 15 14 7 6 6 1 1 ]
+After merging [3,4) with [4,6): Current array: [ 31 35 35 28 28 30 26 26 22 22 22 20 18 15 14 7 6 6 1 1 ]
+After merging [6,8) with [8,11): Current array: [ 31 35 35 28 28 30 22 22 22 26 26 20 18 15 14 7 6 6 1 1 ]
+After merging [11,12) with [12,13): Current array: [ 31 35 35 28 28 30 22 22 22 26 26 18 20 15 14 7 6 6 1 1 ]
+After merging [13,14) with [14,15): Current array: [ 31 35 35 28 28 30 22 22 22 26 26 18 20 14 15 7 6 6 1 1 ]
+After merging [15,16) with [16,18): Current array: [ 31 35 35 28 28 30 22 22 22 26 26 18 20 14 15 6 6 7 1 1 ]
+After merging [0,3) with [3,6): Current array: [ 28 28 30 31 35 35 22 22 22 26 26 18 20 14 15 6 6 7 1 1 ]
+After merging [6,11) with [11,13): Current array: [ 28 28 30 31 35 35 18 20 22 22 22 26 26 14 15 6 6 7 1 1 ]
+After merging [13,15) with [15,18): Current array: [ 28 28 30 31 35 35 18 20 22 22 22 26 26 6 6 7 14 15 1 1 ]
+After merging [0,6) with [6,13): Current array: [ 18 20 22 22 22 26 26 28 28 30 31 35 35 6 6 7 14 15 1 1 ]
+After merging [13,18) with [18,20): Current array: [ 18 20 22 22 22 26 26 28 28 30 31 35 35 1 1 6 6 7 14 15 ]
+After merging [0,13) with [13,20): Current array: [ 1 1 6 6 7 14 15 18 20 22 22 22 26 26 28 28 30 31 35 35 ]
+Original array: [ 35 35 31 30 28 28 26 26 22 22 22 20 18 15 14 7 6 6 1 1 ]
+Sorted array: [ 1 1 6 6 7 14 15 18 20 22 22 22 26 26 28 28 30 31 35 35 ]
+Is sorted: Yes
+Number of comparisons: 53
+Number of swaps: 152
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ ./descending_generator 2000 | ./tim_sort                                                                           
+Is sorted: Yes
+Number of comparisons: 12308
+Number of swaps: 43674
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ cd ..
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ #========ZADANIE 2===========krzysztof400@legion:~/Documents/code/university/mk1/list_two$ cd zad2
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: ^CTraceback (most recent call last):
+  File "/home/krzysztof400/Documents/code/university/mk1/list_two/zad2/test.py", line 60, in <module>
+    k = int(input("Enter the number of iterations for averaging: "))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ #===DLA k=1===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 1
+Enter the gap for the number of elements: 10
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=10, ./random_generator, ./insertion_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=10, ./random_generator, ./DP_quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=10, ./random_generator, ./merge_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=10, ./random_generator, ./quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=10, ./random_generator, ./tim_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=20, ./random_generator, ./insertion_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=20, ./random_generator, ./DP_quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=20, ./random_generator, ./merge_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=20, ./random_generator, ./quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=20, ./random_generator, ./tim_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=30, ./random_generator, ./insertion_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=30, ./random_generator, ./DP_quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=30, ./random_generator, ./merge_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=30, ./random_generator, ./quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=30, ./random_generator, ./tim_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=40, ./random_generator, ./insertion_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=40, ./random_generator, ./DP_quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=40, ./random_generator, ./merge_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=40, ./random_generator, ./quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=40, ./random_generator, ./tim_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=50, ./random_generator, ./insertion_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=50, ./random_generator, ./DP_quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=50, ./random_generator, ./merge_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=50, ./random_generator, ./quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=50, ./random_generator, ./tim_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=60, ./random_generator, ./insertion_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=60, ./random_generator, ./DP_quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=60, ./random_generator, ./merge_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=60, ./random_generator, ./quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=60, ./random_generator, ./tim_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=70, ./random_generator, ./insertion_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=70, ./random_generator, ./DP_quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=70, ./random_generator, ./merge_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=70, ./random_generator, ./quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=70, ./random_generator, ./tim_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=80, ./random_generator, ./insertion_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=80, ./random_generator, ./DP_quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=80, ./random_generator, ./merge_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=80, ./random_generator, ./quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=80, ./random_generator, ./tim_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=90, ./random_generator, ./insertion_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=90, ./random_generator, ./DP_quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=90, ./random_generator, ./merge_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=90, ./random_generator, ./quick_sort
+Unexpected error: [Errno 2] No such file or directory: './random_generator'
+Warning: No successful runs for n=90, ./random_generator, ./tim_sort
+Plot saved as plot_max100_k1_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ #===KOMPILACJA===       
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ make
+g++ -Wall -Wextra -O2 -std=c++17 -o random_generator random_generator.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o merge_sort merge_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o quick_sort quick_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o insertion_sort insertion_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o DP_quick_sort DP_quick_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o descending_generator descending_generator.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o ascending_generator ascending_generator.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o tim_sort tim_sort.cpp utils.cpp 
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py        
+Enter the number of iterations for averaging: 1
+Enter the gap for the number of elements: 10
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max100_k1_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 1
+Enter the gap for the number of elements: 100
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max1000_k1_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 1
+Enter the gap for the number of elements: 1000
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max10000_k1_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 1
+Enter the gap for the number of elements: 10000
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max100000_k1_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ #widac duze wachania - szczegolnie w quicksortach
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ #===DLA k=10===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py         
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 10
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max100_k10_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 100
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max1000_k10_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 1000
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max10000_k10_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 10000
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max100000_k10_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ #===DLA k=100===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 100
+Enter the gap for the number of elements: 10
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max100_k100_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 100
+Enter the gap for the number of elements: 100
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max1000_k100_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 100
+Enter the gap for the number of elements: 1000
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max10000_k100_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test.py 
+Enter the number of iterations for averaging: 100
+Enter the gap for the number of elements: 10000
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max100000_k100_insertion_DP_quick_merge_quick_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ #===PROG DLA HYBRID SORT===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ python3 test_insertion_quick.py 
+We're checking sorting algorithms for arrays of size n from 1 to 40 with k=100 iterations.
+Comparing sorting algorithms...
+Insertion sort is faster for n=5 for random generator
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ #=========ZADANIE 3==============
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ cd ..
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ cd zad
+zad1/ zad2/ zad3/ zad4/ 
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ cd zad3
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad3$ #===KOMPILACJA===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad3$ make
+g++ -Wall -Wextra -O2 -std=c++17 -o random_generator random_generator.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o merge_sort merge_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o tim_sort tim_sort.cpp utils.cpp 
+make: *** No rule to make target 'ascending_sort.cpp', needed by 'ascending_sort'.  Stop.
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad3$ python3 test.py 
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 10000
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r
+Using generator(s): random_generator
+Plot saved as plot_max100000_k10_merge_tim.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad3$ cd ..
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ #==========ZADANIE 4=============
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ cd zad4
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ #=====KOMPILACJA===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ make
+g++ -Wall -Wextra -O2 -std=c++17 -o random_generator random_generator.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o quick_sort quick_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o DP_quick_sort DP_quick_sort.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o descending_generator descending_generator.cpp utils.cpp 
+g++ -Wall -Wextra -O2 -std=c++17 -o ascending_generator ascending_generator.cpp utils.cpp 
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ #===SPRAWDZENIE WSPOLCZYNNIKA===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ python3 test_constant.py 
+Enter the number of repetitions (k): 100
+Enter the number of elements to sort (n): 100000
+Results:
+Generator: ./random_generator, Sort: ./quick_sort, Avg Swaps: 3245189.25
+Constant: 1.9537986117125967
+Generator: ./random_generator, Sort: ./DP_quick_sort, Avg Swaps: 2713252.17
+Constant: 1.633540577940775
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ python3 test.py         
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: ^CTraceback (most recent call last):
+  File "/home/krzysztof400/Documents/code/university/mk1/list_two/zad4/test.py", line 61, in <module>
+    gap = int(input("Enter the gap for the number of elements: "))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ #===POROWNANIE WYKRESOW===
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ python3 test.py         
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 10000
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): all
+Using generator(s): random_generator, descending_generator, ascending_generator
+^Z
+[1]+  Stopped                 python3 test.py
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ python3 test.py
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 1000 
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): r  
+Using generator(s): random_generator
+Plot saved as plot_max10000_k10_DP_quick_quick.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ python3 test.py
+Enter the number of iterations for averaging: 10
+Enter the gap for the number of elements: 100
+
+Select a random number generator:
+r - Random generator
+d - Descending generator
+a - Ascending generator
+all - All generators
+Enter your choice (r/d/a/all): all
+Using generator(s): random_generator, descending_generator, ascending_generator
+Plot saved as plot_max1000_k10_DP_quick_quick.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ #uzywamy mniejszego przedzialu po quick sorty w worst casie sa O(n^2)
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ cd ..
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ #==usuniecie skompikowanych plikow i przeslanie wykresow do svn==
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ cd zad1
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ make clean
+rm -f random_generator merge_sort quick_sort insertion_sort DP_quick_sort descending_generator ascending_generator tim_sort hybrid_sort
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad1$ cd ..
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ cd zad2
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ make clean
+rm -f random_generator merge_sort quick_sort insertion_sort DP_quick_sort descending_generator ascending_generator tim_sort
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad2$ cd ..
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ cd zad3
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad3$ make clean
+rm -f random_generator merge_sort tim_sort ascending_sort descending_sort
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad3$ cd ..
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ cd zad4
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ make clean
+rm -f random_generator quick_sort DP_quick_sort descending_generator ascending_generator
+krzysztof400@legion:~/Documents/code/university/mk1/list_two/zad4$ cd ..
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ svn status
+?       zad2/comparisons_beetween_quick_and_insertion_sort.png
+?       zad2/plot_max100000_k100_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max100000_k10_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max100000_k1_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max10000_k100_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max10000_k10_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max10000_k1_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max1000_k100_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max1000_k10_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max1000_k1_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max100_k100_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max100_k10_insertion_DP_quick_merge_quick_tim.png
+?       zad2/plot_max100_k1_insertion_DP_quick_merge_quick_tim.png
+?       zad3/plot_max100000_k10_merge_tim.png
+?       zad4/plot_max10000_k10_DP_quick_quick.png
+?       zad4/plot_max1000_k10_DP_quick_quick.png
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ svn add .
+svn: warning: W150002: '/home/krzysztof400/Documents/code/university/mk1/list_two' is already under version control
+svn: E200009: Could not add all targets because some targets are already versioned
+svn: E200009: Illegal target for the requested operation
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ svn commit -m ""
+krzysztof400@legion:~/Documents/code/university/mk1/list_two$ 

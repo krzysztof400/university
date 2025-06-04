@@ -11,6 +11,7 @@ lib64/
 # Virtual environments
 venv/
 env/
+tfenv/
 .venv/
 .env/
 
@@ -52,3 +53,6 @@ Thumbs.db  # Windows
 
 # npm specific
 node_modules/
+
+# svn
+.svn/
