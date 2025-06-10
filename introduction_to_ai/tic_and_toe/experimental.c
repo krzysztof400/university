@@ -16,31 +16,21 @@
 
 static const int directions[4][2] = {{0,1},{1,0},{1,1},{1,-1}};
 
-int evaluate(int player) {
+int evaluate(int player, int depth) {
     int opponent = 3 - player;
     int score = 0;
 
-    if(winCheck(player) == 1) return 1000;
-    if(winCheck(opponent) == 1) return -1000;
-    if(loseCheck(player) == 1) return -1000;
-    if(loseCheck(opponent) == 1) return 1000;
+    if(winCheck(player) == 1) return 1000 + depth;
+    if(winCheck(opponent) == 1) return -1000 - depth;
+    if(loseCheck(player) == 1) return -1000 - depth;
+    if(loseCheck(opponent) == 1) return 1000 + depth;
 
-    // Check triangles
-    for (int i = 0; i < 8; i++) {
-        int p1 = board[triangle_patterns[i][0][0]][triangle_patterns[i][0][1]];
-        int p2 = board[triangle_patterns[i][1][0]][triangle_patterns[i][1][1]];
-        int p3 = board[triangle_patterns[i][2][0]][triangle_patterns[i][2][1]];
+    score += check_triangles(player);
 
-        if (p1 == player && p2 == player && p3 == player) {
-            score += 100;
-        } else if (p1 == opponent && p2 == opponent && p3 == opponent) {
-            score -= 100;
-        }
-    }
-
-    // Check for one empty in between
-    score += one_empty_in_beetween_patern(player, opponent);
+    // score += one_empty_in_beetween_patern(player);
     
+    // score += depth;
+
     return score;
 }
 
@@ -55,7 +45,7 @@ int isMovesLeft() {
 }
 
 int minimax(int depth, int alpha, int beta, int player, int isMax) {
-    int score = evaluate(player);
+    int score = evaluate(player, depth);
     if (depth == 0 || !isMovesLeft() || score == 1000 || score == -1000)
         return score;
 
