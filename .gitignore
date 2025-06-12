@@ -12,6 +12,7 @@ lib64/
 venv/
 env/
 tfenv/
+data/
 .venv/
 .env/
 
@@ -56,3 +57,6 @@ node_modules/
 
 # svn
 .svn/
+
+# specific
+/mk1

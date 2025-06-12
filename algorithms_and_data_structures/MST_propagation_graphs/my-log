@@ -1,0 +1,1969 @@
+[krzysztof@archlinux mk1]$ # Krzysztof Zając, 279757
+[krzysztof@archlinux mk1]$ # ========================================================
+[krzysztof@archlinux mk1]$ # ====SVN EXPORT=====
+[krzysztof@archlinux mk1]$ cd list_five/
+[krzysztof@archlinux list_five]$ svn add algo_kruskal.cpp algo_prima.cpp algo_propagation.cpp 
+A         algo_kruskal.cpp
+svn: warning: W150002: '/home/krzysztof/Desktop/university/mk1/list_five/algo_prima.cpp' is already under version control
+svn: warning: W150002: '/home/krzysztof/Desktop/university/mk1/list_five/algo_propagation.cpp' is already under version control
+svn: E200009: Could not add all targets because some targets are already versioned
+svn: E200009: Illegal target for the requested operation
+[krzysztof@archlinux list_five]$ svn add datastruct_binominal_heap.cpp Makefile gen_complete_tree.cpp test_BH.py test_propagation.py test_MST.py 
+A         datastruct_binominal_heap.cpp
+svn: warning: W150002: '/home/krzysztof/Desktop/university/mk1/list_five/Makefile' is already under version control
+A         gen_complete_tree.cpp
+A         test_BH.py
+svn: warning: W150002: '/home/krzysztof/Desktop/university/mk1/list_five/test_propagation.py' is already under version control
+svn: warning: W150002: '/home/krzysztof/Desktop/university/mk1/list_five/test_MST.py' is already under version control
+svn: E200009: Could not add all targets because some targets are already versioned
+svn: E200009: Illegal target for the requested operation
+[krzysztof@archlinux list_five]$ svn commit "files"
+svn: E200009: Commit failed (details follow):
+svn: E200009: '/home/krzysztof/Desktop/university/mk1/list_five/files' is not under version control
+[krzysztof@archlinux list_five]$ svn commit        
+svn: E205007: Commit failed (details follow):
+svn: E205007: Could not use external editor to fetch log message; consider setting the $SVN_EDITOR environment variable or using the --message (-m) or --file (-F) options
+svn: E205007: None of the environment variables SVN_EDITOR, VISUAL or EDITOR are set, and no 'editor-cmd' run-time configuration option was found
+[krzysztof@archlinux list_five]$ svn commit -m "files"
+Adding         .
+Adding         Makefile
+Adding         algo_kruskal.cpp
+Adding         algo_prima.cpp
+Adding         algo_propagation.cpp
+Adding         datastruct_binominal_heap.cpp
+Adding         gen_complete_tree.cpp
+Adding         test_BH.py
+Adding         test_MST.py
+Adding         test_propagation.py
+Adding         venv
+Adding         venv/lib
+Adding         venv/lib/python3.13
+Adding         venv/lib/python3.13/site-packages
+Adding         venv/lib/python3.13/site-packages/PIL
+Adding         venv/lib/python3.13/site-packages/PIL/AvifImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/BdfFontFile.py
+Adding         venv/lib/python3.13/site-packages/PIL/BlpImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/BmpImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/BufrStubImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/ContainerIO.py
+Adding         venv/lib/python3.13/site-packages/PIL/CurImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/DcxImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/DdsImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/EpsImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/ExifTags.py
+Adding         venv/lib/python3.13/site-packages/PIL/FitsImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/FliImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/FontFile.py
+Adding         venv/lib/python3.13/site-packages/PIL/FpxImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/FtexImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/GbrImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/GdImageFile.py
+Adding         venv/lib/python3.13/site-packages/PIL/GifImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/GimpGradientFile.py
+Adding         venv/lib/python3.13/site-packages/PIL/GimpPaletteFile.py
+Adding         venv/lib/python3.13/site-packages/PIL/GribStubImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/Hdf5StubImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/IcnsImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/IcoImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/Image.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageChops.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageCms.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageColor.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageDraw.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageDraw2.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageEnhance.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageFile.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageFilter.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageFont.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageGrab.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageMath.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageMode.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageMorph.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageOps.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImagePalette.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImagePath.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageQt.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageSequence.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageShow.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageStat.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageTk.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageTransform.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImageWin.py
+Adding         venv/lib/python3.13/site-packages/PIL/ImtImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/IptcImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/Jpeg2KImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/JpegImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/JpegPresets.py
+Adding         venv/lib/python3.13/site-packages/PIL/McIdasImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/MicImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/MpegImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/MpoImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/MspImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/PSDraw.py
+Adding         venv/lib/python3.13/site-packages/PIL/PaletteFile.py
+Adding         venv/lib/python3.13/site-packages/PIL/PalmImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/PcdImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/PcfFontFile.py
+Adding         venv/lib/python3.13/site-packages/PIL/PcxImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/PdfImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/PdfParser.py
+Adding         venv/lib/python3.13/site-packages/PIL/PixarImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/PngImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/PpmImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/PsdImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/QoiImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/SgiImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/SpiderImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/SunImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/TarIO.py
+Adding         venv/lib/python3.13/site-packages/PIL/TgaImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/TiffImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/TiffTags.py
+Adding         venv/lib/python3.13/site-packages/PIL/WalImageFile.py
+Adding         venv/lib/python3.13/site-packages/PIL/WebPImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/WmfImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/XVThumbImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/XbmImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/XpmImagePlugin.py
+Adding         venv/lib/python3.13/site-packages/PIL/__init__.py
+Adding         venv/lib/python3.13/site-packages/PIL/__main__.py
+Adding         venv/lib/python3.13/site-packages/PIL/_avif.pyi
+Adding         venv/lib/python3.13/site-packages/PIL/_binary.py
+Adding         venv/lib/python3.13/site-packages/PIL/_deprecate.py
+Adding         venv/lib/python3.13/site-packages/PIL/_imaging.pyi
+Adding         venv/lib/python3.13/site-packages/PIL/_imagingcms.pyi
+Adding         venv/lib/python3.13/site-packages/PIL/_imagingft.pyi
+Adding         venv/lib/python3.13/site-packages/PIL/_imagingmath.pyi
+Adding         venv/lib/python3.13/site-packages/PIL/_imagingmorph.pyi
+Adding         venv/lib/python3.13/site-packages/PIL/_imagingtk.pyi
+Adding         venv/lib/python3.13/site-packages/PIL/_tkinter_finder.py
+Adding         venv/lib/python3.13/site-packages/PIL/_typing.py
+Adding         venv/lib/python3.13/site-packages/PIL/_util.py
+Adding         venv/lib/python3.13/site-packages/PIL/_version.py
+Adding         venv/lib/python3.13/site-packages/PIL/_webp.pyi
+Adding         venv/lib/python3.13/site-packages/PIL/features.py
+Adding         venv/lib/python3.13/site-packages/PIL/py.typed
+Adding         venv/lib/python3.13/site-packages/PIL/report.py
+Adding         venv/lib/python3.13/site-packages/certifi
+Adding         venv/lib/python3.13/site-packages/certifi/__init__.py
+Adding         venv/lib/python3.13/site-packages/certifi/__main__.py
+Adding         venv/lib/python3.13/site-packages/certifi/cacert.pem
+Adding         venv/lib/python3.13/site-packages/certifi/core.py
+Adding         venv/lib/python3.13/site-packages/certifi/py.typed
+Adding         venv/lib/python3.13/site-packages/fontTools
+Adding         venv/lib/python3.13/site-packages/fontTools/agl.py
+Adding         venv/lib/python3.13/site-packages/fontTools/config
+Adding         venv/lib/python3.13/site-packages/fontTools/config/__init__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/cu2qu
+Adding         venv/lib/python3.13/site-packages/fontTools/cu2qu/__init__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/cu2qu/__main__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/cu2qu/benchmark.py
+Adding         venv/lib/python3.13/site-packages/fontTools/cu2qu/cli.py
+Adding         venv/lib/python3.13/site-packages/fontTools/cu2qu/cu2qu.c
+Adding         venv/lib/python3.13/site-packages/fontTools/cu2qu/cu2qu.py
+Adding         venv/lib/python3.13/site-packages/fontTools/cu2qu/errors.py
+Adding         venv/lib/python3.13/site-packages/fontTools/cu2qu/ufo.py
+Adding         venv/lib/python3.13/site-packages/fontTools/fontBuilder.py
+Adding         venv/lib/python3.13/site-packages/fontTools/merge
+Adding         venv/lib/python3.13/site-packages/fontTools/merge/__init__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/merge/__main__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/merge/base.py
+Adding         venv/lib/python3.13/site-packages/fontTools/merge/cmap.py
+Adding         venv/lib/python3.13/site-packages/fontTools/merge/layout.py
+Adding         venv/lib/python3.13/site-packages/fontTools/merge/options.py
+Adding         venv/lib/python3.13/site-packages/fontTools/merge/tables.py
+Adding         venv/lib/python3.13/site-packages/fontTools/merge/unicode.py
+Adding         venv/lib/python3.13/site-packages/fontTools/merge/util.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/__init__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/arrayTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/bezierTools.c
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/bezierTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/classifyTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/cliTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/configTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/cython.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/dictTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/eexec.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/encodingTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/etree.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/filenames.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/fixedTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/intTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/iterTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/lazyTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/loggingTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/macCreatorType.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/macRes.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/plistlib
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/plistlib/__init__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/plistlib/py.typed
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/psCharStrings.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/psLib.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/psOperators.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/py23.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/roundTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/sstruct.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/symfont.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/testTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/textTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/timeTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/transform.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/treeTools.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/vector.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/visitor.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/xmlReader.py
+Adding         venv/lib/python3.13/site-packages/fontTools/misc/xmlWriter.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/basePen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/cairoPen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/freetypePen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/momentsPen.c
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/pointInsidePen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/qtPen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/reverseContourPen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/roundingPen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/statisticsPen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/svgPathPen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/t2CharStringPen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/teePen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/transformPen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/pens/ttGlyphPen.py
+Adding         venv/lib/python3.13/site-packages/fontTools/qu2cu
+Adding         venv/lib/python3.13/site-packages/fontTools/qu2cu/__init__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/qu2cu/__main__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/qu2cu/benchmark.py
+Adding         venv/lib/python3.13/site-packages/fontTools/qu2cu/cli.py
+Adding         venv/lib/python3.13/site-packages/fontTools/qu2cu/qu2cu.c
+Adding         venv/lib/python3.13/site-packages/fontTools/qu2cu/qu2cu.py
+Adding         venv/lib/python3.13/site-packages/fontTools/subset
+Adding         venv/lib/python3.13/site-packages/fontTools/subset/__init__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/subset/__main__.py
+Adding         venv/lib/python3.13/site-packages/fontTools/subset/cff.py
+Adding         venv/lib/python3.13/site-packages/fontTools/subset/svg.py
+Adding         venv/lib/python3.13/site-packages/fontTools/subset/util.py
+Adding         venv/lib/python3.13/site-packages/fontTools/tfmLib.py
+Adding         venv/lib/python3.13/site-packages/idna
+Adding         venv/lib/python3.13/site-packages/idna/__init__.py
+Adding         venv/lib/python3.13/site-packages/idna/codec.py
+Adding         venv/lib/python3.13/site-packages/idna/compat.py
+Adding         venv/lib/python3.13/site-packages/idna/core.py
+Adding         venv/lib/python3.13/site-packages/idna/idnadata.py
+Adding         venv/lib/python3.13/site-packages/idna/intranges.py
+Adding         venv/lib/python3.13/site-packages/idna/package_data.py
+Adding         venv/lib/python3.13/site-packages/idna/py.typed
+Adding         venv/lib/python3.13/site-packages/idna/uts46data.py
+Adding         venv/lib/python3.13/site-packages/matplotlib
+Adding         venv/lib/python3.13/site-packages/matplotlib/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/__init__.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_afm.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_animation_data.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_api
+Adding         venv/lib/python3.13/site-packages/matplotlib/_api/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_api/__init__.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_api/deprecation.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_api/deprecation.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_blocking_input.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_c_internal_utils.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_cm.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_cm_bivar.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_cm_listed.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_cm_multivar.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_color_data.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_color_data.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_constrained_layout.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_docstring.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_docstring.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_enums.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_enums.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_fontconfig_pattern.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_image.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_internal_utils.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_layoutgrid.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_mathtext.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_mathtext_data.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_path.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_pylab_helpers.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_pylab_helpers.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_qhull.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_text_helpers.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_tight_bbox.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_tight_layout.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_tri.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/_type1font.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/_version.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/animation.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/animation.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/artist.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/artist.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/axes
+Adding         venv/lib/python3.13/site-packages/matplotlib/axes/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/axes/__init__.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/axes/_axes.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/axes/_axes.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/axes/_base.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/axes/_base.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/axes/_secondary_axes.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/axes/_secondary_axes.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/axis.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/axis.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/backend_bases.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backend_bases.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/backend_managers.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backend_managers.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/backend_tools.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backend_tools.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/_backend_agg.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/_backend_gtk.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/_backend_pdf_ps.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/_backend_tk.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/_macosx.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/_tkagg.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_agg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_cairo.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_gtk3.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_gtk3agg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_gtk3cairo.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_gtk4.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_gtk4agg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_gtk4cairo.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_macosx.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_mixed.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_nbagg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_pdf.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_pgf.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_ps.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_qt.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_qt5.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_qt5agg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_qt5cairo.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_qtagg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_qtcairo.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_svg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_template.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_tkagg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_tkcairo.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_webagg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_webagg_core.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_wx.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_wxagg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/backend_wxcairo.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/qt_compat.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/qt_editor
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/qt_editor/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/qt_editor/_formlayout.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/qt_editor/figureoptions.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/registry.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/all_figures.html
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/css
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/css/boilerplate.css
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/css/fbm.css
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/css/mpl.css
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/css/page.css
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/ipython_inline_figure.html
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/js
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/js/mpl.js
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/js/mpl_tornado.js
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/js/nbagg_mpl.js
+Adding         venv/lib/python3.13/site-packages/matplotlib/backends/web_backend/single_figure.html
+Adding         venv/lib/python3.13/site-packages/matplotlib/bezier.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/bezier.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/category.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/cbook.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/cbook.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/cm.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/cm.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/collections.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/collections.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/colorbar.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/colorbar.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/colorizer.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/colorizer.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/colors.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/colors.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/container.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/container.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/contour.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/contour.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/dates.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/dviread.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/dviread.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/figure.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/figure.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/font_manager.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/font_manager.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/ft2font.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/gridspec.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/gridspec.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/hatch.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/hatch.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/image.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/image.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/inset.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/inset.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/layout_engine.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/layout_engine.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/legend.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/legend.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/legend_handler.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/legend_handler.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/lines.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/lines.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/markers.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/markers.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/mathtext.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/mathtext.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/mlab.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/mlab.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/cmex10.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/cmmi10.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/cmr10.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/cmsy10.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/cmtt10.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pagd8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pagdo8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pagk8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pagko8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pbkd8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pbkdi8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pbkl8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pbkli8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pcrb8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pcrbo8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pcrr8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pcrro8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvb8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvb8an.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvbo8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvbo8an.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvl8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvlo8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvr8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvr8an.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvro8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/phvro8an.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pncb8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pncbi8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pncr8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pncri8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pplb8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pplbi8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pplr8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pplri8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/psyr.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/ptmb8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/ptmbi8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/ptmr8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/ptmri8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/putb8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/putbi8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/putr8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/putri8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pzcmi8a.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/afm/pzdr.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Courier-Bold.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Courier-BoldOblique.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Courier-Oblique.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Courier.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Helvetica-Bold.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Helvetica-BoldOblique.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Helvetica-Oblique.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Helvetica.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Symbol.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Times-Bold.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Times-BoldItalic.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Times-Italic.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/Times-Roman.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/ZapfDingbats.afm
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/pdfcorefonts/readme.txt
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-BoldOblique.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Oblique.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansDisplay.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Bold.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-BoldOblique.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Oblique.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-BoldItalic.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Italic.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerifDisplay.ttf
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/LICENSE_DEJAVU
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/LICENSE_STIX
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBol.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBolIta.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralItalic.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUni.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBol.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBolIta.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniIta.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFiveSymReg.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymBol.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymReg.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymBol.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymReg.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymBol.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymReg.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymBol.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymReg.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/cmb10.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/cmex10.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/cmmi10.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/cmss10.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/cmsy10.ttf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/fonts/ttf/cmtt10.ttf
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/images
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/back-symbolic.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/back.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/back.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/back.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/back_large.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/filesave-symbolic.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/filesave.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/filesave.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/filesave.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/filesave_large.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/forward-symbolic.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/forward.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/forward.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/forward.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/forward_large.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/hand.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/hand.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/hand.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/help-symbolic.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/help.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/help.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/help.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/help_large.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/home-symbolic.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/home.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/home.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/home.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/home_large.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/matplotlib.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/matplotlib.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/matplotlib.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/matplotlib_large.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/move-symbolic.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/move.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/move.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/move.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/move_large.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/qt4_editor_options.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/qt4_editor_options.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/qt4_editor_options.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/qt4_editor_options_large.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/subplots-symbolic.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/subplots.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/subplots.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/subplots.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/subplots_large.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/zoom_to_rect-symbolic.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/zoom_to_rect.pdf
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/zoom_to_rect.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/zoom_to_rect.svg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/images/zoom_to_rect_large.png
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/kpsewhich.lua
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/matplotlibrc
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/plot_directive
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/plot_directive/plot_directive.css
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/Minduka_Present_Blue_Pack.png
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/README.txt
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/Stocks.csv
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/axes_grid
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/axes_grid/bivariate_normal.npy
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/data_x_x2_x3.csv
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/eeg.dat
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/embedding_in_wx3.xrc
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/goog.npz
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/grace_hopper.jpg
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/jacksboro_fault_dem.npz
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/logo2.png
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/membrane.dat
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/msft.csv
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/s1045.ima.gz
+Adding  (bin)  venv/lib/python3.13/site-packages/matplotlib/mpl-data/sample_data/topobathy.npz
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/Solarize_Light2.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/_classic_test_patch.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/_mpl-gallery-nogrid.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/_mpl-gallery.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/bmh.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/dark_background.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/fast.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/fivethirtyeight.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/ggplot.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/grayscale.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/petroff10.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-bright.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-colorblind.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-dark-palette.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-dark.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-darkgrid.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-deep.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-muted.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-notebook.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-paper.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-pastel.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-poster.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-talk.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-ticks.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-white.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8-whitegrid.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/seaborn-v0_8.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/mpl-data/stylelib/tableau-colorblind10.mplstyle
+Adding         venv/lib/python3.13/site-packages/matplotlib/offsetbox.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/offsetbox.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/patches.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/patches.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/path.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/path.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/patheffects.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/patheffects.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/projections
+Adding         venv/lib/python3.13/site-packages/matplotlib/projections/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/projections/__init__.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/projections/geo.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/projections/geo.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/projections/polar.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/projections/polar.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/py.typed
+Adding         venv/lib/python3.13/site-packages/matplotlib/pylab.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/pyplot.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/quiver.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/quiver.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/rcsetup.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/rcsetup.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/sankey.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/sankey.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/scale.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/scale.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/sphinxext
+Adding         venv/lib/python3.13/site-packages/matplotlib/sphinxext/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/sphinxext/figmpl_directive.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/sphinxext/mathmpl.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/sphinxext/plot_directive.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/sphinxext/roles.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/spines.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/spines.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/stackplot.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/stackplot.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/streamplot.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/streamplot.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/style
+Adding         venv/lib/python3.13/site-packages/matplotlib/style/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/style/core.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/style/core.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/table.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/table.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/__init__.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/_markers.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/compare.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/compare.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/conftest.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/conftest.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/decorators.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/decorators.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/exceptions.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/jpl_units
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/jpl_units/Duration.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/jpl_units/Epoch.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/jpl_units/EpochConverter.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/jpl_units/StrConverter.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/jpl_units/UnitDbl.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/jpl_units/UnitDblConverter.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/jpl_units/UnitDblFormatter.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/jpl_units/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/widgets.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/testing/widgets.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/conftest.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_afm.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_agg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_agg_filter.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_animation.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_api.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_arrow_patches.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_artist.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_axes.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_axis.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_bases.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_cairo.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_gtk3.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_inline.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_macosx.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_nbagg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_pdf.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_pgf.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_ps.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_qt.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_registry.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_svg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_template.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_tk.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_tools.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backend_webagg.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_backends_interactive.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_basic.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_bbox_tight.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_bezier.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_category.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_cbook.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_collections.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_colorbar.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_colors.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_compare_images.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_constrainedlayout.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_container.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_contour.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_cycles.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_dates.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_datetime.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_determinism.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_doc.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_dviread.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_figure.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_font_manager.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_fontconfig_pattern.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_ft2font.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_getattr.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_gridspec.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_image.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_legend.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_lines.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_marker.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_mathtext.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_matplotlib.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_mlab.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_multivariate_colormaps.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_offsetbox.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_patches.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_path.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_patheffects.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_pickle.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_png.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_polar.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_preprocess_data.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_pyplot.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_quiver.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_rcparams.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_sankey.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_scale.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_simplification.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_skew.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_sphinxext.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_spines.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_streamplot.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_style.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_subplots.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_table.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_testing.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_texmanager.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_text.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_textpath.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_ticker.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_tightlayout.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_transforms.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_triangulation.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_type1font.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_units.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_usetex.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tests/test_widgets.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/texmanager.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/texmanager.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/text.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/text.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/textpath.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/textpath.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/ticker.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/ticker.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/transforms.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/transforms.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/__init__.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_triangulation.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_triangulation.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_tricontour.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_tricontour.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_trifinder.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_trifinder.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_triinterpolate.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_triinterpolate.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_tripcolor.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_tripcolor.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_triplot.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_triplot.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_trirefine.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_trirefine.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_tritools.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/tri/_tritools.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib/typing.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/units.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/widgets.py
+Adding         venv/lib/python3.13/site-packages/matplotlib/widgets.pyi
+Adding         venv/lib/python3.13/site-packages/matplotlib-3.10.3.dist-info
+Adding         venv/lib/python3.13/site-packages/matplotlib-3.10.3.dist-info/INSTALLER
+Adding         venv/lib/python3.13/site-packages/matplotlib-3.10.3.dist-info/LICENSE
+Adding         venv/lib/python3.13/site-packages/matplotlib-3.10.3.dist-info/METADATA
+Adding         venv/lib/python3.13/site-packages/matplotlib-3.10.3.dist-info/RECORD
+Adding         venv/lib/python3.13/site-packages/matplotlib-3.10.3.dist-info/REQUESTED
+Adding         venv/lib/python3.13/site-packages/matplotlib-3.10.3.dist-info/WHEEL
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/__init__.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/anchored_artists.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/axes_divider.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/axes_grid.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/axes_rgb.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/axes_size.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/inset_locator.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/mpl_axes.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/parasite_axes.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/tests
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/tests/__init__.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/tests/conftest.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axes_grid1/tests/test_axes_grid1.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/__init__.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/angle_helper.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/axes_divider.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/axis_artist.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/axisline_style.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/axislines.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/floating_axes.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/grid_finder.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/grid_helper_curvelinear.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/parasite_axes.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/tests
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/tests/__init__.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/tests/conftest.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/tests/test_angle_helper.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/tests/test_axis_artist.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/tests/test_axislines.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/tests/test_floating_axes.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/tests/test_grid_finder.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/axisartist/tests/test_grid_helper_curvelinear.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/__init__.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/art3d.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/axes3d.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/axis3d.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/proj3d.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/tests
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/tests/__init__.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/tests/conftest.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/tests/test_art3d.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/tests/test_axes3d.py
+Adding         venv/lib/python3.13/site-packages/mpl_toolkits/mplot3d/tests/test_legend3d.py
+Adding         venv/lib/python3.13/site-packages/packaging
+Adding         venv/lib/python3.13/site-packages/packaging/__init__.py
+Adding         venv/lib/python3.13/site-packages/packaging/_elffile.py
+Adding         venv/lib/python3.13/site-packages/packaging/_manylinux.py
+Adding         venv/lib/python3.13/site-packages/packaging/_musllinux.py
+Adding         venv/lib/python3.13/site-packages/packaging/_parser.py
+Adding         venv/lib/python3.13/site-packages/packaging/_structures.py
+Adding         venv/lib/python3.13/site-packages/packaging/_tokenizer.py
+Adding         venv/lib/python3.13/site-packages/packaging/licenses
+Adding         venv/lib/python3.13/site-packages/packaging/licenses/__init__.py
+Adding         venv/lib/python3.13/site-packages/packaging/licenses/_spdx.py
+Adding         venv/lib/python3.13/site-packages/packaging/markers.py
+Adding         venv/lib/python3.13/site-packages/packaging/metadata.py
+Adding         venv/lib/python3.13/site-packages/packaging/py.typed
+Adding         venv/lib/python3.13/site-packages/packaging/requirements.py
+Adding         venv/lib/python3.13/site-packages/packaging/specifiers.py
+Adding         venv/lib/python3.13/site-packages/packaging/tags.py
+Adding         venv/lib/python3.13/site-packages/packaging/utils.py
+Adding         venv/lib/python3.13/site-packages/packaging/version.py
+Adding         venv/lib/python3.13/site-packages/pillow-11.2.1.dist-info
+Adding         venv/lib/python3.13/site-packages/pillow-11.2.1.dist-info/INSTALLER
+Adding         venv/lib/python3.13/site-packages/pillow-11.2.1.dist-info/METADATA
+Adding         venv/lib/python3.13/site-packages/pillow-11.2.1.dist-info/RECORD
+Adding         venv/lib/python3.13/site-packages/pillow-11.2.1.dist-info/WHEEL
+Adding         venv/lib/python3.13/site-packages/pillow-11.2.1.dist-info/licenses
+Adding         venv/lib/python3.13/site-packages/pillow-11.2.1.dist-info/licenses/LICENSE
+Adding         venv/lib/python3.13/site-packages/pillow-11.2.1.dist-info/top_level.txt
+Adding  (bin)  venv/lib/python3.13/site-packages/pillow-11.2.1.dist-info/zip-safe
+Adding         venv/lib/python3.13/site-packages/pyparsing
+Adding         venv/lib/python3.13/site-packages/pyparsing/__init__.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/actions.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/common.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/core.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/diagram
+Adding         venv/lib/python3.13/site-packages/pyparsing/diagram/__init__.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/exceptions.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/helpers.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/py.typed
+Adding         venv/lib/python3.13/site-packages/pyparsing/results.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/testing.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/tools
+Adding         venv/lib/python3.13/site-packages/pyparsing/tools/__init__.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/tools/cvt_pyparsing_pep8_names.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/unicode.py
+Adding         venv/lib/python3.13/site-packages/pyparsing/util.py
+Adding         venv/lib/python3.13/site-packages/pyparsing-3.2.3.dist-info
+Adding         venv/lib/python3.13/site-packages/pyparsing-3.2.3.dist-info/INSTALLER
+Adding         venv/lib/python3.13/site-packages/pyparsing-3.2.3.dist-info/LICENSE
+Adding         venv/lib/python3.13/site-packages/pyparsing-3.2.3.dist-info/METADATA
+Adding         venv/lib/python3.13/site-packages/pyparsing-3.2.3.dist-info/RECORD
+Adding         venv/lib/python3.13/site-packages/pyparsing-3.2.3.dist-info/WHEEL
+Adding         venv/lib/python3.13/site-packages/python_dateutil-2.9.0.post0.dist-info
+Adding         venv/lib/python3.13/site-packages/python_dateutil-2.9.0.post0.dist-info/INSTALLER
+Adding         venv/lib/python3.13/site-packages/python_dateutil-2.9.0.post0.dist-info/LICENSE
+Adding         venv/lib/python3.13/site-packages/python_dateutil-2.9.0.post0.dist-info/METADATA
+Adding         venv/lib/python3.13/site-packages/python_dateutil-2.9.0.post0.dist-info/RECORD
+Adding         venv/lib/python3.13/site-packages/python_dateutil-2.9.0.post0.dist-info/WHEEL
+Adding         venv/lib/python3.13/site-packages/python_dateutil-2.9.0.post0.dist-info/top_level.txt
+Adding  (bin)  venv/lib/python3.13/site-packages/python_dateutil-2.9.0.post0.dist-info/zip-safe
+Adding         venv/lib/python3.13/site-packages/requests
+Adding         venv/lib/python3.13/site-packages/requests/__init__.py
+Adding         venv/lib/python3.13/site-packages/requests/__version__.py
+Adding         venv/lib/python3.13/site-packages/requests/_internal_utils.py
+Adding         venv/lib/python3.13/site-packages/requests/adapters.py
+Adding         venv/lib/python3.13/site-packages/requests/api.py
+Adding         venv/lib/python3.13/site-packages/requests/auth.py
+Adding         venv/lib/python3.13/site-packages/requests/certs.py
+Adding         venv/lib/python3.13/site-packages/requests/compat.py
+Adding         venv/lib/python3.13/site-packages/requests/cookies.py
+Adding         venv/lib/python3.13/site-packages/requests/exceptions.py
+Adding         venv/lib/python3.13/site-packages/requests/help.py
+Adding         venv/lib/python3.13/site-packages/requests/hooks.py
+Adding         venv/lib/python3.13/site-packages/requests/models.py
+Adding         venv/lib/python3.13/site-packages/requests/packages.py
+Adding         venv/lib/python3.13/site-packages/requests/sessions.py
+Adding         venv/lib/python3.13/site-packages/requests/status_codes.py
+Adding         venv/lib/python3.13/site-packages/requests/structures.py
+Adding         venv/lib/python3.13/site-packages/requests/utils.py
+Adding         venv/lib/python3.13/site-packages/seaborn-0.13.2.dist-info
+Adding         venv/lib/python3.13/site-packages/seaborn-0.13.2.dist-info/INSTALLER
+Adding         venv/lib/python3.13/site-packages/seaborn-0.13.2.dist-info/LICENSE.md
+Adding         venv/lib/python3.13/site-packages/seaborn-0.13.2.dist-info/METADATA
+Adding         venv/lib/python3.13/site-packages/seaborn-0.13.2.dist-info/RECORD
+Adding         venv/lib/python3.13/site-packages/seaborn-0.13.2.dist-info/REQUESTED
+Adding         venv/lib/python3.13/site-packages/seaborn-0.13.2.dist-info/WHEEL
+Adding         venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info
+Adding         venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info/INSTALLER
+Adding         venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info/METADATA
+Adding         venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info/RECORD
+Adding         venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info/WHEEL
+Adding         venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info/entry_points.txt
+Adding         venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info/licenses
+Adding         venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info/licenses/LICENSE
+Adding         venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info/top_level.txt
+Adding         venv/lib/python3.13/site-packages/six-1.17.0.dist-info
+Adding         venv/lib/python3.13/site-packages/six-1.17.0.dist-info/INSTALLER
+Adding         venv/lib/python3.13/site-packages/six-1.17.0.dist-info/LICENSE
+Adding         venv/lib/python3.13/site-packages/six-1.17.0.dist-info/METADATA
+Adding         venv/lib/python3.13/site-packages/six-1.17.0.dist-info/RECORD
+Adding         venv/lib/python3.13/site-packages/six-1.17.0.dist-info/WHEEL
+Adding         venv/lib/python3.13/site-packages/six-1.17.0.dist-info/top_level.txt
+Adding         venv/lib/python3.13/site-packages/urllib3
+Adding         venv/lib/python3.13/site-packages/urllib3/__init__.py
+Adding         venv/lib/python3.13/site-packages/urllib3/_base_connection.py
+Adding         venv/lib/python3.13/site-packages/urllib3/_collections.py
+Adding         venv/lib/python3.13/site-packages/urllib3/_request_methods.py
+Adding         venv/lib/python3.13/site-packages/urllib3/_version.py
+Adding         venv/lib/python3.13/site-packages/urllib3/connection.py
+Adding         venv/lib/python3.13/site-packages/urllib3/connectionpool.py
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/__init__.py
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/emscripten
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/emscripten/__init__.py
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/emscripten/connection.py
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/emscripten/emscripten_fetch_worker.js
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/emscripten/fetch.py
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/emscripten/request.py
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/emscripten/response.py
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/pyopenssl.py
+Adding         venv/lib/python3.13/site-packages/urllib3/contrib/socks.py
+Adding         venv/lib/python3.13/site-packages/urllib3/exceptions.py
+Adding         venv/lib/python3.13/site-packages/urllib3/fields.py
+Adding         venv/lib/python3.13/site-packages/urllib3/filepost.py
+Adding         venv/lib/python3.13/site-packages/urllib3/http2
+Adding         venv/lib/python3.13/site-packages/urllib3/http2/__init__.py
+Adding         venv/lib/python3.13/site-packages/urllib3/http2/connection.py
+Adding         venv/lib/python3.13/site-packages/urllib3/http2/probe.py
+Adding         venv/lib/python3.13/site-packages/urllib3/poolmanager.py
+Adding         venv/lib/python3.13/site-packages/urllib3/py.typed
+Adding         venv/lib/python3.13/site-packages/urllib3/response.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util
+Adding         venv/lib/python3.13/site-packages/urllib3/util/__init__.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/connection.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/proxy.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/request.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/response.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/retry.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/ssl_.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/ssl_match_hostname.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/ssltransport.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/timeout.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/url.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/util.py
+Adding         venv/lib/python3.13/site-packages/urllib3/util/wait.py
+Adding         venv/lib/python3.13/site-packages/urllib3-2.4.0.dist-info
+Adding         venv/lib/python3.13/site-packages/urllib3-2.4.0.dist-info/INSTALLER
+Adding         venv/lib/python3.13/site-packages/urllib3-2.4.0.dist-info/METADATA
+Adding         venv/lib/python3.13/site-packages/urllib3-2.4.0.dist-info/RECORD
+Adding         venv/lib/python3.13/site-packages/urllib3-2.4.0.dist-info/WHEEL
+Adding         venv/lib/python3.13/site-packages/urllib3-2.4.0.dist-info/licenses
+Adding         venv/lib/python3.13/site-packages/urllib3-2.4.0.dist-info/licenses/LICENSE.txt
+Transmitting file data .................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................done
+Committing transaction...
+Committed revision 13.
+[krzysztof@archlinux list_five]$ # =====KOMPILACJA=======
+[krzysztof@archlinux list_five]$ make
+g++ -Wall -Wextra -std=c++17 algo_kruskal.cpp -o algo_kruskal
+g++ -Wall -Wextra -std=c++17 algo_prima.cpp -o algo_prima
+g++ -Wall -Wextra -std=c++17 algo_propagation.cpp -o algo_propagation
+g++ -Wall -Wextra -std=c++17 datastruct_binominal_heap.cpp -o datastruct_binominal_heap
+g++ -Wall -Wextra -std=c++17 gen_complete_tree.cpp -o gen_complete_tree
+[krzysztof@archlinux list_five]$ # ======= ZADANIE 1 =========
+[krzysztof@archlinux list_five]$ pyt
+pytest                                        python3.13
+python                                        python3.13-config
+python3                                       python3-config
+python3.10                                    python-argcomplete-check-easy-install-script
+python3.10-config                             python-config
+[krzysztof@archlinux list_five]$ pyt
+pytest                                        python3.13
+python                                        python3.13-config
+python3                                       python3-config
+python3.10                                    python-argcomplete-check-easy-install-script
+python3.10-config                             python-config
+[krzysztof@archlinux list_five]$ python3 test_MST.py 
+Traceback (most recent call last):
+  File "/home/krzysztof/Desktop/university/mk1/list_five/test_MST.py", line 3, in <module>
+    import matplotlib.pyplot as plt
+ModuleNotFoundError: No module named 'matplotlib'
+[krzysztof@archlinux list_five]$ source venv/bin/activate
+(venv) [krzysztof@archlinux list_five]$ python3 test_MST.py                                         
+Starting experiments...
+Testing for N=100, (repetitions: 5)...
+Testing for N=200, (repetitions: 5)...
+Testing for N=300, (repetitions: 5)...
+Testing for N=400, (repetitions: 5)...
+Testing for N=500, (repetitions: 5)...
+Testing for N=600, (repetitions: 5)...
+Testing for N=700, (repetitions: 5)...
+Testing for N=800, (repetitions: 5)...
+Testing for N=900, (repetitions: 5)...
+Testing for N=1000, (repetitions: 5)...
+
+Experiment complete. Plots displayed.
+(venv) [krzysztof@archlinux list_five]$ # ======= ZADANIE 2 =========
+(venv) [krzysztof@archlinux list_five]$ python3 test_propagation.py 
+All required executables found.
+
+--- Starting Propagation Analysis ---
+
+Processing for n = 10...
+  Iteration 30/30 (root=9)...
+  Done.
+  Results for n=10: Min=5, Avg=5.00, Max=5
+
+Processing for n = 20...
+  Iteration 30/30 (root=6)....
+  Done.
+  Results for n=20: Min=7, Avg=7.00, Max=7
+
+Processing for n = 30...
+  Iteration 30/30 (root=28)...
+  Done.
+  Results for n=30: Min=11, Avg=11.00, Max=11
+
+Processing for n = 40...
+  Iteration 30/30 (root=37)...
+  Done.
+  Results for n=40: Min=13, Avg=13.00, Max=13
+
+Processing for n = 50...
+  Iteration 30/30 (root=42)...
+  Done.
+  Results for n=50: Min=17, Avg=17.00, Max=17
+
+Processing for n = 60...
+  Iteration 30/30 (root=40)...
+  Done.
+  Results for n=60: Min=14, Avg=14.00, Max=14
+
+Processing for n = 70...
+  Iteration 30/30 (root=62)...
+  Done.
+  Results for n=70: Min=17, Avg=17.00, Max=17
+
+Processing for n = 80...
+  Iteration 30/30 (root=0)....
+  Done.
+  Results for n=80: Min=14, Avg=14.00, Max=14
+
+Processing for n = 90...
+  Iteration 30/30 (root=56)...
+  Done.
+  Results for n=90: Min=26, Avg=26.00, Max=26
+
+Processing for n = 100...
+  Iteration 30/30 (root=17)...
+  Done.
+  Results for n=100: Min=20, Avg=20.00, Max=20
+
+Processing for n = 110...
+  Iteration 30/30 (root=107)...
+  Done.
+  Results for n=110: Min=24, Avg=24.00, Max=24
+
+Processing for n = 120...
+  Iteration 30/30 (root=86)....
+  Done.
+  Results for n=120: Min=17, Avg=17.00, Max=17
+
+Processing for n = 130...
+  Iteration 30/30 (root=120)...
+  Done.
+  Results for n=130: Min=20, Avg=20.00, Max=20
+
+Processing for n = 140...
+  Iteration 30/30 (root=34)....
+  Done.
+  Results for n=140: Min=25, Avg=25.00, Max=25
+
+Processing for n = 150...
+  Iteration 30/30 (root=139)...
+  Done.
+  Results for n=150: Min=16, Avg=16.00, Max=16
+
+Processing for n = 160...
+  Iteration 30/30 (root=142)...
+  Done.
+  Results for n=160: Min=20, Avg=20.00, Max=20
+
+Processing for n = 170...
+  Iteration 30/30 (root=83)....
+  Done.
+  Results for n=170: Min=30, Avg=30.00, Max=30
+
+Processing for n = 180...
+  Iteration 30/30 (root=41)....
+  Done.
+  Results for n=180: Min=22, Avg=22.00, Max=22
+
+Processing for n = 190...
+  Iteration 30/30 (root=140)...
+  Done.
+  Results for n=190: Min=18, Avg=18.00, Max=18
+
+Processing for n = 200...
+  Iteration 30/30 (root=5).....
+  Done.
+  Results for n=200: Min=22, Avg=22.00, Max=22
+
+Processing for n = 210...
+  Iteration 30/30 (root=41)....
+  Done.
+  Results for n=210: Min=34, Avg=34.00, Max=34
+
+Processing for n = 220...
+  Iteration 30/30 (root=106)...
+  Done.
+  Results for n=220: Min=32, Avg=32.00, Max=32
+
+Processing for n = 230...
+  Iteration 30/30 (root=84)....
+  Done.
+  Results for n=230: Min=28, Avg=28.00, Max=28
+
+Processing for n = 240...
+  Iteration 30/30 (root=229)...
+  Done.
+  Results for n=240: Min=39, Avg=39.00, Max=39
+
+Processing for n = 250...
+  Iteration 30/30 (root=115)...
+  Done.
+  Results for n=250: Min=36, Avg=36.00, Max=36
+
+Processing for n = 260...
+  Iteration 30/30 (root=135)...
+  Done.
+  Results for n=260: Min=26, Avg=26.00, Max=26
+
+Processing for n = 270...
+  Iteration 30/30 (root=125)...
+  Done.
+  Results for n=270: Min=36, Avg=36.00, Max=36
+
+Processing for n = 280...
+  Iteration 30/30 (root=22)....
+  Done.
+  Results for n=280: Min=27, Avg=27.00, Max=27
+
+Processing for n = 290...
+  Iteration 30/30 (root=64)....
+  Done.
+  Results for n=290: Min=39, Avg=39.00, Max=39
+
+Processing for n = 300...
+  Iteration 30/30 (root=152)...
+  Done.
+  Results for n=300: Min=33, Avg=33.00, Max=33
+
+Processing for n = 310...
+  Iteration 30/30 (root=174)...
+  Done.
+  Results for n=310: Min=44, Avg=44.00, Max=44
+
+Processing for n = 320...
+  Iteration 30/30 (root=246)...
+  Done.
+  Results for n=320: Min=31, Avg=31.00, Max=31
+
+Processing for n = 330...
+  Iteration 30/30 (root=273)...
+  Done.
+  Results for n=330: Min=30, Avg=30.00, Max=30
+
+Processing for n = 340...
+  Iteration 30/30 (root=163)...
+  Done.
+  Results for n=340: Min=20, Avg=20.00, Max=20
+
+Processing for n = 350...
+  Iteration 30/30 (root=145)...
+  Done.
+  Results for n=350: Min=32, Avg=32.00, Max=32
+
+Processing for n = 360...
+  Iteration 30/30 (root=149)...
+  Done.
+  Results for n=360: Min=39, Avg=39.00, Max=39
+
+Processing for n = 370...
+  Iteration 30/30 (root=307)...
+  Done.
+  Results for n=370: Min=43, Avg=43.00, Max=43
+
+Processing for n = 380...
+  Iteration 30/30 (root=159)...
+  Done.
+  Results for n=380: Min=32, Avg=32.00, Max=32
+
+Processing for n = 390...
+  Iteration 30/30 (root=236)...
+  Done.
+  Results for n=390: Min=37, Avg=37.00, Max=37
+
+Processing for n = 400...
+  Iteration 30/30 (root=229)...
+  Done.
+  Results for n=400: Min=31, Avg=31.00, Max=31
+
+Processing for n = 410...
+  Iteration 30/30 (root=381)...
+  Done.
+  Results for n=410: Min=38, Avg=38.00, Max=38
+
+Processing for n = 420...
+  Iteration 30/30 (root=173)...
+  Done.
+  Results for n=420: Min=45, Avg=45.00, Max=45
+
+Processing for n = 430...
+  Iteration 30/30 (root=350)...
+  Done.
+  Results for n=430: Min=28, Avg=28.00, Max=28
+
+Processing for n = 440...
+  Iteration 30/30 (root=314)...
+  Done.
+  Results for n=440: Min=39, Avg=39.00, Max=39
+
+Processing for n = 450...
+  Iteration 30/30 (root=322)...
+  Done.
+  Results for n=450: Min=34, Avg=34.00, Max=34
+
+Processing for n = 460...
+  Iteration 30/30 (root=104)...
+  Done.
+  Results for n=460: Min=51, Avg=51.00, Max=51
+
+Processing for n = 470...
+  Iteration 30/30 (root=22)....
+  Done.
+  Results for n=470: Min=30, Avg=30.00, Max=30
+
+Processing for n = 480...
+  Iteration 30/30 (root=310)...
+  Done.
+  Results for n=480: Min=38, Avg=38.00, Max=38
+
+Processing for n = 490...
+  Iteration 30/30 (root=454)...
+  Done.
+  Results for n=490: Min=26, Avg=26.00, Max=26
+
+Processing for n = 500...
+  Iteration 30/30 (root=362)...
+  Done.
+  Results for n=500: Min=32, Avg=32.00, Max=32
+
+Processing for n = 510...
+  Iteration 30/30 (root=509)...
+  Done.
+  Results for n=510: Min=37, Avg=37.00, Max=37
+
+Processing for n = 520...
+  Iteration 30/30 (root=62)....
+  Done.
+  Results for n=520: Min=46, Avg=46.00, Max=46
+
+Processing for n = 530...
+  Iteration 30/30 (root=199)...
+  Done.
+  Results for n=530: Min=57, Avg=57.00, Max=57
+
+Processing for n = 540...
+  Iteration 30/30 (root=31)....
+  Done.
+  Results for n=540: Min=42, Avg=42.00, Max=42
+
+Processing for n = 550...
+  Iteration 30/30 (root=234)...
+  Done.
+  Results for n=550: Min=38, Avg=38.00, Max=38
+
+Processing for n = 560...
+  Iteration 30/30 (root=72)....
+  Done.
+  Results for n=560: Min=48, Avg=48.00, Max=48
+
+Processing for n = 570...
+  Iteration 30/30 (root=235)...
+  Done.
+  Results for n=570: Min=46, Avg=46.00, Max=46
+
+Processing for n = 580...
+  Iteration 30/30 (root=119)...
+  Done.
+  Results for n=580: Min=36, Avg=36.00, Max=36
+
+Processing for n = 590...
+  Iteration 30/30 (root=126)...
+  Done.
+  Results for n=590: Min=41, Avg=41.00, Max=41
+
+Processing for n = 600...
+  Iteration 30/30 (root=315)...
+  Done.
+  Results for n=600: Min=40, Avg=40.00, Max=40
+
+Processing for n = 610...
+  Iteration 30/30 (root=448)...
+  Done.
+  Results for n=610: Min=44, Avg=44.00, Max=44
+
+Processing for n = 620...
+  Iteration 30/30 (root=146)...
+  Done.
+  Results for n=620: Min=37, Avg=37.00, Max=37
+
+Processing for n = 630...
+  Iteration 30/30 (root=616)...
+  Done.
+  Results for n=630: Min=35, Avg=35.00, Max=35
+
+Processing for n = 640...
+  Iteration 30/30 (root=194)...
+  Done.
+  Results for n=640: Min=43, Avg=43.00, Max=43
+
+Processing for n = 650...
+  Iteration 30/30 (root=345)...
+  Done.
+  Results for n=650: Min=36, Avg=36.00, Max=36
+
+Processing for n = 660...
+  Iteration 30/30 (root=380)...
+  Done.
+  Results for n=660: Min=51, Avg=51.00, Max=51
+
+Processing for n = 670...
+  Iteration 30/30 (root=51)....
+  Done.
+  Results for n=670: Min=37, Avg=37.00, Max=37
+
+Processing for n = 680...
+  Iteration 30/30 (root=31)....
+  Done.
+  Results for n=680: Min=43, Avg=43.00, Max=43
+
+Processing for n = 690...
+  Iteration 30/30 (root=671)...
+  Done.
+  Results for n=690: Min=61, Avg=61.00, Max=61
+
+Processing for n = 700...
+  Iteration 30/30 (root=569)...
+  Done.
+  Results for n=700: Min=44, Avg=44.00, Max=44
+
+Processing for n = 710...
+  Iteration 30/30 (root=485)...
+  Done.
+  Results for n=710: Min=37, Avg=37.00, Max=37
+
+Processing for n = 720...
+  Iteration 30/30 (root=403)...
+  Done.
+  Results for n=720: Min=34, Avg=34.00, Max=34
+
+Processing for n = 730...
+  Iteration 30/30 (root=146)...
+  Done.
+  Results for n=730: Min=40, Avg=40.00, Max=40
+
+Processing for n = 740...
+  Iteration 30/30 (root=400)...
+  Done.
+  Results for n=740: Min=38, Avg=38.00, Max=38
+
+Processing for n = 750...
+  Iteration 30/30 (root=496)...
+  Done.
+  Results for n=750: Min=39, Avg=39.00, Max=39
+
+Processing for n = 760...
+  Iteration 30/30 (root=21)....
+  Done.
+  Results for n=760: Min=48, Avg=48.00, Max=48
+
+Processing for n = 770...
+  Iteration 30/30 (root=671)...
+  Done.
+  Results for n=770: Min=43, Avg=43.00, Max=43
+
+Processing for n = 780...
+  Iteration 30/30 (root=323)...
+  Done.
+  Results for n=780: Min=64, Avg=64.00, Max=64
+
+Processing for n = 790...
+  Iteration 30/30 (root=464)...
+  Done.
+  Results for n=790: Min=49, Avg=49.00, Max=49
+
+Processing for n = 800...
+  Iteration 30/30 (root=290)...
+  Done.
+  Results for n=800: Min=46, Avg=46.00, Max=46
+
+Processing for n = 810...
+  Iteration 30/30 (root=790)...
+  Done.
+  Results for n=810: Min=42, Avg=42.00, Max=42
+
+Processing for n = 820...
+  Iteration 30/30 (root=30)....
+  Done.
+  Results for n=820: Min=41, Avg=41.00, Max=41
+
+Processing for n = 830...
+  Iteration 30/30 (root=449)...
+  Done.
+  Results for n=830: Min=45, Avg=45.00, Max=45
+
+Processing for n = 840...
+  Iteration 30/30 (root=15)....
+  Done.
+  Results for n=840: Min=38, Avg=38.00, Max=38
+
+Processing for n = 850...
+  Iteration 30/30 (root=412)...
+  Done.
+  Results for n=850: Min=41, Avg=41.00, Max=41
+
+Processing for n = 860...
+  Iteration 30/30 (root=733)...
+  Done.
+  Results for n=860: Min=58, Avg=58.00, Max=58
+
+Processing for n = 870...
+  Iteration 30/30 (root=277)...
+  Done.
+  Results for n=870: Min=58, Avg=58.00, Max=58
+
+Processing for n = 880...
+  Iteration 30/30 (root=48)....
+  Done.
+  Results for n=880: Min=50, Avg=50.00, Max=50
+
+Processing for n = 890...
+  Iteration 30/30 (root=673)...
+  Done.
+  Results for n=890: Min=51, Avg=51.00, Max=51
+
+Processing for n = 900...
+  Iteration 30/30 (root=686)...
+  Done.
+  Results for n=900: Min=48, Avg=48.00, Max=48
+
+Processing for n = 910...
+  Iteration 30/30 (root=202)...
+  Done.
+  Results for n=910: Min=33, Avg=33.00, Max=33
+
+Processing for n = 920...
+  Iteration 30/30 (root=165)...
+  Done.
+  Results for n=920: Min=51, Avg=51.00, Max=51
+
+Processing for n = 930...
+  Iteration 30/30 (root=289)...
+  Done.
+  Results for n=930: Min=54, Avg=54.00, Max=54
+
+Processing for n = 940...
+  Iteration 30/30 (root=772)...
+  Done.
+  Results for n=940: Min=47, Avg=47.00, Max=47
+
+Processing for n = 950...
+  Iteration 30/30 (root=57)....
+  Done.
+  Results for n=950: Min=39, Avg=39.00, Max=39
+
+Processing for n = 960...
+  Iteration 30/30 (root=700)...
+  Done.
+  Results for n=960: Min=49, Avg=49.00, Max=49
+
+Processing for n = 970...
+  Iteration 30/30 (root=309)...
+  Done.
+  Results for n=970: Min=43, Avg=43.00, Max=43
+
+Processing for n = 980...
+  Iteration 30/30 (root=410)...
+  Done.
+  Results for n=980: Min=36, Avg=36.00, Max=36
+
+Processing for n = 990...
+  Iteration 30/30 (root=32)....
+  Done.
+  Results for n=990: Min=45, Avg=45.00, Max=45
+
+Processing for n = 1000...
+  Iteration 30/30 (root=548)...
+  Done.
+  Results for n=1000: Min=58, Avg=58.00, Max=58
+
+--- Analysis Complete ---
+/home/krzysztof/Desktop/university/mk1/list_five/test_propagation.py:136: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string "^-" (-> linestyle='-'). The keyword argument will take precedence.
+  ax.plot(n_values, min_rounds, '^-', label='Minimum Rounds', color='forestgreen', linestyle='--', markersize=6)
+/home/krzysztof/Desktop/university/mk1/list_five/test_propagation.py:137: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string "s-" (-> linestyle='-'). The keyword argument will take precedence.
+  ax.plot(n_values, max_rounds, 's-', label='Maximum Rounds', color='indianred', linestyle='--', markersize=6)
+
+Plot saved as 'propagation_analysis_plot.png'
+(venv) [krzysztof@archlinux list_five]$ # ===== ZADANIE 3 =======
+(venv) [krzysztof@archlinux list_five]$ python3 test_BH.py 
+Binomial Heap Experiment Suite
+==================================================
+Compiling datastruct_binominal_heap.cpp...
+Compilation successful!
+
+=== Experiment 1: Multiple runs with n=500 ===
+Running experiment 1 with n=500...
+Experiment 1 (n=500):
+Total comparisons: 9036
+Average comparisons per operation: 4.51574
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n500_exp1.csv
+
+
+Running experiment 2 with n=500...
+Experiment 2 (n=500):
+Total comparisons: 9156
+Average comparisons per operation: 4.57571
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n500_exp2.csv
+
+
+Running experiment 3 with n=500...
+Experiment 3 (n=500):
+Total comparisons: 9100
+Average comparisons per operation: 4.54773
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n500_exp3.csv
+
+
+Running experiment 4 with n=500...
+Experiment 4 (n=500):
+Total comparisons: 9211
+Average comparisons per operation: 4.6032
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n500_exp4.csv
+
+
+Running experiment 5 with n=500...
+Experiment 5 (n=500):
+Total comparisons: 9114
+Average comparisons per operation: 4.55472
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n500_exp5.csv
+
+
+
+Statistics per experiment:
+             sum      mean       std
+experiment                          
+1           9036  4.515742  2.923162
+2           9156  4.575712  3.029586
+3           9100  4.547726  2.989958
+4           9211  4.603198  3.052289
+5           9114  4.554723  2.996686
+
+=== Experiment 2: Scaling analysis ===
+Testing n values: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+
+Testing n = 100
+Running experiment 1 with n=100...
+Experiment 1 (n=100):
+Total comparisons: 1566
+Average comparisons per operation: 3.90524
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n100_exp1.csv
+
+
+Running experiment 2 with n=100...
+Experiment 2 (n=100):
+Total comparisons: 1536
+Average comparisons per operation: 3.83042
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n100_exp2.csv
+
+
+Running experiment 3 with n=100...
+Experiment 3 (n=100):
+Total comparisons: 1576
+Average comparisons per operation: 3.93017
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n100_exp3.csv
+
+
+
+Testing n = 200
+Running experiment 1 with n=200...
+Experiment 1 (n=200):
+Total comparisons: 3281
+Average comparisons per operation: 4.09613
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n200_exp1.csv
+
+
+Running experiment 2 with n=200...
+Experiment 2 (n=200):
+Total comparisons: 3335
+Average comparisons per operation: 4.16355
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n200_exp2.csv
+
+
+Running experiment 3 with n=200...
+Experiment 3 (n=200):
+Total comparisons: 3337
+Average comparisons per operation: 4.16604
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n200_exp3.csv
+
+
+
+Testing n = 300
+Running experiment 1 with n=300...
+Experiment 1 (n=300):
+Total comparisons: 5133
+Average comparisons per operation: 4.27394
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n300_exp1.csv
+
+
+Running experiment 2 with n=300...
+Experiment 2 (n=300):
+Total comparisons: 5133
+Average comparisons per operation: 4.27394
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n300_exp2.csv
+
+
+Running experiment 3 with n=300...
+Experiment 3 (n=300):
+Total comparisons: 5106
+Average comparisons per operation: 4.25146
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n300_exp3.csv
+
+
+
+Testing n = 400
+Running experiment 1 with n=400...
+Experiment 1 (n=400):
+Total comparisons: 7085
+Average comparisons per operation: 4.42536
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n400_exp1.csv
+
+
+Running experiment 2 with n=400...
+Experiment 2 (n=400):
+Total comparisons: 7100
+Average comparisons per operation: 4.43473
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n400_exp2.csv
+
+
+Running experiment 3 with n=400...
+Experiment 3 (n=400):
+Total comparisons: 7034
+Average comparisons per operation: 4.3935
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n400_exp3.csv
+
+
+
+Testing n = 500
+Running experiment 1 with n=500...
+Experiment 1 (n=500):
+Total comparisons: 9119
+Average comparisons per operation: 4.55722
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n500_exp1.csv
+
+
+Running experiment 2 with n=500...
+Experiment 2 (n=500):
+Total comparisons: 9113
+Average comparisons per operation: 4.55422
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n500_exp2.csv
+
+
+Running experiment 3 with n=500...
+Experiment 3 (n=500):
+Total comparisons: 9103
+Average comparisons per operation: 4.54923
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n500_exp3.csv
+
+
+
+Testing n = 600
+Running experiment 1 with n=600...
+Experiment 1 (n=600):
+Total comparisons: 10909
+Average comparisons per operation: 4.54352
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n600_exp1.csv
+
+
+Running experiment 2 with n=600...
+Experiment 2 (n=600):
+Total comparisons: 10872
+Average comparisons per operation: 4.52811
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n600_exp2.csv
+
+
+Running experiment 3 with n=600...
+Experiment 3 (n=600):
+Total comparisons: 10974
+Average comparisons per operation: 4.5706
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n600_exp3.csv
+
+
+
+Testing n = 700
+Running experiment 1 with n=700...
+Experiment 1 (n=700):
+Total comparisons: 12945
+Average comparisons per operation: 4.62156
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n700_exp1.csv
+
+
+Running experiment 2 with n=700...
+Experiment 2 (n=700):
+Total comparisons: 12929
+Average comparisons per operation: 4.61585
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n700_exp2.csv
+
+
+Running experiment 3 with n=700...
+Experiment 3 (n=700):
+Total comparisons: 12872
+Average comparisons per operation: 4.5955
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n700_exp3.csv
+
+
+
+Testing n = 800
+Running experiment 1 with n=800...
+Experiment 1 (n=800):
+Total comparisons: 15021
+Average comparisons per operation: 4.6926
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n800_exp1.csv
+
+
+Running experiment 2 with n=800...
+Experiment 2 (n=800):
+Total comparisons: 14967
+Average comparisons per operation: 4.67573
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n800_exp2.csv
+
+
+Running experiment 3 with n=800...
+Experiment 3 (n=800):
+Total comparisons: 14968
+Average comparisons per operation: 4.67604
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n800_exp3.csv
+
+
+
+Testing n = 900
+Running experiment 1 with n=900...
+Experiment 1 (n=900):
+Total comparisons: 17045
+Average comparisons per operation: 4.73341
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n900_exp1.csv
+
+
+Running experiment 2 with n=900...
+Experiment 2 (n=900):
+Total comparisons: 17009
+Average comparisons per operation: 4.72341
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n900_exp2.csv
+
+
+Running experiment 3 with n=900...
+Experiment 3 (n=900):
+Total comparisons: 16968
+Average comparisons per operation: 4.71202
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n900_exp3.csv
+
+
+
+Testing n = 1000
+Running experiment 1 with n=1000...
+Experiment 1 (n=1000):
+Total comparisons: 19214
+Average comparisons per operation: 4.8023
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n1000_exp1.csv
+
+
+Running experiment 2 with n=1000...
+Experiment 2 (n=1000):
+Total comparisons: 19322
+Average comparisons per operation: 4.82929
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n1000_exp2.csv
+
+
+Running experiment 3 with n=1000...
+Experiment 3 (n=1000):
+Total comparisons: 19256
+Average comparisons per operation: 4.8128
+Extracted sequence is sorted: NO
+Heap is empty after extraction: YES
+Results saved to: experiment_n1000_exp3.csv
+
+
+
+Scaling Results:
+   n  avg_total_comparisons  avg_cost_per_operation  avg_cost_per_n  std_cost_per_n
+ 100                1559.33                    3.89           15.59            0.17
+ 200                3317.67                    4.14           16.59            0.13
+ 300                5124.00                    4.27           17.08            0.04
+ 400                7073.00                    4.42           17.68            0.07
+ 500                9111.67                    4.55           18.22            0.01
+ 600               10918.33                    4.55           18.20            0.07
+ 700               12915.33                    4.61           18.45            0.04
+ 800               14985.33                    4.68           18.73            0.03
+ 900               17007.33                    4.72           18.90            0.03
+1000               19264.00                    4.81           19.26            0.04
+
+=== Complexity Analysis ===
+Fitted curve: avg_cost ≈ 0.27 * log₂(n) + 2.07
+R² value: 0.9904
+
+==================================================
+All experiments completed successfully!
+Generated files:
+- experiment1_n500_historical_plots.png
+- experiment2_scaling_analysis.png
+- complexity_analysis.png
+- scaling_results.csv
+
+Clean up temporary files? (y/n): y
+Cleanup completed.
+(venv) [krzysztof@archlinux list_five]$ # EXPORTING ONCE AGAIN 
+(venv) [krzysztof@archlinux list_five]$ tmux capture-pane -p -S'-' -E'-' -J > my-log
+
