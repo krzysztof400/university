@@ -1,10 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct Graph{ bool directed; int n,m; vector<vector<int>> adj; void read(){
-    string f; if(!(cin>>f)) exit(1);
+
+struct Graph { bool directed; int n,m; vector<vector<int>> adj; void read(){
+    string f;
+    if(!(cin>>f)) exit(1);
     directed = (f=="D"||f=="d");
-    cin>>n>>m; adj.assign(n+1,{});
-    for(int i=0;i<m;i++){ int u,v; cin>>u>>v; if(u>=1&&u<=n && v>=1&&v<=n){ adj[u].push_back(v); if(!directed) adj[v].push_back(u);} }
+    cin>>n>>m; adj.assign(n+1, {});
+    for(int i=0;i<m;i++){
+        int u,v;
+        cin>>u>>v;
+        if(u>=1&&u<=n && v>=1&&v<=n){ 
+            adj[u].push_back(v); if(!directed) adj[v].push_back(u); 
+        }
+    }
 }};
 
 struct Tarjan {
