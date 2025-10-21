@@ -2,17 +2,30 @@
 using namespace std;
 
 struct Graph { bool directed; int n,m; vector<vector<int>> adj; void read(){
-    string f; if(!(cin>>f)) exit(1);
+    string f;
+    if(!(cin>>f)) exit(1);
     directed = (f=="D"||f=="d");
     cin>>n>>m; adj.assign(n+1, {});
-    for(int i=0;i<m;i++){ int u,v; cin>>u>>v; if(u>=1&&u<=n && v>=1&&v<=n){ adj[u].push_back(v); if(!directed) adj[v].push_back(u); } }
+    for(int i=0;i<m;i++){
+        int u,v;
+        cin>>u>>v;
+        if(u>=1&&u<=n && v>=1&&v<=n){ 
+            adj[u].push_back(v); if(!directed) adj[v].push_back(u); 
+        }
+    }
 }};
 
 struct Res { vector<int> order; vector<pair<int,int>> tree; };
 
 Res bfs(const Graph& G, int start){
-    Res r; vector<char> vis(G.n+1,0); queue<int> q; auto start_from=[&](int s){
-        if(vis[s]) return; vis[s]=1; q.push(s); r.order.push_back(s);
+    Res r; 
+    vector<char> vis(G.n+1,0); 
+    queue<int> q; 
+    auto start_from=[&](int s){
+        if(vis[s]) return; 
+        vis[s]=1; 
+        q.push(s); 
+        r.order.push_back(s);
         while(!q.empty()){
             int u=q.front(); q.pop();
             for(int v: G.adj[u]) if(!vis[v]){
@@ -36,7 +49,8 @@ Res dfs(const Graph& G, int start){
             if(it < (int)G.adj[u].size()){
                 int v = G.adj[u][it++];
                 if(!vis[v]){ vis[v]=1; r.tree.emplace_back(u,v); r.order.push_back(v); st.emplace_back(v,0); }
-            } else st.pop_back();
+            } 
+            else st.pop_back();
         }
     };
     if(start>=1 && start<=G.n) start_from(start);
@@ -44,8 +58,11 @@ Res dfs(const Graph& G, int start){
     return r;
 }
 int main(int argc,char**argv){
-    ios::sync_with_stdio(false); cin.tie(nullptr);
-    string mode="dfs"; int start=-1; int print_tree=0;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    string mode="dfs";
+    int start=-1;
+    int print_tree=0;
     for(int i=1;i<argc;i++){
         string s=argv[i];
         if(s=="dfs"||s=="bfs") mode=s;
