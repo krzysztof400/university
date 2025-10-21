@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 struct Graph { bool directed; int n,m; vector<vector<int>> adj; void read(){
