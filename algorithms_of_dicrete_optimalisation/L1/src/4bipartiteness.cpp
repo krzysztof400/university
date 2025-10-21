@@ -20,6 +20,7 @@ int main(){
     cin.tie(nullptr);
     Graph G; G.read();
     vector<vector<int>> und(G.n+1);
+
     
     for(int u=1;u<=G.n;u++){
         for(int v: G.adj[u]){ und[u].push_back(v); und[v].push_back(u); }
