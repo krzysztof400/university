@@ -1,0 +1,501 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+
+
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\title{Zadanie 1: Algorytmy DFS i BFS}
+\author{Krzysztof Zając}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Zadanie 1}
+\subsection{Opis problemu}
+Implementujemy algorytmy DFS i BFS - algorytmy przeszukiwania grafów na poniższych grafach:
+
+
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=0.5\linewidth]{grafy_odgorne_zad1.png}
+    \caption{Grafy do przeszukania w ramach Zadania 1.}
+    \label{fig:grafy_zad1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{mojgraf_zad1.jpeg}
+    \caption{Mój graf}
+    \label{fig:graf_moj}
+\end{figure}
+
+\vspace{2cm}
+
+\subsection{Wyniki}
+
+\subsection{BFS}
+
+\subsubsection{06vertices.txt}
+VISIT ORDER: 1 2 3 4 5 6
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[level distance=1.2cm,
+  level 1/.style={sibling distance=3cm},
+  level 2/.style={sibling distance=2cm},
+  edge from parent/.style={draw,-latex}]
+  \node {1}
+    child {node {2}
+      child {node {4}}
+      child {node {5}}
+    }
+    child {node {3}
+      child {node {6}}
+    };
+\end{tikzpicture}
+\caption{BFS tree for 06vertices.txt}
+\end{figure}
+
+\subsubsection{08vertices.txt}
+VISIT ORDER: 1 4 2 3 6 5 7 8
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[level distance=1.2cm,
+  level 1/.style={sibling distance=3.5cm},
+  level 2/.style={sibling distance=2cm},
+  level 3/.style={sibling distance=1.5cm},
+  edge from parent/.style={draw,-latex}]
+  \node {1}
+    child {node {2}
+      child {node {3}}
+      child {node {6}
+        child {node {5}
+          child {node {8}}
+        }
+        child {node {7}}
+      }
+    }
+    child {node {4}};
+\end{tikzpicture}
+\caption{BFS tree for 08vertices.txt}
+\end{figure}
+
+\subsubsection{09vertices.txt}
+VISIT ORDER: 1 2 3 5 4 6 9 7 8
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[level distance=1.2cm,
+  level 1/.style={sibling distance=3.5cm},
+  level 2/.style={sibling distance=2cm},
+  level 3/.style={sibling distance=1.5cm},
+  edge from parent/.style={draw,-latex}]
+  \node {1}
+    child {node {2}
+      child {node {4}}
+    }
+    child {node {3}
+      child {node {6}
+        child {node {7}
+          child {node {8}}
+        }
+        child {node {9}}
+      }
+    }
+    child {node {5}};
+\end{tikzpicture}
+\caption{BFS tree for 09vertices.txt}
+\end{figure}
+
+\vspace{1cm}
+
+\subsubsection{16vertices.txt}
+VISIT ORDER: 1 2 5 6 3 7 9 10 11 4 8 12 13 14 15 16
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[level distance=1.2cm,
+  level 1/.style={sibling distance=4cm},
+  level 2/.style={sibling distance=2.5cm},
+  level 3/.style={sibling distance=2cm},
+  level 4/.style={sibling distance=1.5cm},
+  edge from parent/.style={draw,-latex}]
+  \node {1}
+    child {node {2}
+      child {node {3}
+        child {node {4}}
+        child {node {7}
+          child {node {12}}
+        }
+      }
+      child {node {7}}
+    }
+    child {node {5}
+      child {node {9}
+        child {node {13}}
+        child {node {14}}
+      }
+      child {node {10}
+        child {node {15}}
+      }
+    }
+    child {node {6}
+      child {node {11}
+        child {node {16}}
+      }
+    };
+\end{tikzpicture}
+\caption{BFS tree for 16vertices.txt}
+\end{figure}
+
+\subsection{DFS}
+
+\subsubsection{06vertices.txt}
+VISIT ORDER: 1 2 4 5 6 3
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[level distance=1.2cm,
+  level 1/.style={sibling distance=3cm},
+  level 2/.style={sibling distance=2cm},
+  edge from parent/.style={draw,-latex}]
+  \node {1}
+    child {node {2}
+      child {node {4}
+        child {node {5}
+          child {node {6}}
+        }
+      }
+    }
+    child {node {3}};
+\end{tikzpicture}
+\caption{DFS tree for 06vertices.txt}
+\end{figure}
+
+\subsubsection{08vertices.txt}
+VISIT ORDER: 1 4 2 3 6 5 8 7
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[level distance=1.2cm,
+  level 1/.style={sibling distance=3.5cm},
+  level 2/.style={sibling distance=2cm},
+  level 3/.style={sibling distance=1.5cm},
+  edge from parent/.style={draw,-latex}]
+  \node {1}
+    child {node {2}
+      child {node {3}}
+      child {node {6}
+        child {node {5}
+          child {node {8}
+            child {node {7}}
+          }
+        }
+      }
+    }
+    child {node {4}};
+\end{tikzpicture}
+\caption{DFS tree for 08vertices.txt}
+\end{figure}
+
+\subsubsection{09vertices.txt}
+VISIT ORDER: 1 2 4 5 6 9 7 8 3
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[level distance=1.2cm,
+  level 1/.style={sibling distance=3.5cm},
+  level 2/.style={sibling distance=2cm},
+  level 3/.style={sibling distance=1.5cm},
+  edge from parent/.style={draw,-latex}]
+  \node {1}
+    child {node {2}
+      child {node {4}}
+      child {node {5}
+        child {node {6}
+          child {node {9}
+            child {node {7}
+              child {node {8}}
+            }
+          }
+        }
+      }
+    }
+    child {node {3}};
+\end{tikzpicture}
+\caption{DFS tree for 09vertices.txt}
+\end{figure}
+
+\subsubsection{16vertices.txt}
+VISIT ORDER: 1 2 3 4 8 12 16 7 11 15 6 10 14 5 9 13
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[level distance=1.2cm,
+  level 1/.style={sibling distance=4cm},
+  level 2/.style={sibling distance=2.5cm},
+  level 3/.style={sibling distance=2cm},
+  level 4/.style={sibling distance=1.5cm},
+  edge from parent/.style={draw,-latex}]
+  \node {1}
+    child {node {2}
+      child {node {3}
+        child {node {4}
+          child {node {8}
+            child {node {12}
+              child {node {16}}
+            }
+          }
+        }
+        child {node {7}
+          child {node {11}
+            child {node {15}}
+          }
+        }
+      }
+      child {node {6}
+        child {node {10}
+          child {node {14}}
+        }
+      }
+    }
+    child {node {5}
+      child {node {9}
+        child {node {13}}
+      }
+    };
+\end{tikzpicture}
+\caption{DFS tree for 16vertices.txt}
+\end{figure}
+\vspace{3cm}
+
+
+\section{Zadanie 2}
+\subsection{Opis problemu}
+Implementacja algorytmu sortowania topologicznego
+
+\subsection{Wyniki}
+\begin{verbatim}
+--- Testing 2topological_sort ---
+
+--- Running on g2a-1.txt ---
+--- STDOUT ---
+ACYCLIC
+TOPO_ORDER: 1 2 5 3 6 9 4 7 10 13 8 11 14 12 15 16
+
+--- Running on g2a-2.txt ---
+--- STDOUT ---
+ACYCLIC
+TOPO_ORDER: 1 2 11 3 12 21 4 13 22 31 5 14 23 32 41 6 15 24 33 42 51 7 16 25 34 43 52 61 8 17 26 35 44 53 62 71 9 18 27 36 45 54 63 72 81 10 19 28 37 46 55 64 73 82 91 20 29 38 47 56 65 74 83 92 30 39 48 57 66 75 84 93 40 49 58 67 76 85 94 50 59 68 77 86 95 60 69 78 87 96 70 79 88 97 80 89 98 90 99 100
+
+--- Running on g2a-3.txt ---
+--- STDOUT ---
+ACYCLIC
+
+--- Running on g2a-4.txt ---
+--- STDOUT ---
+ACYCLIC
+
+--- Running on g2a-5.txt ---
+--- STDOUT ---
+ACYCLIC
+
+--- Running on g2a-6.txt ---
+--- STDOUT ---
+ACYCLIC
+
+--- Running on g2b-1.txt ---
+--- STDOUT ---
+CYCLE
+
+--- Running on g2b-2.txt ---
+--- STDOUT ---
+CYCLE
+
+--- Running on g2b-3.txt ---
+--- STDOUT ---
+CYCLE
+
+--- Running on g2b-4.txt ---
+--- STDOUT ---
+CYCLE
+
+--- Running on g2b-5.txt ---
+--- STDOUT ---
+CYCLE
+
+--- Running on g2b-6.txt ---
+--- STDOUT ---
+CYCLE
+\end{verbatim}
+\vspace{3cm}
+
+\section{Zadanie 3}
+\subsection{Opis problemu}
+Implementacja algorytmu wykrycia silnie spójnych składowych (tarjan)
+\subsection{Wyniki}
+\begin{verbatim}
+--- Testing 3tarjan ---
+
+--- Running on g3-1.txt ---
+--- STDOUT ---
+SCC_COUNT 5
+SCC_SIZES: 1 2 4 4 5
+SCC_COMPONENTS:
+1: 16
+2: 11 10
+3: 8 9 7 6
+4: 15 14 13 12
+5: 5 4 3 2 1
+
+--- Running on g3-2.txt ---
+--- STDOUT ---
+SCC_COUNT 5
+SCC_SIZES: 1 24 36 40 6
+SCC_COMPONENTS:
+1: 107
+2: 66 65 64 63 62 61 60 59 58 57 56 55 54 53 52 51 50 49 48 47 46 45 44 43
+3: 28 22 21 27 33 34 35 29 23 17 16 15 14 20 26 32 13 19 25 31 37 38 39 40 41 42 36 30 24 18 12 11 10 9 8 7
+4: 106 105 104 103 102 101 100 99 98 97 96 95 94 93 92 91 90 89 88 87 86 85 84 83 82 81 80 79 78 77 76 75 74 73 72 71 70 69 68 67
+5: 6 5 4 3 2 1
+
+--- Running on g3-3.txt ---
+--- STDOUT ---
+SCC_COUNT 5
+SCC_SIZES: 1 200 400 400 7
+
+--- Running on g3-4.txt ---
+--- STDOUT ---
+SCC_COUNT 5
+SCC_SIZES: 1 2400 3600 4000 8
+
+--- Running on g3-5.txt ---
+--- STDOUT ---
+SCC_COUNT 5
+SCC_SIZES: 1 20000 40000 40000 9
+
+--- Running on g3-6.txt ---
+--- STDOUT ---
+\end{verbatim}
+\vspace{4cm}
+
+\section{Zadanie 4}
+\subsection{Opis problemu}
+Implementacja algorymtu wykrywającego i badającego dwudzielność
+\subsection{Wyniki}
+\begin{verbatim}
+--- Testing 4bipartiteness ---
+
+--- Running on d4a-1.txt ---
+--- STDOUT ---
+BIPARTITE YES
+V0: 1 3 6 8 9 11 14 16
+V1: 2 4 5 7 10 12 13 15
+
+--- Running on d4a-2.txt ---
+--- STDOUT ---
+BIPARTITE YES
+V0: 1 3 5 7 9 12 14 16 18 20 21 23 25 27 29 32 34 36 38 40 41 43 45 47 49 52 54 56 58 60 61 63 65 67 69 72 74 76 78 80 81 83 85 87 89 92 94 96 98 100
+V1: 2 4 6 8 10 11 13 15 17 19 22 24 26 28 30 31 33 35 37 39 42 44 46 48 50 51 53 55 57 59 62 64 66 68 70 71 73 75 77 79 82 84 86 88 90 91 93 95 97 99
+
+--- Running on d4a-3.txt ---
+--- STDOUT ---
+BIPARTITE YES
+
+--- Running on d4a-4.txt ---
+--- STDOUT ---
+BIPARTITE YES
+
+--- Running on d4a-5.txt ---
+--- STDOUT ---
+BIPARTITE YES
+
+--- Running on d4a-6.txt ---
+--- STDOUT ---
+BIPARTITE YES
+
+--- Running on d4b-1.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on d4b-2.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on d4b-3.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on d4b-4.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on d4b-5.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on d4b-6.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on u4a-1.txt ---
+--- STDOUT ---
+BIPARTITE YES
+V0: 1 4 5 6 7
+V1: 2 3 8 9 10 11 12 13 14 15
+
+--- Running on u4a-2.txt ---
+--- STDOUT ---
+BIPARTITE YES
+V0: 1 4 5 6 7 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127
+V1: 2 3 8 9 10 11 12 13 14 15 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63
+
+--- Running on u4a-3.txt ---
+--- STDOUT ---
+BIPARTITE YES
+
+--- Running on u4a-4.txt ---
+--- STDOUT ---
+BIPARTITE YES
+
+--- Running on u4a-5.txt ---
+--- STDOUT ---
+BIPARTITE YES
+
+--- Running on u4a-6.txt ---
+--- STDOUT ---
+BIPARTITE YES
+
+--- Running on u4b-1.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on u4b-2.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on u4b-3.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on u4b-4.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on u4b-5.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+--- Running on u4b-6.txt ---
+--- STDOUT ---
+BIPARTITE NO
+
+\end{verbatim}
+
+\end{document}
