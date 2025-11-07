@@ -1,3 +1,5 @@
+# Krzysztof Zając, 279757
+
 using Printf
 
 f_z7(x) = sin(x) + cos(3x)
@@ -10,7 +12,7 @@ exact_val = f_prime_exact(x0)
 println("Wartość dokładna f'(1.0): $exact_val")
 
 println("\n n |      h      |   f_approx'  |     Błąd     | 1+h == 1? ")
-println("---|---------------|--------------|--------------|-----------")
+println("---|-------------|--------------|--------------|-----------")
 
 
 

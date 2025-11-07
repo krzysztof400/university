@@ -1,3 +1,5 @@
+# Krzysztof Zając, 279757
+
 println("\n--- Przedział [1, 2] ---")
 delta_teoria_1 = 2.0^-52
 delta_eksperyment_1 = eps(1.0)

@@ -1,8 +1,10 @@
+# Krzysztof Zając, 279757
+
 using Printf
 
 x_vec = [2.718281828, -3.141592654, 1.414213562, 0.5772156649, 0.3010299957]
 y_vec = [1486.2497, 878366.9879, -22.37492, 4773714.647, 0.000185049]
-wartosc_dokladna = -1.00657107000000e-11
+exact_val = -1.00657107000000e-11
 
 function dot_forward(x, y)
     S = zero(eltype(x))
@@ -42,4 +44,4 @@ println(" (b) W tył:      $(dot_backward(x32, y32))")
 println(" (c) Sort najw->najmn: $(dot_sorted(x32, y32, rev=true))")
 println(" (d) Sort najmn->najw: $(dot_sorted(x32, y32, rev=false))")
 
-println("\n Wartość dokładna: $wartosc_dokladna")
+println("\n Wartość dokładna: $exact_val")

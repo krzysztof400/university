@@ -22,14 +22,21 @@ struct Graph {
 struct Res { vector<int> order; vector<pair<int,int>> tree; };
 
 Res bfs(const Graph& G, int start) {
-    Res r; vector<char> vis(G.n+1, 0); queue<int> q;
+    Res r;
+    vector<char> vis(G.n+1, 0);
+    queue<int> q;
     auto start_from = [&](int s){
         if (vis[s]) return;
-        vis[s]=1; q.push(s); r.order.push_back(s);
+        vis[s]=1; 
+        q.push(s); 
+        r.order.push_back(s);
         while(!q.empty()){
             int u = q.front(); q.pop();
             for(int v: G.adj[u]) if(!vis[v]){
-                vis[v]=1; r.tree.emplace_back(u,v); q.push(v); r.order.push_back(v);
+                vis[v]=1; 
+                r.tree.emplace_back(u,v); 
+                q.push(v); 
+                r.order.push_back(v);
             }
         }
     };

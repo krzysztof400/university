@@ -18,17 +18,25 @@ struct Graph { bool directed; int n,m; vector<vector<int>> adj;
 struct Res { vector<int> order; vector<pair<int,int>> tree; };
 
 Res dfs(const Graph& G, int start){
-    Res r; vector<char> vis(G.n+1,0);
+    Res r;
+    vector<char> vis(G.n+1,0);
     auto start_from=[&](int s){
         if(vis[s]) return;
         vector<pair<int,int>> st;
-        st.emplace_back(s,0); vis[s]=1; r.order.push_back(s);
+        st.emplace_back(s,0);
+        vis[s]=1;
+        r.order.push_back(s);
         while(!st.empty()){
             int u = st.back().first;
             int &it = st.back().second;
             if(it < (int)G.adj[u].size()){
                 int v = G.adj[u][it++];
-                if(!vis[v]){ vis[v]=1; r.tree.emplace_back(u,v); r.order.push_back(v); st.emplace_back(v,0); }
+                if(!vis[v]){ 
+                    vis[v]=1; 
+                    r.tree.emplace_back(u,v); 
+                    r.order.push_back(v); 
+                    st.emplace_back(v,0); 
+                }
             } else st.pop_back();
         }
     };

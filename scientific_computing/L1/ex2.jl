@@ -1,3 +1,5 @@
+# Krzysztof Zając, 279757
+
 function kahan_macheps(T::Type{<:AbstractFloat})
     macheps = T(3.0)*(T(4.0/3.0) - T(1.0)) - T(1.0)
     return macheps

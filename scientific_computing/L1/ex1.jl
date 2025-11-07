@@ -1,3 +1,5 @@
+# Krzysztof Zając, 279757
+
 function calculate_machine_epsilon(T::Type{<:AbstractFloat})
     epsilon = one(T)
     while one(T) + epsilon/2 > one(T)

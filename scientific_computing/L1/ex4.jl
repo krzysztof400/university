@@ -1,3 +1,5 @@
+# Krzysztof Zając, 279757
+
 x_min = nextfloat(1.0)
 wynik = x_min * (1.0 / x_min)
 

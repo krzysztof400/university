@@ -1,3 +1,5 @@
+# Krzysztof Zając, 279757
+
 using Printf
 f(x) = sqrt(x^2 + 1) - 1
 
