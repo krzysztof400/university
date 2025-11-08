@@ -1,3 +1,5 @@
+# Krzysztof Zając, 279757
+
 import math
 import numpy as np
 import matplotlib.pyplot as plt
@@ -45,4 +47,4 @@ ax.legend(loc="lower left")
 
 ax.grid(True, linestyle=':', alpha=0.7)
 
-fig.savefig("zad2_plot.png")
+fig.savefig("ex2_plot_py.png")

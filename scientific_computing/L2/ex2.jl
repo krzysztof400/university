@@ -31,4 +31,4 @@ p = plot(xs, ys,
 )
 hline!([1.0], label="Granica analityczna y = 1", linestyle=:dash, color=:red)
 
-savefig(p, "zad2_plot.png")
+savefig(p, "ex2_plot_jl.png")
