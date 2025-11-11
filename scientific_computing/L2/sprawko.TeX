@@ -149,8 +149,8 @@ Analiza uwarunkowania problemu znajdowania zer wielomianu. (a) Obliczenie zer $z
 Użyto funkcji \texttt{roots()} z pakietu \texttt{Polynomials}. (a) Obliczono $z_k = \text{roots}(P)$ i błędy $|z_k - k|$. (b) Zmieniono współczynnik $a_{19}$ i ponownie obliczono zera.
 
 \subsection{Wyniki}
-\par(a) Obliczone zera $z_k$ znacznie różnią się od dokładnych $k \in \{1, \dots, 20\}$. Pierwiastki $k \le 8$ są wyznaczone poprawnie. Dla $k \ge 9$ błędy gwałtownie rosną. Pierwiastki **$k \in [10, 18]$ są obliczone jako liczby zespolone** o znaczących częściach urojonych (np. **$z_{14}, z_{15} \approx 13.99 \pm 2.5i$**).
-\par(b) Niewielka perturbacja $a_{19}$ ($\delta \approx 1.19 \times 10^{-7}$) spowodowała drastyczne zmiany. Już $z_{10}$ i $z_{11}$ stały się zespolone. Błędy dla pierwiastków $k \ge 12$ są rzędu 2-3 (np. $z_{15} \approx 17.6 \pm 2.8i$).
+\par(a) Obliczone zera $z_k$ znacznie różnią się od dokładnych $k \in \{1, \dots, 20\}$. Pierwiastki $k \le 8$ są wyznaczone poprawnie. Dla $k \ge 9$ błędy gwałtownie rosną. Pierwiastki $k \in [10, 18]$ są obliczone jako liczby zespolone o znaczących częściach urojonych (np. $z_{14}, z_{15} \approx 13.99 \pm 2.5i$).
+\par(b) Niewielka zamiana $a_{19}$ ($\delta \approx 1.19 \times 10^{-7}$) spowodowała drastyczne zmiany. Już $z_{10}$ i $z_{11}$ stały się zespolone. Błędy dla pierwiastków $k \ge 12$ są rzędu 2-3 (np. $z_{15} \approx 17.6 \pm 2.8i$).
 
 \subsection{Wnioski}
 (a) Problem znajdowania zer wielomianu na podstawie współczynników w bazie naturalnej jest źle uwarunkowany. Błędy reprezentacji współczynników w Float64
@@ -193,7 +193,7 @@ n    | p_n (F32)       | p_n (F64)
 \end{verbatim}
 
 \subsection{Wnioski}
-Model logistyczny dla $r=3$ (w obszarze zachowań chaotycznych) jest wysoce wrażliwy na warunki początkowe i błędy zaokrągleń. Minimalna perturbacja (obcięcie, różna precyzja) jest wykładniczo wzmacniana w kolejnych iteracjach, prowadząc do zupełnie różnych trajektorii w długim okresie.
+Model logistyczny dla $r=3$ (w obszarze zachowań chaotycznych) jest wysoce wrażliwy na warunki początkowe i błędy zaokrągleń. Minimalna zmiana (obcięcie, różna precyzja) jest wykładniczo wzmacniana w kolejnych iteracjach, prowadząc do zupełnie różnych trajektorii w długim okresie.
 
 \FloatBarrier
 \section{Zadanie 6 - Równanie rekurencyjne $x_{n+1}=x_n^2+c$}
@@ -217,6 +217,6 @@ Zaobserwowano następujące zachowania:
 \end{enumerate}
 
 \subsection{Wnioski}
-Badane równanie rekurencyjne (związane ze zbiorem Mandelbrota) wykazuje bogatą dynamikę. W zależności od parametrów $c$ i $x_0$, trajektorie mogą zbiegać do punktów stałych, zbiegać do cykli (atraktorów) lub wykazywać zachowanie chaotyczne (dziwny atraktor, jak w przypadku 3).
+Badane równanie rekurencyjne (związane ze zbiorem Mandelbrota) wykazuje dużą dynamikę. W zależności od parametrów $c$ i $x_0$, trajektorie mogą zbiegać do punktów stałych, zbiegać do cykli lub wykazywać zachowanie chaotyczne (w przypadku 3).
 
 \end{document}

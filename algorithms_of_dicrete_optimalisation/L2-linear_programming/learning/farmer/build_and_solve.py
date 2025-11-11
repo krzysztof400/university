@@ -1,24 +1,16 @@
 import json
 import pulp
 
-def load_data(path="data.json"):
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
 def build_model(data):
-    # Tworzymy problem
     sense = pulp.LpMaximize if data["objective"]["sense"].lower().startswith("m") else pulp.LpMinimize
     prob = pulp.LpProblem(data.get("problem_name","Problem"), sense)
 
-    # Zmienne: słownik name -> LpVariable
     vars_ = {}
     for vname, vinfo in data["variables"].items():
         lb = vinfo.get("lb", None)
         ub = vinfo.get("ub", None)
-        # PuLP oczekuje None lub numeric
         vars_[vname] = pulp.LpVariable(vname, lowBound=lb, upBound=ub)
 
-    # Funkcja celu
     obj = sum(data["objective"]["coefs"].get(v, 0) * vars_[v] for v in vars_)
     prob += obj, "Objective"
 
