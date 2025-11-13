@@ -44,13 +44,6 @@ tensorflow_datasets/
 .DS_Store  # macOS
 Thumbs.db  # Windows
 
-# Miscellaneous
-*.log
-*.csv
-*.json
-*.pkl
-*.img
-
 # npm specific
 node_modules/
 
