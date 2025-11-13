@@ -12,7 +12,6 @@ lib64/
 venv/
 env/
 tfenv/
-data/
 .venv/
 .env/
 
