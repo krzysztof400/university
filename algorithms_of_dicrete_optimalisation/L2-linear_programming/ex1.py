@@ -28,7 +28,7 @@ def build_model(data):
     model += obj, "Total_Profit"
 
     for aname, ainfo in data["airports"].items():
-        model += (machine_hours[aname] <= minfo["demand"]), f"Airport_{aname}_Demand"
+        model += (machine_hours[aname] >= minfo["demand"]), f"Airport_{aname}_Demand"
 
     return model, vars
 

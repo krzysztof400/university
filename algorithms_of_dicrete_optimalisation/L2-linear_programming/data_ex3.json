@@ -1,0 +1,13 @@
+{
+    "okresy": [1, 2, 3, 4],
+    "pojemnosc_produkcji_normalnej": 100,
+    "pojemnosc_magazynu": 70,
+    "koszt_magazynowania_jednostki": 1500,
+    "magazyn_poczatkowy": 15,
+    "dane_okresowe": {
+        "1": { "koszt_normalny": 6000, "limit_nadwym": 60, "koszt_nadwym": 8000,  "popyt": 130 },
+        "2": { "koszt_normalny": 4000, "limit_nadwym": 65, "koszt_nadwym": 6000,  "popyt": 80 },
+        "3": { "koszt_normalny": 8000, "limit_nadwym": 70, "koszt_nadwym": 10000, "popyt": 125 },
+        "4": { "koszt_normalny": 9000, "limit_nadwym": 60, "koszt_nadwym": 11000, "popyt": 195 }
+    }
+}

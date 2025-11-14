@@ -1,9 +1,9 @@
 {
     "products": {
-        "p1": { "price": 9, "materials_cost": 4 },
-        "p2": { "price": 6, "materials_cost": 1 },
-        "p3": { "price": 6, "materials_cost": 1 },
-        "p4": { "price": 5, "materials_cost": 1 }
+        "p1": { "price": 9, "materials_cost": 4, "ub": 400 },
+        "p2": { "price": 7, "materials_cost": 1, "ub": 100 },
+        "p3": { "price": 6, "materials_cost": 1, "ub": 150 },
+        "p4": { "price": 5, "materials_cost": 1, "ub": 500 }
     },
     "machines": {
         "m1": { "availability_time": 3600, "running_cost": 2 },
