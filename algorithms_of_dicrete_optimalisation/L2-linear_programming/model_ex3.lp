@@ -1,31 +1,30 @@
-\* Minimalizacja_kosztow_produkcji_i_magazynowania *\
+\* Minimize_production_and_inventory_costs *\
 Minimize
-Calkowity_koszt: 1500 Magazyn_1 + 1500 Magazyn_2 + 1500 Magazyn_3
- + 1500 Magazyn_4 + 8000 Produkcja_nadwymiarowa_1
- + 6000 Produkcja_nadwymiarowa_2 + 10000 Produkcja_nadwymiarowa_3
- + 11000 Produkcja_nadwymiarowa_4 + 6000 Produkcja_normalna_1
- + 4000 Produkcja_normalna_2 + 8000 Produkcja_normalna_3
- + 9000 Produkcja_normalna_4
+Total_cost: 1500 Inventory_1 + 1500 Inventory_2 + 1500 Inventory_3
+ + 1500 Inventory_4 + 6000 NormalProduction_1 + 4000 NormalProduction_2
+ + 8000 NormalProduction_3 + 9000 NormalProduction_4
+ + 8000 OvertimeProduction_1 + 6000 OvertimeProduction_2
+ + 10000 OvertimeProduction_3 + 11000 OvertimeProduction_4
 Subject To
-Bilans_magazynu_okres_1: Magazyn_0 - Magazyn_1 + Produkcja_nadwymiarowa_1
- + Produkcja_normalna_1 = 130
-Bilans_magazynu_okres_2: Magazyn_1 - Magazyn_2 + Produkcja_nadwymiarowa_2
- + Produkcja_normalna_2 = 80
-Bilans_magazynu_okres_3: Magazyn_2 - Magazyn_3 + Produkcja_nadwymiarowa_3
- + Produkcja_normalna_3 = 125
-Bilans_magazynu_okres_4: Magazyn_3 - Magazyn_4 + Produkcja_nadwymiarowa_4
- + Produkcja_normalna_4 = 195
-Limit_magazynu_1: Magazyn_1 <= 70
-Limit_magazynu_2: Magazyn_2 <= 70
-Limit_magazynu_3: Magazyn_3 <= 70
-Limit_magazynu_4: Magazyn_4 <= 70
-Limit_prod_nadwym_1: Produkcja_nadwymiarowa_1 <= 60
-Limit_prod_nadwym_2: Produkcja_nadwymiarowa_2 <= 65
-Limit_prod_nadwym_3: Produkcja_nadwymiarowa_3 <= 70
-Limit_prod_nadwym_4: Produkcja_nadwymiarowa_4 <= 60
-Limit_prod_normalnej_1: Produkcja_normalna_1 <= 100
-Limit_prod_normalnej_2: Produkcja_normalna_2 <= 100
-Limit_prod_normalnej_3: Produkcja_normalna_3 <= 100
-Limit_prod_normalnej_4: Produkcja_normalna_4 <= 100
-Magazyn_poczatek: Magazyn_0 = 15
+Inventory_balance_period_1: Inventory_0 - Inventory_1 + NormalProduction_1
+ + OvertimeProduction_1 = 130
+Inventory_balance_period_2: Inventory_1 - Inventory_2 + NormalProduction_2
+ + OvertimeProduction_2 = 80
+Inventory_balance_period_3: Inventory_2 - Inventory_3 + NormalProduction_3
+ + OvertimeProduction_3 = 125
+Inventory_balance_period_4: Inventory_3 - Inventory_4 + NormalProduction_4
+ + OvertimeProduction_4 = 195
+Inventory_limit_1: Inventory_1 <= 70
+Inventory_limit_2: Inventory_2 <= 70
+Inventory_limit_3: Inventory_3 <= 70
+Inventory_limit_4: Inventory_4 <= 70
+Inventory_start: Inventory_0 = 15
+Normal_prod_limit_1: NormalProduction_1 <= 100
+Normal_prod_limit_2: NormalProduction_2 <= 100
+Normal_prod_limit_3: NormalProduction_3 <= 100
+Normal_prod_limit_4: NormalProduction_4 <= 100
+Overtime_prod_limit_1: OvertimeProduction_1 <= 60
+Overtime_prod_limit_2: OvertimeProduction_2 <= 65
+Overtime_prod_limit_3: OvertimeProduction_3 <= 70
+Overtime_prod_limit_4: OvertimeProduction_4 <= 60
 End

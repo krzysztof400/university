@@ -1,13 +1,13 @@
 {
-    "okresy": [1, 2, 3, 4],
-    "pojemnosc_produkcji_normalnej": 100,
-    "pojemnosc_magazynu": 70,
-    "koszt_magazynowania_jednostki": 1500,
-    "magazyn_poczatkowy": 15,
-    "dane_okresowe": {
-        "1": { "koszt_normalny": 6000, "limit_nadwym": 60, "koszt_nadwym": 8000,  "popyt": 130 },
-        "2": { "koszt_normalny": 4000, "limit_nadwym": 65, "koszt_nadwym": 6000,  "popyt": 80 },
-        "3": { "koszt_normalny": 8000, "limit_nadwym": 70, "koszt_nadwym": 10000, "popyt": 125 },
-        "4": { "koszt_normalny": 9000, "limit_nadwym": 60, "koszt_nadwym": 11000, "popyt": 195 }
+    "periods": [1, 2, 3, 4],
+    "normal_production_capacity": 100,
+    "inventory_capacity": 70,
+    "holding_cost_per_unit": 1500,
+    "initial_inventory": 15,
+    "period_data": {
+        "1": { "normal_cost": 6000, "overtime_limit": 60, "overtime_cost": 8000,  "demand": 130 },
+        "2": { "normal_cost": 4000, "overtime_limit": 65, "overtime_cost": 6000,  "demand": 80 },
+        "3": { "normal_cost": 8000, "overtime_limit": 70, "overtime_cost": 10000, "demand": 125 },
+        "4": { "normal_cost": 9000, "overtime_limit": 60, "overtime_cost": 11000, "demand": 195 }
     }
 }

@@ -1,55 +1,52 @@
-\* Najkrotsza_sciezka_z_limitem_czasu *\
+\* Shortest_path_with_time_limit *\
 Minimize
-Calkowity_koszt_sciezki: 3 Sciezka_(1,_2) + 4 Sciezka_(1,_3)
- + 7 Sciezka_(1,_4) + 8 Sciezka_(1,_5) + 2 Sciezka_(2,_3) + 6 Sciezka_(3,_10)
- + 4 Sciezka_(3,_4) + 2 Sciezka_(3,_5) + Sciezka_(4,_5) + 3 Sciezka_(4,_7)
- + 5 Sciezka_(5,_10) + 5 Sciezka_(5,_6) + 3 Sciezka_(5,_7) + 5 Sciezka_(6,_1)
- + 7 Sciezka_(6,_10) + 2 Sciezka_(6,_7) + 4 Sciezka_(7,_3) + 3 Sciezka_(7,_8)
- + Sciezka_(7,_9) + Sciezka_(8,_9) + 2 Sciezka_(9,_10)
+Total_path_cost: 3 Path_(1,_2) + 4 Path_(1,_3) + 7 Path_(1,_4) + 8 Path_(1,_5)
+ + 2 Path_(2,_3) + 6 Path_(3,_10) + 4 Path_(3,_4) + 2 Path_(3,_5)
+ + Path_(4,_5) + 3 Path_(4,_7) + 5 Path_(5,_10) + 5 Path_(5,_6)
+ + 3 Path_(5,_7) + 5 Path_(6,_1) + 7 Path_(6,_10) + 2 Path_(6,_7)
+ + 4 Path_(7,_3) + 3 Path_(7,_8) + Path_(7,_9) + Path_(8,_9) + 2 Path_(9,_10)
 Subject To
-Limit_czasu: 4 Sciezka_(1,_2) + 9 Sciezka_(1,_3) + 10 Sciezka_(1,_4)
- + 12 Sciezka_(1,_5) + 3 Sciezka_(2,_3) + 11 Sciezka_(3,_10)
- + 6 Sciezka_(3,_4) + 2 Sciezka_(3,_5) + Sciezka_(4,_5) + 5 Sciezka_(4,_7)
- + 8 Sciezka_(5,_10) + 6 Sciezka_(5,_6) + 3 Sciezka_(5,_7) + 8 Sciezka_(6,_1)
- + 11 Sciezka_(6,_10) + 2 Sciezka_(6,_7) + 6 Sciezka_(7,_3) + 5 Sciezka_(7,_8)
- + Sciezka_(7,_9) + 2 Sciezka_(8,_9) + 2 Sciezka_(9,_10) <= 15
-Przeplyw_koniec_10: Sciezka_(3,_10) + Sciezka_(5,_10) + Sciezka_(6,_10)
- + Sciezka_(9,_10) = 1
-Przeplyw_posredni_2: Sciezka_(1,_2) - Sciezka_(2,_3) = 0
-Przeplyw_posredni_3: Sciezka_(1,_3) + Sciezka_(2,_3) - Sciezka_(3,_10)
- - Sciezka_(3,_4) - Sciezka_(3,_5) + Sciezka_(7,_3) = 0
-Przeplyw_posredni_4: Sciezka_(1,_4) + Sciezka_(3,_4) - Sciezka_(4,_5)
- - Sciezka_(4,_7) = 0
-Przeplyw_posredni_5: Sciezka_(1,_5) + Sciezka_(3,_5) + Sciezka_(4,_5)
- - Sciezka_(5,_10) - Sciezka_(5,_6) - Sciezka_(5,_7) = 0
-Przeplyw_posredni_6: Sciezka_(5,_6) - Sciezka_(6,_1) - Sciezka_(6,_10)
- - Sciezka_(6,_7) = 0
-Przeplyw_posredni_7: Sciezka_(4,_7) + Sciezka_(5,_7) + Sciezka_(6,_7)
- - Sciezka_(7,_3) - Sciezka_(7,_8) - Sciezka_(7,_9) = 0
-Przeplyw_posredni_8: Sciezka_(7,_8) - Sciezka_(8,_9) = 0
-Przeplyw_posredni_9: Sciezka_(7,_9) + Sciezka_(8,_9) - Sciezka_(9,_10) = 0
-Przeplyw_start_1: Sciezka_(1,_2) + Sciezka_(1,_3) + Sciezka_(1,_4)
- + Sciezka_(1,_5) - Sciezka_(6,_1) = 1
+Flow_end_10: Path_(3,_10) + Path_(5,_10) + Path_(6,_10) + Path_(9,_10) = 1
+Flow_intermediate_2: Path_(1,_2) - Path_(2,_3) = 0
+Flow_intermediate_3: Path_(1,_3) + Path_(2,_3) - Path_(3,_10) - Path_(3,_4)
+ - Path_(3,_5) + Path_(7,_3) = 0
+Flow_intermediate_4: Path_(1,_4) + Path_(3,_4) - Path_(4,_5) - Path_(4,_7) = 0
+Flow_intermediate_5: Path_(1,_5) + Path_(3,_5) + Path_(4,_5) - Path_(5,_10)
+ - Path_(5,_6) - Path_(5,_7) = 0
+Flow_intermediate_6: Path_(5,_6) - Path_(6,_1) - Path_(6,_10) - Path_(6,_7)
+ = 0
+Flow_intermediate_7: Path_(4,_7) + Path_(5,_7) + Path_(6,_7) - Path_(7,_3)
+ - Path_(7,_8) - Path_(7,_9) = 0
+Flow_intermediate_8: Path_(7,_8) - Path_(8,_9) = 0
+Flow_intermediate_9: Path_(7,_9) + Path_(8,_9) - Path_(9,_10) = 0
+Flow_start_1: Path_(1,_2) + Path_(1,_3) + Path_(1,_4) + Path_(1,_5)
+ - Path_(6,_1) = 1
+Time_limit: 4 Path_(1,_2) + 9 Path_(1,_3) + 10 Path_(1,_4) + 12 Path_(1,_5)
+ + 3 Path_(2,_3) + 11 Path_(3,_10) + 6 Path_(3,_4) + 2 Path_(3,_5)
+ + Path_(4,_5) + 5 Path_(4,_7) + 8 Path_(5,_10) + 6 Path_(5,_6)
+ + 3 Path_(5,_7) + 8 Path_(6,_1) + 11 Path_(6,_10) + 2 Path_(6,_7)
+ + 6 Path_(7,_3) + 5 Path_(7,_8) + Path_(7,_9) + 2 Path_(8,_9)
+ + 2 Path_(9,_10) <= 15
 Binaries
-Sciezka_(1,_2)
-Sciezka_(1,_3)
-Sciezka_(1,_4)
-Sciezka_(1,_5)
-Sciezka_(2,_3)
-Sciezka_(3,_10)
-Sciezka_(3,_4)
-Sciezka_(3,_5)
-Sciezka_(4,_5)
-Sciezka_(4,_7)
-Sciezka_(5,_10)
-Sciezka_(5,_6)
-Sciezka_(5,_7)
-Sciezka_(6,_1)
-Sciezka_(6,_10)
-Sciezka_(6,_7)
-Sciezka_(7,_3)
-Sciezka_(7,_8)
-Sciezka_(7,_9)
-Sciezka_(8,_9)
-Sciezka_(9,_10)
+Path_(1,_2)
+Path_(1,_3)
+Path_(1,_4)
+Path_(1,_5)
+Path_(2,_3)
+Path_(3,_10)
+Path_(3,_4)
+Path_(3,_5)
+Path_(4,_5)
+Path_(4,_7)
+Path_(5,_10)
+Path_(5,_6)
+Path_(5,_7)
+Path_(6,_1)
+Path_(6,_10)
+Path_(6,_7)
+Path_(7,_3)
+Path_(7,_8)
+Path_(7,_9)
+Path_(8,_9)
+Path_(9,_10)
 End

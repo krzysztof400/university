@@ -18,47 +18,47 @@ def solve_and_save(model, solver_name="CBC", lp_filename="model.lp", solver_msg=
     else:
         solver = None
 
-    print(f"--- Rozwiązywanie modelu {model.name} ---")
+    print(f"--- Solving model {model.name} ---")
     model.solve(solver)
 
     print("Status:", LpStatus[model.status])
-    print("\nZmienne:")
+    print("\nVariables:")
     for v in model.variables():
         if v.varValue > 1e-6:
             print(v.name, "=", v.varValue)
     
-    print("\nWynik (funkcja celu):")
+    print("\nResult (objective):")
     print(f"{model.objective.name} = {value(model.objective)}")
-    print(f"--- Koniec modelu {model.name} ---")
+    print(f"--- End of model {model.name} ---")
 
 def build_model_task1(data):
-    model = LpProblem(name="Minimalizacja_kosztow_paliwa", sense=LpMinimize)
+    model = LpProblem(name="Minimize_fuel_costs", sense=LpMinimize)
 
-    dostawcy = data["dostawcy"]
-    lotniska = data["lotniska"]
-    koszty = data["koszty"]
-    podaż = data["podaż"]
-    popyt = data["popyt"]
+    suppliers = data["suppliers"]
+    airports = data["airports"]
+    costs = data["costs"]
+    supply = data["supply"]
+    demand = data["demand"]
 
-    zmienne = LpVariable.dicts("Paliwo", 
-                               [(d, l) for d in dostawcy for l in lotniska], 
+    zmienne = LpVariable.dicts("Fuel", 
+                               [(d, l) for d in suppliers for l in airports], 
                                lowBound=0, 
                                cat='Continuous')
 
-    obj = lpSum(zmienne[(d, l)] * koszty[l][d] 
-                for d in dostawcy for l in lotniska)
-    model += obj, "Calkowity_koszt_dostaw"
+    obj = lpSum(zmienne[(d, l)] * costs[l][d] 
+                for d in suppliers for l in airports)
+    model += obj, "Total_delivery_cost"
 
-    for d in dostawcy:
-        model += lpSum(zmienne[(d, l)] for l in lotniska) <= podaż[d], f"Podaż_dostawcy_{d}"
+    for d in suppliers:
+        model += lpSum(zmienne[(d, l)] for l in airports) <= supply[d], f"Supply_supplier_{d}"
 
-    for l in lotniska:
-        model += lpSum(zmienne[(d, l)] for d in dostawcy) == popyt[l], f"Popyt_lotniska_{l}"
+    for l in airports:
+        model += lpSum(zmienne[(d, l)] for d in suppliers) == demand[l], f"Airport_demand_{l}"
 
     return model, zmienne
 
 def build_model_task2(data):
-    model = LpProblem(name="Maksymalizacja_zysku_produkcji", sense=LpMaximize)
+    model = LpProblem(name="Maximize_production_profit", sense=LpMaximize)
     
     produkty = data["products"]
     maszyny = data["machines"]
@@ -90,151 +90,152 @@ def build_model_task2(data):
     )
 
     obj = lpSum(zysk_jednostkowy[p] * vars[p] for p in nazwy_produktow) - calkowity_koszt_maszyn
-    model += obj, "Calkowity_Zysk"
+    model += obj, "Total_Profit"
 
     for m_nazwa, m_info in maszyny.items():
-        model += czas_pracy_maszyn[m_nazwa] <= m_info["availability_time"], f"Czas_pracy_maszyny_{m_nazwa}"
+        model += czas_pracy_maszyn[m_nazwa] <= m_info["availability_time"], f"Machine_work_time_{m_nazwa}"
 
     return model, vars
 
 def build_model_task3(data):
-    model = LpProblem(name="Minimalizacja_kosztow_produkcji_i_magazynowania", sense=LpMinimize)
+    model = LpProblem(name="Minimize_production_and_inventory_costs", sense=LpMinimize)
 
-    okresy = data["okresy"]
-    dane_okresowe = data["dane_okresowe"]
+    periods = data["periods"]
+    period_data = data["period_data"]
     
-    poj_magazynu = data["pojemnosc_magazynu"]
-    koszt_magazynowania = data["koszt_magazynowania_jednostki"]
-    magazyn_pocz = data["magazyn_poczatkowy"]
-    poj_prod_normalna = data["pojemnosc_produkcji_normalnej"]
+    inventory_capacity = data["inventory_capacity"]
+    holding_cost_per_unit = data["holding_cost_per_unit"]
+    initial_inventory = data["initial_inventory"]
+    normal_production_capacity = data["normal_production_capacity"]
 
-    prod_normalna = LpVariable.dicts("Produkcja_normalna", okresy, lowBound=0, cat='Continuous')
-    prod_nadwym = LpVariable.dicts("Produkcja_nadwymiarowa", okresy, lowBound=0, cat='Continuous')
-    magazyn = LpVariable.dicts("Magazyn", [0] + okresy, lowBound=0, cat='Continuous')
 
-    model += magazyn[0] == magazyn_pocz, "Magazyn_poczatek"
+    prod_normalna = LpVariable.dicts("NormalProduction", periods, lowBound=0, cat='Continuous')
+    prod_nadwym = LpVariable.dicts("OvertimeProduction", periods, lowBound=0, cat='Continuous')
+    magazyn = LpVariable.dicts("Inventory", [0] + periods, lowBound=0, cat='Continuous')
+
+    model += magazyn[0] == initial_inventory, "Inventory_start"
 
     koszt_prod = lpSum(
-        prod_normalna[j] * dane_okresowe[str(j)]["koszt_normalny"] + 
-        prod_nadwym[j] * dane_okresowe[str(j)]["koszt_nadwym"]
-        for j in okresy
+        prod_normalna[j] * period_data[str(j)]["normal_cost"] + 
+        prod_nadwym[j] * period_data[str(j)]["overtime_cost"]
+        for j in periods
     )
     koszt_magaz = lpSum(
-        magazyn[j] * koszt_magazynowania
-        for j in okresy
+        magazyn[j] * holding_cost_per_unit
+        for j in periods
     )
     
-    model += koszt_prod + koszt_magaz, "Calkowity_koszt"
+    model += koszt_prod + koszt_magaz, "Total_cost"
 
-    for j in okresy:
+    for j in periods:
         js = str(j)
-        
-        model += (magazyn[j-1] + prod_normalna[j] + prod_nadwym[j] - dane_okresowe[js]["popyt"] 
-                  == magazyn[j]), f"Bilans_magazynu_okres_{j}"
 
-        model += prod_normalna[j] <= poj_prod_normalna, f"Limit_prod_normalnej_{j}"
+        model += (magazyn[j-1] + prod_normalna[j] + prod_nadwym[j] - period_data[js]["demand"] 
+                  == magazyn[j]), f"Inventory_balance_period_{j}"
 
-        model += prod_nadwym[j] <= dane_okresowe[js]["limit_nadwym"], f"Limit_prod_nadwym_{j}"
+        model += prod_normalna[j] <= normal_production_capacity, f"Normal_prod_limit_{j}"
+
+        model += prod_nadwym[j] <= period_data[js]["overtime_limit"], f"Overtime_prod_limit_{j}"
         
-        model += magazyn[j] <= poj_magazynu, f"Limit_magazynu_{j}"
+        model += magazyn[j] <= inventory_capacity, f"Inventory_limit_{j}"
 
     return model, {"prod_normalna": prod_normalna, "prod_nadwym": prod_nadwym, "magazyn": magazyn}
 
 def build_model_task4(data):
-    model = LpProblem(name="Najkrotsza_sciezka_z_limitem_czasu", sense=LpMinimize)
+    model = LpProblem(name="Shortest_path_with_time_limit", sense=LpMinimize)
 
-    wezly = data["wezly"]
-    luki = data["luki"]
+    nodes = data["nodes"]
+    arcs = data["arcs"]
     start = data["start"]
-    koniec = data["koniec"]
-    limit_czasu = data["limit_czasu"]
+    koniec = data["end"]
+    time_limit = data["time_limit"]
 
-    dane_lukow = {}
-    for luk_dane in data["luki"]:
-        if len(luk_dane) == 4:
-            z, do, koszt, czas = luk_dane
-            dane_lukow[(z, do)] = {"koszt": koszt, "czas": czas}
-        elif len(luk_dane) == 5:
-            _nazwa, z, do, koszt, czas = luk_dane
-            dane_lukow[(z, do)] = {"koszt": koszt, "czas": czas}
+    arc_data = {}
+    for arc in arcs:
+        if len(arc) == 4:
+            from_node, to_node, cost, time = arc
+            arc_data[(from_node, to_node)] = {"cost": cost, "time": time}
+        elif len(arc) == 5:
+            _name, from_node, to_node, cost, time = arc
+            arc_data[(from_node, to_node)] = {"cost": cost, "time": time}
 
-    x = LpVariable.dicts("Sciezka", dane_lukow.keys(), cat='Binary')
+    x = LpVariable.dicts("Path", arc_data.keys(), cat='Binary')
 
-    model += lpSum(dane_lukow[luk]["koszt"] * x[luk] for luk in dane_lukow), "Calkowity_koszt_sciezki"
+    model += lpSum(arc_data[luk]["cost"] * x[luk] for luk in arc_data), "Total_path_cost"
 
-    model += lpSum(dane_lukow[luk]["czas"] * x[luk] for luk in dane_lukow) <= limit_czasu, "Limit_czasu"
+    model += lpSum(arc_data[luk]["time"] * x[luk] for luk in arc_data) <= time_limit, "Time_limit"
 
-    for w in wezly:
-        przeplyw_wchodzacy = lpSum(x[(i, j)] for (i, j) in dane_lukow if j == w)
-        przeplyw_wychodzacy = lpSum(x[(i, j)] for (i, j) in dane_lukow if i == w)
+    for w in nodes:
+        flow_in = lpSum(x[(i, j)] for (i, j) in arc_data if j == w)
+        flow_out = lpSum(x[(i, j)] for (i, j) in arc_data if i == w)
 
         if w == start:
-            model += przeplyw_wychodzacy - przeplyw_wchodzacy == 1, f"Przeplyw_start_{w}"
+            model += flow_out - flow_in == 1, f"Flow_start_{w}"
         elif w == koniec:
-            model += przeplyw_wchodzacy - przeplyw_wychodzacy == 1, f"Przeplyw_koniec_{w}"
+            model += flow_in - flow_out == 1, f"Flow_end_{w}"
         else:
-            model += przeplyw_wchodzacy - przeplyw_wychodzacy == 0, f"Przeplyw_posredni_{w}"
+            model += flow_in - flow_out == 0, f"Flow_intermediate_{w}"
 
     return model, x
 
 def build_model_task5(data):
-    model = LpProblem(name="Minimalizacja_liczby_radiowozow", sense=LpMinimize)
+    model = LpProblem(name="Minimize_number_of_patrol_cars", sense=LpMinimize)
 
-    dzielnice = data["dzielnice"]
-    zmiany = data["zmiany"]
+    districts = data["districts"]
+    shifts = data["shifts"]
 
     zmienne = {}
-    for d in dzielnice:
-        for z in zmiany:
-            min_val = data["min_radiowozy"][d][z]
-            max_val = data["max_radiowozy"][d][z]
-            zmienne[(d, z)] = LpVariable(name=f"Radiowozy_{d}_{z}",
+    for d in districts:
+        for z in shifts:
+            min_val = data["min_cars"][d][z]
+            max_val = data["max_cars"][d][z]
+            zmienne[(d, z)] = LpVariable(name=f"PatrolCars_{d}_{z}",
                                          lowBound=min_val,
                                          upBound=max_val,
                                          cat='Integer')
 
-    model += lpSum(zmienne[(d, z)] for d in dzielnice for z in zmiany), "Calkowita_liczba_przydzialow"
+    model += lpSum(zmienne[(d, z)] for d in districts for z in shifts), "Total_number_of_assignments"
 
-    for z in zmiany:
-        model += lpSum(zmienne[(d, z)] for d in dzielnice) >= data["min_lacznie_zmiana"][z], f"Min_lacznie_zmiana_{z}"
+    for z in shifts:
+        model += lpSum(zmienne[(d, z)] for d in districts) >= data["min_total_shift"][z], f"Min_total_shift_{z}"
     
-    for d in dzielnice:
-        model += lpSum(zmienne[(d, z)] for z in zmiany) >= data["min_lacznie_dzielnica"][d], f"Min_lacznie_dzielnica_{d}"
+    for d in districts:
+        model += lpSum(zmienne[(d, z)] for z in shifts) >= data["min_total_district"][d], f"Min_total_district_{d}"
 
     return model, zmienne
 
 def build_model_task6(data, k):
     m = data["m"]
     n = data["n"]
-    kontenery = [tuple(k) for k in data["kontenery"]]
+    kontenery = [tuple(k) for k in data["containers"]]
     
-    model = LpProblem(name=f"Rozmieszczenie_kamer_k={k}", sense=LpMinimize)
+    model = LpProblem(name=f"Camera_placement_k={k}", sense=LpMinimize)
 
-    pozycje = [(r, c) for r in range(m) for c in range(n)]
-    pozycje_kamer = [p for p in pozycje if p not in kontenery]
+    positions = [(r, c) for r in range(m) for c in range(n)]
+    camera_positions = [p for p in positions if p not in kontenery]
     
-    cam = LpVariable.dicts("Kamera", pozycje_kamer, cat='Binary')
+    cam = LpVariable.dicts("Camera", camera_positions, cat='Binary')
 
-    model += lpSum(cam[p] for p in pozycje_kamer), "Liczba_kamer"
+    model += lpSum(cam[p] for p in camera_positions), "Number_of_cameras"
 
     for (kr, kc) in kontenery:
-        widzace_kamery = []
-        for (pr, pc) in pozycje_kamer:
+        visible_cameras = []
+        for (pr, pc) in camera_positions:
             if (pr == kr and abs(pc - kc) <= k) or (pc == kc and abs(pr - kr) <= k):
-                widzace_kamery.append(cam[(pr, pc)])
+                visible_cameras.append(cam[(pr, pc)])
         
-        if widzace_kamery:
-            model += lpSum(widzace_kamery) >= 1, f"Pokrycie_kontenera_{kr}_{kc}"
+        if visible_cameras:
+            model += lpSum(visible_cameras) >= 1, f"Container_coverage_{kr}_{kc}"
         else:
-            print(f"OSTRZEŻENIE: Kontener w ({kr},{kc}) nie może być przez nic widziany!")
-            model += 1 == 0, f"Niespelnialne_pokrycie_{kr}_{kc}"
+            print(f"WARNING: Container at ({kr},{kc}) cannot be seen by any camera!")
+            model += 1 == 0, f"Unfeasible_coverage_{kr}_{kc}"
 
     return model, cam
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Użycie: python rozwiazania_lp.py <numer_zadania>")
-        print("Dostępne zadania: 1, 2, 3, 4a, 4b, 5, 6")
+        print("Usage: python solver.py <task_number>")
+        print("Available tasks: 1, 2, 3, 4a, 4b, 5, 6")
         sys.exit(1)
 
     numer_zadania_str = sys.argv[1]
@@ -283,12 +284,12 @@ if __name__ == "__main__":
             try:
                 k_zasięg = int(sys.argv[2])
             except ValueError:
-                print("Drugi argument (zasięg k) musi być liczbą całkowitą.")
+                print("Second argument (range k) must be an integer.")
                 sys.exit(1)
         prob, vars_ = build_model_task6(data, k=k_zasięg)
         nazwa_pliku_lp = f"model_ex6_k={k_zasięg}.lp"
     else:
-        print(f"Nieznany numer zadania: {numer_zadania_str}")
+        print(f"Unknown task number: {numer_zadania_str}")
         sys.exit(1)
 
     solve_and_save(prob, solver_name="CBC", lp_filename=nazwa_pliku_lp, solver_msg=True)
