@@ -1,6 +1,6 @@
-#line 1 "ex2.yy.c"
+#line 2 "ex2.yy.c"
 
-#line 3 "ex2.yy.c"
+#line 4 "ex2.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -466,9 +466,9 @@ char *yytext;
 #line 1 "ex2.l"
 #line 2 "ex2.l"
 #include <stdio.h>
-#line 469 "ex2.yy.c"
+#line 470 "ex2.yy.c"
 
-#line 471 "ex2.yy.c"
+#line 472 "ex2.yy.c"
 
 #define INITIAL 0
 #define SINGLE_Q 1
@@ -692,7 +692,7 @@ YY_DECL
 #line 10 "ex2.l"
 
 
-#line 695 "ex2.yy.c"
+#line 696 "ex2.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -852,7 +852,7 @@ YY_RULE_SETUP
 #line 38 "ex2.l"
 ECHO;
 	YY_BREAK
-#line 855 "ex2.yy.c"
+#line 856 "ex2.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(SINGLE_Q):
 case YY_STATE_EOF(DOUBLE_Q):
