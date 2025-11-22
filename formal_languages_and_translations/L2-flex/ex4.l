@@ -70,7 +70,7 @@ void bin_op(char op) {
 
 [ \t]+          { }
 
-"-?"[0-9]+      { push(atoi(yytext)); }
+-?[0-9]+      { push(atoi(yytext)); }
 
 "+"             { bin_op('+'); }
 "-"             { bin_op('-'); }
@@ -80,13 +80,13 @@ void bin_op(char op) {
 "^"             { bin_op('^'); }
 
 \n              {
-                  if (!has_error) {
-                      if (top == 0) {
-                          printf("= %d\n", stack[top]);
-                      } else if (top > 0) {
-                          error("Error: Too few operators");
-                      }
-                  }
+                //   if (!has_error) {
+                //       if (top == 0) {
+                //           printf("= %d\n", stack[top]);
+                //       } else if (top > 0) {
+                //           error("Error: Too few operators");
+                //       }
+                //   }
                   
                   has_error = 0;
                   top = -1;

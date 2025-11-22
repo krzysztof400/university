@@ -364,7 +364,7 @@ struct yy_trans_info
 static const flex_int16_t yy_accept[17] =
     {   0,
         0,    0,   12,   10,    1,    9,    7,    5,    3,    4,
-        6,    8,    1,    0,    2,    0
+        6,    2,    8,    1,    2,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -375,10 +375,10 @@ static const YY_CHAR yy_ec[256] =
         1,    2,    1,    1,    1,    1,    4,    1,    1,    1,
         1,    5,    6,    1,    7,    1,    8,    9,    9,    9,
         9,    9,    9,    9,    9,    9,    9,    1,    1,    1,
-        1,    1,   10,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,   11,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,   10,    1,    1,    1,    1,    1,    1,
 
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -399,16 +399,15 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[12] =
+static const YY_CHAR yy_meta[11] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1
     } ;
 
 static const flex_int16_t yy_base[17] =
     {   0,
-        0,    0,   17,   18,   14,   18,   18,   18,   18,    5,
-       18,   18,   12,    4,    3,   18
+        0,    0,   16,   17,   13,   17,   17,   17,   17,    5,
+       17,    4,   17,   10,    2,   17
     } ;
 
 static const flex_int16_t yy_def[17] =
@@ -417,18 +416,18 @@ static const flex_int16_t yy_def[17] =
        16,   16,   16,   16,   16,    0
     } ;
 
-static const flex_int16_t yy_nxt[30] =
+static const flex_int16_t yy_nxt[28] =
     {   0,
-        4,    5,    6,    7,    8,    9,   10,   11,    4,    4,
-       12,   15,   15,   13,   14,   13,   16,    3,   16,   16,
-       16,   16,   16,   16,   16,   16,   16,   16,   16
+        4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
+       15,   14,   15,   15,   14,   16,    3,   16,   16,   16,
+       16,   16,   16,   16,   16,   16,   16
     } ;
 
-static const flex_int16_t yy_chk[30] =
+static const flex_int16_t yy_chk[28] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,   15,   14,   13,   10,    5,    3,   16,   16,   16,
-       16,   16,   16,   16,   16,   16,   16,   16,   16
+       15,   14,   12,   10,    5,    3,   16,   16,   16,   16,
+       16,   16,   16,   16,   16,   16,   16
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -512,8 +511,8 @@ void bin_op(char op) {
     }
 }
 
+#line 515 "ex4.yy.c"
 #line 516 "ex4.yy.c"
-#line 517 "ex4.yy.c"
 
 #define INITIAL 0
 
@@ -733,7 +732,7 @@ YY_DECL
 #line 69 "ex4.l"
 
 
-#line 737 "ex4.yy.c"
+#line 736 "ex4.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -766,7 +765,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 18 );
+		while ( yy_base[yy_current_state] != 17 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -835,13 +834,13 @@ case 9:
 YY_RULE_SETUP
 #line 82 "ex4.l"
 {
-                  if (!has_error) {
-                      if (top == 0) {
-                          printf("= %d\n", stack[top]);
-                      } else if (top > 0) {
-                          error("Error: Too few operators");
-                      }
-                  }
+                //   if (!has_error) {
+                //       if (top == 0) {
+                //           printf("= %d\n", stack[top]);
+                //       } else if (top > 0) {
+                //           error("Error: Too few operators");
+                //       }
+                //   }
                   
                   has_error = 0;
                   top = -1;
@@ -861,7 +860,7 @@ YY_RULE_SETUP
 #line 101 "ex4.l"
 ECHO;
 	YY_BREAK
-#line 865 "ex4.yy.c"
+#line 864 "ex4.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
