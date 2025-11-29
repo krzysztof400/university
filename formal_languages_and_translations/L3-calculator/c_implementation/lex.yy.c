@@ -809,7 +809,7 @@ case 13:
 YY_RULE_SETUP
 #line 36 "calc.l"
 {
-              printf("Nieznany znak: %c\n", *yytext); 
+              printf("Unknown symbol: %c\n", *yytext); 
             }
 	YY_BREAK
 case 14:
