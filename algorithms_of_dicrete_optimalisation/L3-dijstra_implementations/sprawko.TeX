@@ -1,0 +1,167 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{caption}
+
+% Ustawienia marginesów
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+
+% Dane autora
+\title{\textbf{Sprawozdanie z Laboratorium 3}\\
+Algorytmy Optymalizacji Dyskretnej\\
+\large Porównanie implementacji algorytmu Dijkstry}
+\author{Krzysztof Zając}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Wstęp}
+Celem laboratorium było zaimplementowanie oraz porównanie wydajności trzech wariantów algorytmu Dijkstry, służącego do wyznaczania najkrótszych ścieżek w grafie z nieujemnymi wagami krawędzi. Badania przeprowadzono na różnych rodzinach grafów (losowych, siatkowych oraz drogowych) zgodnych ze specyfikacją \textit{9th DIMACS Implementation Challenge}.
+
+\section{Opis Implementacji i Złożoność}
+Zgodnie z wymaganiami, zaimplementowano trzy warianty algorytmu w języku C++.
+
+\subsection{Standardowy Algorytm Dijkstry}
+Wykorzystuje on kolejkę priorytetową do wybierania wierzchołka o najmniejszym oszacowaniu odległości. W implementacji użyto standardowego kontenera \texttt{std::priority\_queue} z biblioteki STL, który jest realizacją kopca binarnego.
+\begin{itemize}
+    \item \textbf{Struktura danych:} Kopiec binarny (binary heap).
+    \item \textbf{Złożoność obliczeniowa:} $O(m \log n)$, gdzie $m$ to liczba krawędzi, a $n$ to liczba wierzchołków.
+\end{itemize}
+
+\subsection{Algorytm Diala}
+Jest to implementacja kubełkowa algorytmu Dijkstry. Zamiast jednej kolejki priorytetowej, używa tablicy list (kubełków), gdzie indeks tablicy odpowiada odległości. Zastosowano bufor cykliczny o rozmiarze $C+1$, gdzie $C$ to maksymalna waga krawędzi.
+\begin{itemize}
+    \item \textbf{Struktura danych:} Tablica kubełków (buckets).
+    \item \textbf{Złożoność obliczeniowa:} $O(m + nC)$.
+    \item \textbf{Ograniczenia:} Algorytm jest bardzo wydajny dla małych wag całkowitych, ale jego złożoność i zużycie pamięci rosną liniowo wraz ze wzrostem maksymalnej wagi krawędzi $C$.
+\end{itemize}
+
+\subsection{Algorytm Radix Heap}
+Ulepszona wersja algorytmu kubełkowego, przeznaczona do radzenia sobie z większymi wagami. Kubełki przechowują zakresy odległości o rozmiarach będących potęgami dwójki. Wykorzystano funkcje wbudowane (np. \texttt{\_\_builtin\_clz}) do szybkiego obliczania indeksu kubełka.
+\begin{itemize}
+    \item \textbf{Struktura danych:} Radix Heap (kubełki o zmiennych zakresach).
+    \item \textbf{Złożoność obliczeniowa:} $O(m + n \log C)$.
+    \item \textbf{Zaleta:} Logarytmiczna zależność od $C$ czyni go teoretycznie szybszym od Diala dla dużych wag.
+\end{itemize}
+
+\section{Wyniki Eksperymentów}
+Testy przeprowadzono na zestawie danych DIMACS. Czas mierzono jako średnią z uruchomienia dla jednego ustalonego źródła oraz 5 losowych źródeł.
+
+\subsection{Rodzina Random4-n (Zależność od $n$)}
+Grafy losowe o stałym stopniu wierzchołka i małych wagach.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{plots/Random4-n_plot.png}
+    \caption{Zależność czasu działania od liczby wierzchołków ($n$) dla rodziny Random4-n.}
+    \label{fig:random4n}
+\end{figure}
+
+\textbf{Analiza:}
+Dla największych instancji ($n=2^{21}$) algorytm Diala osiągnął najlepszy czas (ok. 1036 ms), nieznacznie wyprzedzając standardowego Dijkstrę (1121 ms). Algorytm Radix Heap okazał się najwolniejszy (1787 ms), co prawdopodobnie wynika z narzutu zarządzania strukturą przy rzadkim grafie i losowych wagach.
+
+\subsection{Rodzina Random4-C (Zależność od kosztu $C$)}
+Grafy o stałym rozmiarze ($n=2^{20}$), ale rosnących wagach krawędzi.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{plots/Random4-C_plot.png}
+    \caption{Zależność czasu działania od maksymalnej wagi ($C$) dla rodziny Random4-C.}
+    \label{fig:random4c}
+\end{figure}
+
+\textbf{Analiza:}
+Wykres ten idealnie ilustruje teoretyczne właściwości algorytmów. Algorytm Diala jest bezkonkurencyjny dla bardzo małych wag ($C \le 16$), osiągając czasy rzędu 130-180 ms. Jednakże, wraz ze wzrostem $C$, jego wydajność drastycznie spada. Standardowy Dijkstra utrzymuje stały poziom wydajności (ok. 500-600 ms) niezależnie od wagi $C$.
+
+\subsection{Rodziny Long-n i Long-C}
+Długie, wąskie grafy.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{plots/Long-n_plot.png}
+    \caption{Czas działania dla rodziny Long-n.}
+    \label{fig:longn}
+\end{figure}
+
+\textbf{Analiza:}
+W rodzinie Long-n standardowy Dijkstra znacząco przewyższa wydajnością pozostałe algorytmy. Dla $n=2^{21}$ Dijkstra (360 ms) jest wielokrotnie szybszy od Radix Heap (1888 ms). Struktura grafu (długie ścieżki) jest niekorzystna dla algorytmów kubełkowych w zastosowanej implementacji.
+
+\subsection{Rodziny Square-n i Square-C}
+Grafy typu siatka (grid).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{plots/Square-n_plot.png}
+    \caption{Czas działania dla rodziny Square-n.}
+    \label{fig:squaren}
+\end{figure}
+
+\textbf{Analiza:}
+Podobnie jak w przypadku Long-n, dla siatek standardowy algorytm Dijkstry okazał się najszybszy. Dla $n=2^{21}$ Dijkstra (542 ms) jest drastycznie szybszy od Diala (4253 ms) i Radix Heap (8325 ms). Wskazuje to na wysoką efektywność kopca binarnego w grafach o regularnej strukturze siatki.
+
+\subsection{Sieć drogowa USA-road-d (NY)}
+Test przeprowadzono na grafie o topologii zbliżonej do drogowej. Ze względu na problemy z dostępnością oryginalnych plików DIMACS, test wykonano na grafie zastępczym o zbliżonym rozmiarze ($n \approx 260k$).
+
+\begin{table}[H]
+\centering
+\caption{Wyniki wydajności dla grafu typu USA-road-d (NY)}
+\begin{tabular}{lc}
+\toprule
+\textbf{Algorytm} & \textbf{Średni czas [ms]} \\
+\midrule
+Dijkstra (Std) & 138.69 \\
+Dial & 130.47 \\
+Radix Heap & 154.31 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Analiza:}
+W przypadku tego grafu różnice między algorytmami są niewielkie. Algorytm Diala okazał się najszybszy (130 ms), co potwierdza jego przydatność w grafach o wagach całkowitych, typowych dla odległości drogowych.
+
+\section{Weryfikacja Poprawności (P2P)}
+Zgodnie z wymaganiami, zweryfikowano poprawność algorytmów poprzez wyznaczenie odległości między losowymi parami wierzchołków dla dużej instancji ($n=2^{18}$). Poniższa tabela przedstawia wyniki otrzymane z programu testującego (plik \texttt{weryfikacja.res}).
+
+\begin{table}[H]
+\centering
+\caption{Przykładowe odległości wyznaczone przez algorytmy (Random4-n, $n=2^{18}$)}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Źródło ($s$)} & \textbf{Cel ($t$)} & \textbf{Wyznaczony Dystans} \\
+\midrule
+237829 & 33296 & 1051335 \\
+233614 & 27738 & 666975 \\
+128554 & 189030 & 1280252 \\
+2153 & 11997 & 1105507 \\
+238409 & 94242 & 925823 \\
+157743 & 43546 & 551741 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Wszystkie trzy zaimplementowane algorytmy (Dijkstra, Dial, Radix Heap) zwróciły identyczne wyniki długości ścieżek dla wszystkich testowanych par, co potwierdza poprawność implementacji.
+
+\section{Wnioski}
+\begin{enumerate}
+    \item \textbf{Standardowy Dijkstra} oparty na kopcu binarnym (STL) okazał się najbardziej uniwersalnym i stabilnym rozwiązaniem. W testach na grafach siatkowych (\textit{Square}, \textit{Long}) deklasował konkurencję. Jest niewrażliwy na wielkość wag krawędzi.
+    \item \textbf{Algorytm Diala} jest niezwykle szybki dla grafów o małych wagach krawędzi (Random4-C dla małych $C$), gdzie wyprzedza standardowego Dijkstrę. Jednak jego wydajność drastycznie spada wraz ze wzrostem wag (złożoność $O(nC)$), co czyni go nieużywalnym dla dużych kosztów.
+    \item \textbf{Radix Heap} w tej implementacji ustępował wydajnością zoptymalizowanej bibliotece standardowej C++. Mimo lepszej złożoności teoretycznej dla dużych wag niż Dial, narzut stały związany z zarządzaniem kubełkami był zbyt duży w porównaniu do prostoty kopca binarnego, szczególnie dla rzadkich grafów.
+    \item Struktura grafu ma kluczowe znaczenie: algorytmy kubełkowe radziły sobie znacznie gorzej na grafach typu siatka (\textit{Square}, \textit{Long}) w porównaniu do grafów losowych (\textit{Random}).
+\end{enumerate}
+
+\end{document}
