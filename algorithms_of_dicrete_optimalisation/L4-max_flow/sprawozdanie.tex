@@ -1,0 +1,131 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{hyperref}
+
+\geometry{margin=2.5cm}
+
+\title{Sprawozdanie: Algorytmy Optymalizacji Dyskretnej - Lista 4}
+\author{Imię Nazwisko (Nr Indeksu)}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Wstęp}
+Celem niniejszego sprawozdania jest analiza i przedstawienie wyników implementacji algorytmów maksymalnego przepływu oraz skojarzeń w grafach dwudzielnych. Zadania obejmowały implementację algorytmów Edmonds-Karp oraz relabel-to-front (lub wariantu najkrótszej ścieżki powiększającej - SAP), modelowanie problemu jako Programowanie Liniowe (LP) oraz badanie skojarzeń w grafach losowych.
+
+\section{Opis implementacji algorytmów (Zadania 1, 2, 4)}
+
+\subsection{Struktura FlowNetwork}
+Podstawą implementacji jest klasa \texttt{FlowNetwork}, reprezentująca sieć przepływową za pomocą list sąsiedztwa. Każda krawędź przechowuje informację o wierzchołku docelowym, aktualnej przepustowości rezydualnej, indeksie krawędzi powrotnej oraz oryginalnej przepustowości.
+
+\subsection{Algorytm Edmondsa-Karpa}
+Zaimplementowano klasyczny algorytm Edmondsa-Karpa, który jest realizacją metody Forda-Fulkersona wykorzystującą przeszukiwanie wszerz (BFS) do znajdowania najkrótszych ścieżek powiększających w grafie rezydualnym.
+\begin{itemize}
+    \item \textbf{Złożoność}: $O(V E^2)$.
+    \item \textbf{Działanie}: W każdej iteracji BFS znajduje najkrótszą ścieżkę (w sensie liczby krawędzi) z źródła do ujścia. Przepływ jest zwiększany o "wąskie gardło" tej ścieżki.
+\end{itemize}
+
+\subsection{Algorytm Shortest Augmenting Path (SAP)}
+Jako algorytm alternatywny użyto podejścia 'Shortest Augmenting Path' (implementacja wzorowana na metodach typu Goldberg-Tarjan/Relabel, ale z wykorzystaniem etykiet odległości do szybkiego znajdowania dopuszczalnych krawędzi).
+\begin{itemize}
+    \item \textbf{Złożoność}: Teoretycznie $O(V^2 E)$ dla ogólnej metody, w praktyce często znacznie szybszy od EK na gęstych grafach.
+    \item \textbf{Optymalizacje}: Użycie "Gap Heuristic" oraz wskaźników \texttt{current\_arc} pozwala na unikanie ponownego przeglądania nasyconych krawędzi.
+\end{itemize}
+
+\subsection{Maksymalne skojarzenie w grafie dwudzielnym (Zadanie 2)}
+Problem znalezienia maksymalnego skojarzenia w grafie dwudzielnym zredukowano do problemu maksymalnego przepływu:
+1. Dodano super-źródło $S$ połączone krawędziami o pojemności 1 ze wszystkimi wierzchołkami zbioru $V_1$.
+2. Dodano super-ujście $T$, do którego wchodzą krawędzie o pojemności 1 od wszystkich wierzchołków zbioru $V_2$.
+3. Istniejące krawędzie między $V_1$ a $V_2$ otrzymały pojemność 1 (lub $\infty$).
+4. Maksymalny przepływ w takiej sieci odpowiada liczności maksymalnego skojarzenia (z uwagi na całkowitoliczbowość przepływu).
+
+\section{Opis modeli Programowania Liniowego (Zadanie 3)}
+
+Dla problemu maksymalnego przepływu wygenerowano modele w formacie LP (rozwiązywalne przez GLPK).
+
+\subsection{Zmienne decyzyjne}
+Dla każdej krawędzi skierowanej $(u, v)$ w grafie zdefiniowano zmienną decyzyjną $f_{u,v}$ oznaczającą wielkość przepływu na tej krawędzi.
+
+\subsection{Funkcja celu}
+Celem jest maksymalizacja wypływu ze źródła $s$:
+$$ \max \sum_{v \in N(s)} f_{s,v} - \sum_{u \in N^{-1}(s)} f_{u,s} $$
+(W praktyce często wystarczy suma wypływów, jeśli do źródła nic nie wraca).
+
+\subsection{Ograniczenia}
+\begin{enumerate}
+    \item \textbf{Ograniczenie przepustowości}: Dla każdej krawędzi $(u, v)$, przepływ nie może przekraczać przepustowości $c_{u,v}$:
+    $$ 0 \le f_{u,v} \le c_{u,v} $$
+    \item \textbf{Zachowanie przepływu}: Dla każdego węzła $v \in V \setminus \{s, t\}$, suma wpływów musi równać się sumie wypływów:
+    $$ \sum_{u} f_{u,v} = \sum_{w} f_{v,w} $$
+\end{enumerate}
+
+Model generowany przez program zapisuje te równania w standardzie CPLEX LP, np.:
+\begin{verbatim}
+Maximize
+ obj: f_0_1 + f_0_2
+Subject To
+ c1: f_0_1 - f_1_3 = 0
+ ...
+\end{verbatim}
+
+\section{Wyniki eksperymentów}
+
+\subsection{Zadanie 1: Przepływ w hipersześcianie}
+Przeprowadzono testy dla wymiarów $k$ od 1 do 16. Porównano czas działania algorytmów Edmonds-Karp oraz SAP.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{comparison_task1.png}
+    \caption{Porównanie czasu wykonania i liczby ścieżek powiększających dla algorytmów EK i SAP w funkcji wymiaru $k$.}
+    \label{fig:task1}
+\end{figure}
+
+\textbf{Wnioski:}
+\begin{itemize}
+    \item Wraz ze wzrostem wymiaru $k$, liczba wierzchołków rośnie wykładniczo ($2^k$), co drastycznie zwiększa czas obliczeń.
+    \item Algorytm SAP wykazuje na ogół lepszą wydajność dla dużych grafów dzięki lepszemu zarządzaniu odległościami w grafie rezydualnym.
+    \item Liczba znalezionych ścieżek powiększających jest skorelowana z wartością maksymalnego przepływu.
+\end{itemize}
+
+\subsection{Zadanie 2: Skojarzenia w grafie dwudzielnym}
+Zbadano wpływ stopnia wierzchołka $i$ na wielkość maksymalnego skojarzenia w losowym grafie dwudzielnym o $2^k$ wierzchołkach po każdej stronie.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{task2_matching_vs_i.png}
+    \caption{Rozmiar maksymalnego skojarzenia w zależności od stopnia $i$ dla różnych $k$.}
+    \label{fig:task2_matching}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{task2_time_vs_k.png}
+    \caption{Czas wykonania algorytmu znajdowania skojarzenia w zależności od $k$.}
+    \label{fig:task2_time}
+\end{figure}
+
+\textbf{Wnioski:}
+\begin{itemize}
+    \item Dla małych wartości $i$ skojarzenie jest niepełne.
+    \item Wraz ze wzrostem $i$ (liczby krawędzi wychodzących z $V_1$), rozmiar skojarzenia szybko dąży do $2^k$ (skojarzenie doskonałe). Istnieje "próg", powyżej którego z dużym prawdopodobieństwem znajdujemy skojarzenie doskonałe.
+\end{itemize}
+
+\subsection{Poprawność wyników (GLPK)}
+Dla małych instancji ($k \le 4$) wyniki własnych implementacji zostały zweryfikowane przy użyciu solvera GLPK (wczytującego wygenerowane modele LP).
+\begin{itemize}
+    \item Wartości funkcji celu (Max Flow / Max Matching) były identyczne dla obu metod.
+    \item Potwierdza to poprawność implementacji algorytmów grafowych oraz generatora modeli LP.
+\end{itemize}
+
+\section{Podsumowanie}
+Zrealizowane zadania pozwoliły na praktyczne zapoznanie się z problematyką maksymalnego przepływu. Eksperymenty potwierdziły teoretyczne założenia dotyczące złożoności obliczeniowej oraz pokazały elastyczność redukcji problemów (skojarzenia) do przepływów. Weryfikacja za pomocą programowania liniowego stanowi silny dowód poprawności zaimplementowanych rozwiązań.
+
+\end{document}

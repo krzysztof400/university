@@ -1,0 +1,92 @@
+Problem:    
+Rows:       14
+Columns:    32
+Non-zeros:  56
+Status:     OPTIMAL
+Objective:  Max_Flow = 36 (MAXimum)
+
+   No.   Row name   St   Activity     Lower bound   Upper bound    Marginal
+------ ------------ -- ------------- ------------- ------------- -------------
+     1 Conservation_1
+                    NS             0             0             =         < eps
+     2 Conservation_10
+                    NS             0             0             =         < eps
+     3 Conservation_11
+                    NS             0             0             =         < eps
+     4 Conservation_12
+                    NS             0             0             =         < eps
+     5 Conservation_13
+                    NS             0             0             =         < eps
+     6 Conservation_14
+                    NS             0             0             =         < eps
+     7 Conservation_2
+                    NS             0             0             =             1 
+     8 Conservation_3
+                    NS             0             0             =         < eps
+     9 Conservation_4
+                    NS             0             0             =             1 
+    10 Conservation_5
+                    NS             0             0             =         < eps
+    11 Conservation_6
+                    NS             0             0             =         < eps
+    12 Conservation_7
+                    NS             0             0             =         < eps
+    13 Conservation_8
+                    NS             0             0             =             1 
+    14 Conservation_9
+                    NS             0             0             =         < eps
+
+   No. Column name  St   Activity     Lower bound   Upper bound    Marginal
+------ ------------ -- ------------- ------------- ------------- -------------
+     1 f_0_1        NU             4             0             4             1 
+     2 f_0_2        B             11             0            15 
+     3 f_0_4        B             10             0            10 
+     4 f_0_8        B             11             0            11 
+     5 f_1_3        B              0             0             7 
+     6 f_1_5        NU             1             0             1         < eps
+     7 f_1_9        NU             3             0             3         < eps
+     8 f_10_11      B              3             0             8 
+     9 f_10_14      B              6             0             8 
+    10 f_2_10       NU             2             0             2             1 
+    11 f_8_10       NU             7             0             7             1 
+    12 f_11_15      NU             5             0             5         < eps
+    13 f_3_11       B              2             0             4 
+    14 f_9_11       NL             0             0             4         < eps
+    15 f_12_13      NU             3             0             3         < eps
+    16 f_12_14      B              2             0             3 
+    17 f_4_12       NU             3             0             3             1 
+    18 f_8_12       NU             2             0             2             1 
+    19 f_13_15      B             10             0            14 
+    20 f_5_13       NU             2             0             2         < eps
+    21 f_9_13       B              5             0             7 
+    22 f_14_15      B              9             0            15 
+    23 f_6_14       NU             1             0             1         < eps
+    24 f_2_3        NU             5             0             5             1 
+    25 f_2_6        NU             4             0             4             1 
+    26 f_3_7        B              3             0             3 
+    27 f_4_5        NU             3             0             3             1 
+    28 f_4_6        NU             4             0             4             1 
+    29 f_5_7        B              2             0             4 
+    30 f_6_7        B              7             0             7 
+    31 f_7_15       NU            12             0            12         < eps
+    32 f_8_9        NU             2             0             2             1 
+
+Karush-Kuhn-Tucker optimality conditions:
+
+KKT.PE: max.abs.err = 0.00e+00 on row 0
+        max.rel.err = 0.00e+00 on row 0
+        High quality
+
+KKT.PB: max.abs.err = 0.00e+00 on row 0
+        max.rel.err = 0.00e+00 on row 0
+        High quality
+
+KKT.DE: max.abs.err = 0.00e+00 on column 0
+        max.rel.err = 0.00e+00 on column 0
+        High quality
+
+KKT.DB: max.abs.err = 0.00e+00 on row 0
+        max.rel.err = 0.00e+00 on row 0
+        High quality
+
+End of output
