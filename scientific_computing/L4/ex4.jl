@@ -1,6 +1,6 @@
 # Krzysztof Zając, 279757
 using Plots
-include("ex.jl")
+include("ex1.jl")
 include("ex2.jl")
 export rysujNnfx
 

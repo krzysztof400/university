@@ -1,5 +1,6 @@
 include("blocksys.jl")
 import .blocksys
+import LinearAlgebra
 
 function main()
     if length(ARGS) < 2
@@ -9,7 +10,7 @@ function main()
 
     matrix_file = ARGS[1]
     b_arg = ARGS[2]
-    out_file = length(ARGS) >= 3 ? ARGS[3] : "result_task1.txt"
+    out_file = length(ARGS) >= 3 ? ARGS[3] : "result_task1_bezpiwotu.txt"
 
     println("Loading matrix A...")
     A = blocksys.load_matrix(matrix_file)
@@ -28,14 +29,11 @@ function main()
 
     println("Solving Ax = b using Gaussian Elimination (with pivoting)...")
     # Using partial pivoting (true) as requested for robustness
-    @time x = blocksys.solve_gauss(A, b, pivot=true)
+    @time x = blocksys.solve_gauss(A, b, pivot=false)
 
     # Calculate error if exact solution known (ones)
-    err = 0.0
-    if b_arg == "gen"
-        err = norm(x - ones(n)) / norm(ones(n))
-        println("Relative Error: $err")
-    end
+    err = LinearAlgebra.norm(x - ones(n)) / LinearAlgebra.norm(ones(n))
+    println("Relative Error: $err")
 
     println("Saving solution to $out_file...")
     blocksys.write_solution(out_file, x, err)
