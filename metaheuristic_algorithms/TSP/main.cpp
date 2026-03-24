@@ -1,5 +1,0 @@
-import graph
-
-int main() {
-    
-}
