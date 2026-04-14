@@ -1,0 +1,152 @@
+bash: ./local_search_max: No such file or directory
+==================================================
+Processing: data/di38.tsp
+==================================================
+Graph loaded: dj38 (38 nodes)
+
+--- Task 1: Local Search (Full Neighborhood) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 6892.97
+  Average steps to opt:   34.58
+  Best solution value:    6656
+
+--- Task 2: Local Search (n Random Neighbors) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 11240.26
+  Average steps to opt:   26.95
+  Best solution value:    8426
+
+--- Task 3: MST Initialization + Local Search ---
+      Progress: 14% (1/7)      Progress: 28% (2/7)      Progress: 42% (3/7)      Progress: 57% (4/7)      Progress: 71% (5/7)      Progress: 85% (6/7)      Progress: 100% (7/7)==================================================
+Processing: data/di38.tsp
+==================================================
+Graph loaded: dj38 (38 nodes)
+
+--- Task 1: Local Search (Full Neighborhood) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 6899.32
+  Average steps to opt:   35.03
+  Best solution value:    6656
+
+--- Task 2: Local Search (n Random Neighbors) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 11016.95
+  Average steps to opt:   27.53
+  Best solution value:    9181
+
+--- Task 3: MST Initialization + Local Search ---
+      Progress: 14% (1/7)      Progress: 28% (2/7)      Progress: 42% (3/7)      Progress: 57% (4/7)      Progress: 71% (5/7)      Progress: 85% (6/7)      Progress: 100% (7/7)==================================================
+Processing: data/di38.tsp
+==================================================
+Graph loaded: dj38 (38 nodes)
+
+--- Task 1: Local Search (Full Neighborhood) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 6879.58
+  Average steps to opt:   34.34
+  Best solution value:    6656
+
+--- Task 2: Local Search (n Random Neighbors) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 11261.50
+  Average steps to opt:   27.84
+  Best solution value:    8809
+
+--- Task 3: MST Initialization + Local Search ---
+      Progress: 14% (1/7)      Progress: 28% (2/7)      Progress: 42% (3/7)      Progress: 57% (4/7)      Progress: 71% (5/7)      Progress: 85% (6/7)      Progress: 100% (7/7)==================================================
+Processing: data/di38.tsp
+==================================================
+Graph loaded: dj38 (38 nodes)
+
+--- Task 1: Local Search (Full Neighborhood) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 6935.66
+  Average steps to opt:   34.53
+  Best solution value:    6656
+
+--- Task 2: Local Search (n Random Neighbors) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 10795.92
+  Average steps to opt:   27.58
+  Best solution value:    8773
+
+--- Task 3: MST Initialization + Local Search ---
+      Progress: 14% (1/7)      Progress: 28% (2/7)      Progress: 42% (3/7)      Progress: 57% (4/7)      Progress: 71% (5/7)      Progress: 85% (6/7)      Progress: 100% (7/7)==================================================
+Processing: data/di38.tsp
+==================================================
+Graph loaded: dj38 (38 nodes)
+
+--- Task 1: Local Search (Full Neighborhood) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 6894.68
+  Average steps to opt:   35.00
+  Best solution value:    6656
+
+--- Task 2: Local Search (n Random Neighbors) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 10911.84
+  Average steps to opt:   26.92
+  Best solution value:    7781
+
+--- Task 3: MST Initialization + Local Search ---
+      Progress: 14% (1/7)      Progress: 28% (2/7)      Progress: 42% (3/7)      Progress: 57% (4/7)      Progress: 71% (5/7)      Progress: 85% (6/7)      Progress: 100% (7/7)==================================================
+Processing: data/di38.tsp
+==================================================
+Graph loaded: dj38 (38 nodes)
+
+--- Task 1: Local Search (Full Neighborhood) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 6904.18
+  Average steps to opt:   34.74
+  Best solution value:    6656
+
+--- Task 2: Local Search (n Random Neighbors) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 11336.45
+  Average steps to opt:   26.18
+  Best solution value:    8732
+
+--- Task 3: MST Initialization + Local Search ---
+      Progress: 14% (1/7)      Progress: 28% (2/7)      Progress: 42% (3/7)      Progress: 57% (4/7)      Progress: 71% (5/7)      Progress: 85% (6/7)      Progress: 100% (7/7)==================================================
+Processing: data/di38.tsp
+==================================================
+Graph loaded: dj38 (38 nodes)
+
+--- Task 2: Local Search (n Random Neighbors) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 11148.5
+  Average steps to opt:   26.8684
+  Best solution value:    8552
+
+--- Task 3: MST Initialization + Local Search ---
+      Progress: 14% (1/7)      Progress: 28% (2/7)      Progress: 42% (3/7)      Progress: 57% (4/7)      Progress: 71% (5/7)      Progress: 85% (6/7)      Progress: 100% (7/7)==================================================
+Processing: data/di38.tsp
+==================================================
+Graph loaded: dj38 (38 nodes)
+
+--- Task 2: Local Search (n Random Neighbors) ---
+      Progress: 7% (3/38)      Progress: 15% (6/38)      Progress: 23% (9/38)      Progress: 31% (12/38)      Progress: 39% (15/38)      Progress: 47% (18/38)      Progress: 55% (21/38)      Progress: 63% (24/38)      Progress: 71% (27/38)      Progress: 78% (30/38)      Progress: 86% (33/38)      Progress: 94% (36/38)      Progress: 100% (38/38)
+  Average solution value: 11125.7
+  Average steps to opt:   27.3158
+  Best solution value:    7919
+
+--- Task 3: MST Initialization + Local Search ---
+      Progress: 14% (1/7)      Progress: 28% (2/7)      Progress: 42% (3/7)      Progress: 57% (4/7)      Progress: 71% (5/7)      Progress: 85% (6/7)      Progress: 100% (7/7)
+  MST minimum weight:     5828
+  Average solution value: 6977.57
+  Average steps to opt:   8.57143
+  Best solution value:    6656
+
+==================================================
+Processing: data/mu1979.tsp
+==================================================
+Graph loaded: mu1979 (1979 nodes)
+
+--- Task 2: Local Search (n Random Neighbors) ---
+      Progress: 9% (197/1979)      Progress: 19% (394/1979)      Progress: 29% (591/1979)      Progress: 39% (788/1979)      Progress: 49% (985/1979)      Progress: 59% (1182/1979)      Progress: 69% (1379/1979)      Progress: 79% (1576/1979)      Progress: 89% (1773/1979)      Progress: 99% (1970/1979)      Progress: 100% (1979/1979)
+  Average solution value: 175774
+  Average steps to opt:   2632.82
+  Best solution value:    147786
+
+--- Task 3: MST Initialization + Local Search ---
+      Progress: 8% (4/45)      Progress: 17% (8/45)      Progress: 26% (12/45)      Progress: 35% (16/45)      Progress: 44% (20/45)      Progress: 53% (24/45)      Progress: 62% (28/45)      Progress: 71% (32/45)      Progress: 80% (36/45)      Progress: 88% (40/45)      Progress: 97% (44/45)      Progress: 100% (45/45)
