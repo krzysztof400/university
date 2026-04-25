@@ -123,7 +123,6 @@ local_search_2opt(std::vector<int> path) {
                 int t2 = tour[j];
                 int t2_next = tour[(j + 1) % N];
 
-                // calculate len of path
                 int delta = DIST[t1 * N + t2] + DIST[t1_next * N + t2_next]
                           - DIST[t1 * N + t1_next] - DIST[t2 * N + t2_next];
 
