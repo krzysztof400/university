@@ -2,7 +2,7 @@
 
 #include "Wheels.h"
 
-#define MS_PER_CM = 50
+#define MS_PER_CM 50
 #define SET_MOVEMENT(side,f,b) digitalWrite( side[0], f);\
                                digitalWrite( side[1], b)
 
