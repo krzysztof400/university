@@ -22,8 +22,8 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(EnA, HIGH);
-  digitalWrite(EnB, HIGH);
+  analogWrite(EnA, 16); // 0 - 255
+  analogWrite(EnB, 16);
 
   digitalWrite(In1, HIGH);
   digitalWrite(In3, HIGH);

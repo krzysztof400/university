@@ -1,18 +1,16 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h> //[cite: 1]
+#include <LiquidCrystal_I2C.h>
 
 #include "Wheels.h"
 
-// Poprawione makro
 #define MS_PER_CM 50
 #define SET_MOVEMENT(side,f,b) digitalWrite( side[0], f);\
                                digitalWrite( side[1], b)
 
-// Inicjalizacja obiektu LCD (częsty adres 0x27 lub 0x3F)[cite: 1]
+
 LiquidCrystal_I2C lcd(0x27, 16, 2); 
 
-// Własny znak: Strzałka w prawo[cite: 1]
 uint8_t arrowRight[8] = {
     0b01000,
     0b01100,
@@ -24,7 +22,6 @@ uint8_t arrowRight[8] = {
     0b01000
 };
 
-// Własny znak: Strzałka w lewo
 uint8_t arrowLeft[8] = {
     0b00010,
     0b00110,
@@ -80,11 +77,10 @@ void Wheels::attach(int pRF, int pRB, int pRS, int pLF, int pLB, int pLS)
     this->attachRight(pRF, pRB, pRS);
     this->attachLeft(pLF, pLB, pLS);
     
-    // Inicjalizacja LCD następuje podczas przypisywania pinów kół
-    lcd.init(); //[cite: 1]
-    lcd.backlight(); //[cite: 1]
+    lcd.init();
+    lcd.backlight();
     
-    // Tworzenie własnych znaków strzałek w pamięci ekranu[cite: 1]
+    // create our own chars in lcd memory
     lcd.createChar(0, arrowRight); 
     lcd.createChar(1, arrowLeft);  
     
@@ -144,10 +140,9 @@ void Wheels::goForward(int cm)
 {
     int currentSpeed = 200; 
     int totalTime = MS_PER_CM * cm; 
-    int stepTime = 200; // Aktualizujemy ekran co 200 ms
+    int stepTime = 200;
     int totalSteps = totalTime / stepTime;
     
-    // Zabezpieczenie przed podaniem np. 1 cm (czas całkowity < 200ms)
     if (totalSteps == 0) totalSteps = 1; 
 
     setSpeed(currentSpeed);
@@ -159,17 +154,16 @@ void Wheels::goForward(int cm)
 
         lcd.clear(); 
         
-        // --- LINIA 1: Zostało odległości ---
+        // distacnce
         lcd.setCursor(0, 0);
         lcd.print("Zostalo: ");
         lcd.print(remaining_cm);
         lcd.print("cm");
         
-        // --- LINIA 2: Deska rozdzielcza ---
+        // speed
         lcd.setCursor(0, 1);
         lcd.print(currentSpeed); 
         
-        // Animacja na środku - znak "arrowRight"[cite: 1]
         lcd.setCursor(6, 1);
         int frame = i % 3; 
         if (frame == 0) { lcd.write(0); lcd.print("  "); }
@@ -184,7 +178,7 @@ void Wheels::goForward(int cm)
     
     stop(); 
     
-    lcd.clear(); //[cite: 1]
+    lcd.clear();
     lcd.print("Cel osiagniety!");
     lcd.setCursor(0, 1);
     lcd.print("L: STOP  P: STOP");
@@ -196,7 +190,7 @@ void Wheels::goBack(int cm)
     int totalTime = MS_PER_CM * cm; 
     int stepTime = 200; 
     int totalSteps = totalTime / stepTime;
-    
+
     if (totalSteps == 0) totalSteps = 1;
 
     setSpeed(abs(currentSpeed)); 
@@ -206,17 +200,17 @@ void Wheels::goBack(int cm)
         int remaining_cm = cm - (cm * i / totalSteps);
         if (remaining_cm < 0) remaining_cm = 0;
 
-        lcd.clear(); //[cite: 1]
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("W tyl: ");
         lcd.print(remaining_cm);
         lcd.print("cm");
         
-        // Deska rozdzielcza
+        // speed
         lcd.setCursor(0, 1);
         lcd.print(currentSpeed); 
         
-        // Animacja w tył - własny znak arrowLeft
+        // arrowLeft
         lcd.setCursor(6, 1);
         int frame = i % 3; 
         if (frame == 0) { lcd.print("  "); lcd.write(1); }
@@ -231,7 +225,7 @@ void Wheels::goBack(int cm)
     
     stop();
     
-    lcd.clear(); //[cite: 1]
+    lcd.clear();
     lcd.print("Zatrzymany (Tyl)");
     lcd.setCursor(0, 1);
     lcd.print("L: STOP  P: STOP");

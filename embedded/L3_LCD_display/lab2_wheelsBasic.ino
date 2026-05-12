@@ -1,12 +1,9 @@
 #include "Wheels.h"
 
-
-
 Wheels w;
 volatile char cmd;
 
 void setup() {
-  // put your setup code here, to run once:
   w.attach(7,8,5,12,11,10);
   
   Serial.begin(9600);
@@ -34,6 +31,8 @@ void loop() {
       case '9': w.setSpeedRight(75); break;
       case '0': w.setSpeedRight(200); break;
       case '5': w.setSpeed(100); break;
+      case '' : w.goForward(); break;
+      case '' : w.goBack(); break;
     }
   }
 }

@@ -54,6 +54,9 @@ class Wheels {
         void setSpeedRight(uint8_t);
         void setSpeedLeft(uint8_t);
 
+        void goForward(int cm);
+        void goBack(int cm);
+
     private: 
         int pinsRight[3];
         int pinsLeft[3];
