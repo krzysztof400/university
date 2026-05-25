@@ -125,7 +125,6 @@ static void apply_2opt_inversion(std::vector<int>& tour, int i, int j) {
 // A Priori Parameter Estimation
 // ---------------------------------------------------------------------------
 
-// Szacuje początkową temperaturę tak, by szansa akceptacji gorszego ruchu wynosiła ~85%
 static double estimate_initial_temperature(double target_prob = 0.85, int samples = 1000) {
     std::vector<int> current_path = random_perm();
     std::uniform_int_distribution<int> rnd_idx(0, N - 1);
@@ -149,15 +148,13 @@ static double estimate_initial_temperature(double target_prob = 0.85, int sample
         int delta = DIST[t1 * N + t2] + DIST[t1_next * N + t2_next]
                   - DIST[t1 * N + t1_next] - DIST[t2 * N + t2_next];
 
-        if (delta > 0) { // Zbieramy tylko gorsze ruchy
+        if (delta > 0) {
             sum_positive_delta += delta;
             positive_count++;
         }
-        // W przeciwieństwie do prawdziwego SA, tu nic nie akceptujemy na stałe, 
-        // to tylko symulacja losowych ruchów z jednego punktu.
     }
 
-    if (positive_count == 0) return 1000.0; // Fallback
+    if (positive_count == 0) return 1000.0;
 
     double avg_delta = sum_positive_delta / positive_count;
     
@@ -353,27 +350,24 @@ int main(int argc, char* argv[]) {
     load_and_build(argv[1]);
     std::cout << "Graph: " << GRAPH_NAME << " (n=" << N << ")\n\n";
 
-    int iterations = 100; // Zgodnie z poleceniem dla dużych danych
+    int iterations = 100;
 
     // ==========================================
     // A Priori Parametrization
     // ==========================================
     
-    // Ustawienia dla SA
+    // SA
     SA_Params sa_params;
-    sa_params.initial_temp = estimate_initial_temperature(0.85); // 85% szansy na start
+    sa_params.initial_temp = estimate_initial_temperature(0.85); // 85% chance for start
     sa_params.alpha = 0.995; 
-    sa_params.epochs_per_temp = std::max(100, N); // Skalowanie epok z grafem
+    sa_params.epochs_per_temp = std::max(100, N); // scaling epochs with graph
 
-    // Ustawienia dla TS
+    // TS
     TS_Params ts_params;
     ts_params.tabu_list_size = std::max(1, (int)std::sqrt(N)); // TL = sqrt(N)
     ts_params.max_iterations = std::max(1000, 10 * N); 
-    ts_params.max_no_improve = ts_params.max_iterations / 5;   // 20% czasu bez poprawy = stop
+    ts_params.max_no_improve = ts_params.max_iterations / 5;   // 20% times without = stop
 
-    // ==========================================
-    // Wykonanie i Wypisywanie
-    // ==========================================
 
     std::cout << "--- Parametry A Priori ---\n";
     std::cout << "[SA] T_start = " << sa_params.initial_temp << ", alpha = " << sa_params.alpha << "\n";
