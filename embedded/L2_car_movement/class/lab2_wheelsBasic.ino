@@ -7,7 +7,7 @@ volatile char cmd;
 
 void setup() {
   // put your setup code here, to run once:
-  w.attach(7,8,5,12,11,10);
+  w.attach(12,13,10,6,7,5);
   
   Serial.begin(9600);
   Serial.println("Forward: WAD");
