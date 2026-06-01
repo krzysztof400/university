@@ -2,7 +2,7 @@
 
 #include "Wheels.h"
 
-#define MS_PER_CM 50
+#define MS_PER_CM 30
 #define SET_MOVEMENT(side,f,b) digitalWrite( side[0], f);\
                                digitalWrite( side[1], b)
 
@@ -102,6 +102,7 @@ void Wheels::stop()
 
 void Wheels::goForward(int cm)
 {
+    delay(5000);
     setSpeed(200);
     forward();
     delay((int)(MS_PER_CM * cm));

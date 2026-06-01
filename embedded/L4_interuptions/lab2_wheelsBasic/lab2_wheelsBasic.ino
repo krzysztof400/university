@@ -1,3 +1,4 @@
+#include "TimerOne.h"
 #include "Wheels.h"
 
 
@@ -6,8 +7,8 @@ Wheels w;
 volatile char cmd;
 
 void setup() {
-  // put your setup code here, to run once:
-  w.attach(12,13,10,6,7,5);
+  w.attach(7,8,5,12,11,10);
+
   
   Serial.begin(9600);
   Serial.println("Forward: WAD");
@@ -29,11 +30,13 @@ void loop() {
       case 'z': w.backLeft(); break;
       case 'c': w.backRight(); break;
       case 's': w.stop(); break;
-      case '1': w.setSpeedLeft(75); break;
-      case '2': w.setSpeedLeft(200); break;
-      case '9': w.setSpeedRight(75); break;
-      case '0': w.setSpeedRight(200); break;
-      case '5': w.setSpeed(100); break;
+      case '1': w.setSpeed(1); break;
+      case '2': w.setSpeed(2); break;
+      case '3': w.setSpeed(3); break;
+      case '4': w.setSpeed(4); break;
+      case '5': w.setSpeed(5); break;
+      case 'f' : w.goForward(200); break;
+      case 'b' : w.goBack(200); break;
     }
   }
 }

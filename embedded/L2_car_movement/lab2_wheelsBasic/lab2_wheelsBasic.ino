@@ -1,10 +1,15 @@
 #include "Wheels.h"
 
+
+
 Wheels w;
 volatile char cmd;
 
 void setup() {
+  // put your setup code here, to run once:
   w.attach(7,8,5,12,11,10);
+  // void Wheels::attach(int pRF, int pRB, int pRS, int pLF, int pLB, int pLS)
+  // blue green yellow grey purple white
   
   Serial.begin(9600);
   Serial.println("Forward: WAD");
@@ -12,6 +17,7 @@ void setup() {
   Serial.println("Stop: S");
 
 }
+
 
 void loop() {
   while(Serial.available())
@@ -31,8 +37,7 @@ void loop() {
       case '9': w.setSpeedRight(75); break;
       case '0': w.setSpeedRight(200); break;
       case '5': w.setSpeed(100); break;
-      case 'f' : w.goForward(200); break;
-      case 'b' : w.goBack(200); break;
+      case 'f': w.goForward(100); break;
     }
   }
 }

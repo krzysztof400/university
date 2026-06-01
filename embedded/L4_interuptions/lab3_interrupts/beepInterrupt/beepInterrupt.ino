@@ -24,12 +24,12 @@ void setup() {
 // główna pętla
 void loop() {
   while(Serial.available()){
+    Serial.println(intPeriod);
     char i = Serial.read();
     switch(i) {
       case '+' : intPeriod += 100000; TimerUpdate(); break;
       case '-' : intPeriod -= 100000; TimerUpdate(); break;
     }
-    Serial.println(intPeriod);
   }
 
 }

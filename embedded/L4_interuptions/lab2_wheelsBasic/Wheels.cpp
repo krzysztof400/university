@@ -2,11 +2,25 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
+#include "TimerOne.h"
 #include "Wheels.h"
 
 #define MS_PER_CM 30
 #define SET_MOVEMENT(side,f,b) digitalWrite( side[0], f);\
                                digitalWrite( side[1], b)
+
+#define BEEPER 13
+
+long int intPeroid = 500000;
+
+void doBeep() {
+  digitalWrite(BEEPER, digitalRead(BEEPER) ^ 1);
+}
+
+void TimerUpdate() {
+  Timer1.detachInterrupt();
+  Timer1.attachInterrupt(doBeep, intPeroid);
+}
 
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); 
@@ -68,14 +82,20 @@ void Wheels::setSpeedLeft(uint8_t s)
 
 void Wheels::setSpeed(uint8_t s)
 {
-    setSpeedLeft(s);
-    setSpeedRight(s);
+    setSpeedLeft(s*100);
+    setSpeedRight(s*100);
+    intPeroid = s*100000;
 }
 
 void Wheels::attach(int pRF, int pRB, int pRS, int pLF, int pLB, int pLS)
 {
     this->attachRight(pRF, pRB, pRS);
     this->attachLeft(pLF, pLB, pLS);
+
+      
+    pinMode(BEEPER, OUTPUT);
+    Timer1.initialize();
+    TimerUpdate();
     
     lcd.init();
     lcd.backlight();
@@ -116,6 +136,7 @@ void Wheels::forward()
 
 void Wheels::back()
 {
+    TimerUpdate();
     this->backLeft();
     this->backRight();
 }
@@ -138,7 +159,7 @@ void Wheels::stop()
 
 void Wheels::goForward(int cm)
 {
-    int currentSpeed = 200; 
+    int currentSpeed = 2; 
     int totalTime = MS_PER_CM * cm; 
     int stepTime = 200;
     int totalSteps = totalTime / stepTime;
@@ -186,11 +207,11 @@ void Wheels::goForward(int cm)
 
 void Wheels::goBack(int cm)
 {
-    int currentSpeed = -200; 
+    int currentSpeed = -2; 
     int totalTime = MS_PER_CM * cm; 
     int stepTime = 200; 
     int totalSteps = totalTime / stepTime;
-
+    
     if (totalSteps == 0) totalSteps = 1;
 
     setSpeed(abs(currentSpeed)); 
