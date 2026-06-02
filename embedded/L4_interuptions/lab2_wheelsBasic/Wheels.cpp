@@ -6,12 +6,20 @@
 #include "Wheels.h"
 
 #define MS_PER_CM 30
+#define SENSOR_RIGHT A0
+#define SENSOR_LEFT A1
 #define SET_MOVEMENT(side,f,b) digitalWrite( side[0], f);\
                                digitalWrite( side[1], b)
 
 #define BEEPER 13
 
 long int intPeroid = 500000;
+bool reverseBeepEnabled = false;
+volatile unsigned long rightWheelTicks = 0;
+volatile unsigned long leftWheelTicks = 0;
+float pulsesPerCm = 1.0f;
+
+LiquidCrystal_I2C lcd(0x27, 16, 2); 
 
 void doBeep() {
   digitalWrite(BEEPER, digitalRead(BEEPER) ^ 1);
@@ -22,8 +30,74 @@ void TimerUpdate() {
   Timer1.attachInterrupt(doBeep, intPeroid);
 }
 
+void TimerStop() {
+    Timer1.detachInterrupt();
+}
 
-LiquidCrystal_I2C lcd(0x27, 16, 2); 
+static unsigned long readRightWheelTicks() {
+    noInterrupts();
+    unsigned long value = rightWheelTicks;
+    interrupts();
+    return value;
+}
+
+static unsigned long readLeftWheelTicks() {
+    noInterrupts();
+    unsigned long value = leftWheelTicks;
+    interrupts();
+    return value;
+}
+
+static void resetWheelTicks() {
+    noInterrupts();
+    rightWheelTicks = 0;
+    leftWheelTicks = 0;
+    interrupts();
+}
+
+static int distanceToTargetTicks(int cm) {
+    int targetTicks = (int)(cm * pulsesPerCm + 0.5f);
+    if (targetTicks <= 0) {
+        targetTicks = 1;
+    }
+
+    return targetTicks;
+}
+
+static void setupWheelSensors() {
+    pinMode(SENSOR_RIGHT, INPUT);
+    pinMode(SENSOR_LEFT, INPUT);
+
+    PCICR = 0x02;
+    PCMSK1 = 0x03;
+}
+
+static void showProgress(const char *title, unsigned long leftTicks, unsigned long rightTicks, int targetTicks) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(title);
+    lcd.print(" ");
+    lcd.print(leftTicks);
+    lcd.print("/");
+    lcd.print(targetTicks);
+
+    lcd.setCursor(0, 1);
+    lcd.print("P ");
+    lcd.print(rightTicks);
+    lcd.print("/");
+    lcd.print(targetTicks);
+}
+
+ISR(PCINT1_vect) {
+    if (PINC & (1 << PC0)) {
+        rightWheelTicks++;
+    }
+
+    if (PINC & (1 << PC1)) {
+        leftWheelTicks++;
+    }
+}
+
 
 uint8_t arrowRight[8] = {
     0b01000,
@@ -82,9 +156,13 @@ void Wheels::setSpeedLeft(uint8_t s)
 
 void Wheels::setSpeed(uint8_t s)
 {
-    setSpeedLeft(s*100);
-    setSpeedRight(s*100);
-    intPeroid = s*100000;
+    setSpeedLeft(s);
+    setSpeedRight(s);
+    intPeroid = max(50000L, (long)s * 1000L);
+
+    if (reverseBeepEnabled) {
+        TimerUpdate();
+    }
 }
 
 void Wheels::attach(int pRF, int pRB, int pRS, int pLF, int pLB, int pLS)
@@ -95,7 +173,9 @@ void Wheels::attach(int pRF, int pRB, int pRS, int pLF, int pLB, int pLS)
       
     pinMode(BEEPER, OUTPUT);
     Timer1.initialize();
-    TimerUpdate();
+    TimerStop();
+    setupWheelSensors();
+    resetWheelTicks();
     
     lcd.init();
     lcd.backlight();
@@ -130,12 +210,15 @@ void Wheels::backRight()
 
 void Wheels::forward()
 {
+    reverseBeepEnabled = false;
+    TimerStop();
     this->forwardLeft();
     this->forwardRight();
 }
 
 void Wheels::back()
 {
+    reverseBeepEnabled = true;
     TimerUpdate();
     this->backLeft();
     this->backRight();
@@ -153,101 +236,193 @@ void Wheels::stopRight()
 
 void Wheels::stop()
 {
+    reverseBeepEnabled = false;
+    TimerStop();
     this->stopLeft();
     this->stopRight();
 }
 
 void Wheels::goForward(int cm)
 {
-    int currentSpeed = 2; 
-    int totalTime = MS_PER_CM * cm; 
-    int stepTime = 200;
-    int totalSteps = totalTime / stepTime;
-    
-    if (totalSteps == 0) totalSteps = 1; 
+    int currentSpeed = 180;
+    int targetTicks = distanceToTargetTicks(cm);
+    unsigned long startTime = millis();
+    unsigned long timeoutMs = max(1000L, (long)MS_PER_CM * cm * 2L);
 
+    resetWheelTicks();
     setSpeed(currentSpeed);
-    forward(); 
-    
-    for (int i = 0; i <= totalSteps; i++) {
-        int remaining_cm = cm - (cm * i / totalSteps);
-        if (remaining_cm < 0) remaining_cm = 0;
+    forward();
 
-        lcd.clear(); 
-        
-        // distacnce
-        lcd.setCursor(0, 0);
-        lcd.print("Zostalo: ");
-        lcd.print(remaining_cm);
-        lcd.print("cm");
-        
-        // speed
-        lcd.setCursor(0, 1);
-        lcd.print(currentSpeed); 
-        
-        lcd.setCursor(6, 1);
-        int frame = i % 3; 
-        if (frame == 0) { lcd.write(0); lcd.print("  "); }
-        else if (frame == 1) { lcd.print(" "); lcd.write(0); lcd.print(" "); }
-        else { lcd.print("  "); lcd.write(0); }
+    while (true) {
+        unsigned long leftTicks = readLeftWheelTicks();
+        unsigned long rightTicks = readRightWheelTicks();
 
-        lcd.setCursor(13, 1);
-        lcd.print(currentSpeed);
-        
-        delay(stepTime);
+        if (leftTicks >= (unsigned long)targetTicks && rightTicks >= (unsigned long)targetTicks) {
+            break;
+        }
+
+        if (millis() - startTime >= timeoutMs) {
+            break;
+        }
+
+        showProgress("F", leftTicks, rightTicks, targetTicks);
+        delay(50);
     }
-    
-    stop(); 
-    
+
+    stop();
+
     lcd.clear();
-    lcd.print("Cel osiagniety!");
+    lcd.print("Cel osiagiety!");
     lcd.setCursor(0, 1);
     lcd.print("L: STOP  P: STOP");
 }
 
 void Wheels::goBack(int cm)
 {
-    int currentSpeed = -2; 
-    int totalTime = MS_PER_CM * cm; 
-    int stepTime = 200; 
-    int totalSteps = totalTime / stepTime;
-    
-    if (totalSteps == 0) totalSteps = 1;
+    int currentSpeed = 180;
+    int targetTicks = distanceToTargetTicks(cm);
+    unsigned long startTime = millis();
+    unsigned long timeoutMs = max(1000L, (long)MS_PER_CM * cm * 2L);
 
-    setSpeed(abs(currentSpeed)); 
-    back(); 
-    
-    for (int i = 0; i <= totalSteps; i++) {
-        int remaining_cm = cm - (cm * i / totalSteps);
-        if (remaining_cm < 0) remaining_cm = 0;
+    resetWheelTicks();
+    setSpeed(currentSpeed);
+    back();
 
-        lcd.clear();
-        lcd.setCursor(0, 0);
-        lcd.print("W tyl: ");
-        lcd.print(remaining_cm);
-        lcd.print("cm");
-        
-        // speed
-        lcd.setCursor(0, 1);
-        lcd.print(currentSpeed); 
-        
-        // arrowLeft
-        lcd.setCursor(6, 1);
-        int frame = i % 3; 
-        if (frame == 0) { lcd.print("  "); lcd.write(1); }
-        else if (frame == 1) { lcd.print(" "); lcd.write(1); lcd.print(" "); }
-        else { lcd.write(1); lcd.print("  "); }
+    while (true) {
+        unsigned long leftTicks = readLeftWheelTicks();
+        unsigned long rightTicks = readRightWheelTicks();
 
-        lcd.setCursor(12, 1);
-        lcd.print(currentSpeed);
-        
-        delay(stepTime);
+        if (leftTicks >= (unsigned long)targetTicks && rightTicks >= (unsigned long)targetTicks) {
+            break;
+        }
+
+        if (millis() - startTime >= timeoutMs) {
+            break;
+        }
+
+        showProgress("B", leftTicks, rightTicks, targetTicks);
+        delay(50);
     }
-    
+
     stop();
-    
+
     lcd.clear();
     lcd.print("Zatrzymany (Tyl)");
     lcd.setCursor(0, 1);
     lcd.print("L: STOP  P: STOP");
+}
+
+void Wheels::turnLeft(int cm)
+{
+    int currentSpeed = 170;
+    int targetTicks = distanceToTargetTicks(cm);
+    unsigned long startTime = millis();
+    unsigned long timeoutMs = max(1000L, (long)MS_PER_CM * cm * 2L);
+
+    resetWheelTicks();
+    setSpeed(currentSpeed);
+    reverseBeepEnabled = true;
+    TimerUpdate();
+    backLeft();
+    forwardRight();
+
+    while (true) {
+        unsigned long leftTicks = readLeftWheelTicks();
+        unsigned long rightTicks = readRightWheelTicks();
+
+        if (leftTicks >= (unsigned long)targetTicks && rightTicks >= (unsigned long)targetTicks) {
+            break;
+        }
+
+        if (millis() - startTime >= timeoutMs) {
+            break;
+        }
+
+        showProgress("TL", leftTicks, rightTicks, targetTicks);
+        delay(50);
+    }
+
+    stop();
+
+    lcd.clear();
+    lcd.print("Skret w lewo");
+    lcd.setCursor(0, 1);
+    lcd.print("L: STOP  P: STOP");
+}
+
+void Wheels::turnRight(int cm)
+{
+    int currentSpeed = 170;
+    int targetTicks = distanceToTargetTicks(cm);
+    unsigned long startTime = millis();
+    unsigned long timeoutMs = max(1000L, (long)MS_PER_CM * cm * 2L);
+
+    resetWheelTicks();
+    setSpeed(currentSpeed);
+    reverseBeepEnabled = true;
+    TimerUpdate();
+    forwardLeft();
+    backRight();
+
+    while (true) {
+        unsigned long leftTicks = readLeftWheelTicks();
+        unsigned long rightTicks = readRightWheelTicks();
+
+        if (leftTicks >= (unsigned long)targetTicks && rightTicks >= (unsigned long)targetTicks) {
+            break;
+        }
+
+        if (millis() - startTime >= timeoutMs) {
+            break;
+        }
+
+        showProgress("TR", leftTicks, rightTicks, targetTicks);
+        delay(50);
+    }
+
+    stop();
+
+    lcd.clear();
+    lcd.print("Skret w prawo");
+    lcd.setCursor(0, 1);
+    lcd.print("L: STOP  P: STOP");
+}
+
+void Wheels::resetEncoders()
+{
+    resetWheelTicks();
+}
+
+unsigned long Wheels::getLeftTicks()
+{
+    return readLeftWheelTicks();
+}
+
+unsigned long Wheels::getRightTicks()
+{
+    return readRightWheelTicks();
+}
+
+void Wheels::setPulsesPerCm(float value)
+{
+    if (value > 0.0f) {
+        pulsesPerCm = value;
+    }
+}
+
+float Wheels::getPulsesPerCm()
+{
+    return pulsesPerCm;
+}
+
+void Wheels::showSpeedMeasurement(int setSpeedValue, float cmPerSec)
+{
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("setSpeed: ");
+    lcd.print(setSpeedValue);
+    lcd.setCursor(0, 1);
+    lcd.print("v=");
+    lcd.print(cmPerSec, 2);
+    lcd.print(" cm/s");
 }

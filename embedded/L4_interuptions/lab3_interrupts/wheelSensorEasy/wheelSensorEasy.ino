@@ -35,6 +35,6 @@ void loop() {
 void increment() {
   if(digitalRead(INTINPUT0))
     cnt0++;
-  else if(digitalRead(INTINPUT1))
+  if(digitalRead(INTINPUT1))
     cnt1++;
 }

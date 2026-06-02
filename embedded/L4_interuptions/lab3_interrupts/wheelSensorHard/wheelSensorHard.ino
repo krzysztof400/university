@@ -37,6 +37,6 @@ void loop() {
 ISR(PCINT1_vect) {
   if(digitalRead(INTINPUT0))
     cnt0++;
-  else if(digitalRead(INTINPUT1))
+  if(digitalRead(INTINPUT1))
     cnt1++;
 }

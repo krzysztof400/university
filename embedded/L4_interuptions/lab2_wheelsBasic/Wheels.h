@@ -56,6 +56,14 @@ class Wheels {
 
         void goForward(int cm);
         void goBack(int cm);
+        void turnLeft(int cm);
+        void turnRight(int cm);
+        void resetEncoders();
+        unsigned long getLeftTicks();
+        unsigned long getRightTicks();
+        void setPulsesPerCm(float value);
+        float getPulsesPerCm();
+        void showSpeedMeasurement(int setSpeedValue, float cmPerSec);
 
     private: 
         int pinsRight[3];
