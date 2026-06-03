@@ -8,6 +8,9 @@
 
 using Monomial = std::vector<int>;
 
+template <typename T>
+struct ReduceResult;
+
 // Pad a monomial to length n on the right with zeros.
 inline Monomial pad(Monomial m, size_t n) {
     m.resize(n, 0);
@@ -66,12 +69,6 @@ struct MonomialCmp {
         }
         return false;
     }
-};
-
-template <typename T>
-struct ReduceResult {
-    std::vector<MvPolynomial<T>> alphas; // Ciąg współczynników
-    MvPolynomial<T> r;                   // Reszta
 };
 
 template <typename T>
@@ -375,52 +372,100 @@ MvPolynomial<T> ext_gcd(MvPolynomial<T> a, MvPolynomial<T> b, MvPolynomial<T>& x
     return a / lc;
 }
 
-int main() {
-    double c = 9.0;
-    int a_val = 2;
-    double b = 7.0;
+template <typename T>
+struct ReduceResult {
+    std::vector<MvPolynomial<T>> alphas; // Ciąg współczynników
+    MvPolynomial<T> r;                   // Reszta
+};
 
-    MvPolynomial<double> P1(1);
-    P1 = P1 + MvPolynomial<double>(c, Monomial{a_val});
-    P1 = P1 + MvPolynomial<double>(b, Monomial{0});
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        std::cout << "Usage: " << argv[0] << " <1|2>\n";
+        return 1;
+    }
 
-    MvPolynomial<double> D(1);
-    D = D + MvPolynomial<double>(1.0, Monomial{1});
-    D = D + MvPolynomial<double>(1.0, Monomial{0});
+    std::string flag = argv[1];
 
-    std::cout << P1.degree() << "\n";
+    if (flag == "1") {
+        std::cout << "--- List 1 (Exercise 37) ---\n";
+        
+        MonomialCmp grlex(OrderType::GRADED_LEX);
+        
+        MvPolynomial<double> f(3, grlex);
+        f = f + MvPolynomial<double>(1.0, {3, 0, 0}, grlex)
+              - MvPolynomial<double>(1.0, {2, 1, 0}, grlex)
+              - MvPolynomial<double>(1.0, {2, 0, 1}, grlex);
 
-    auto div_res = P1.divmod({D});
-    std::cout << div_res.first[0] << "\n";
-    std::cout << div_res.second << "\n";
+        MvPolynomial<double> g1(3, grlex);
+        g1 = g1 + MvPolynomial<double>(1.0, {2, 1, 0}, grlex)
+                - MvPolynomial<double>(1.0, {0, 0, 1}, grlex);
 
-    MvPolynomial<double> V(1);
-    V = V + MvPolynomial<double>(1.0, Monomial{3});
-    V = V + MvPolynomial<double>(-2.0, Monomial{2});
-    V = V + MvPolynomial<double>(-1.0, Monomial{1});
-    V = V + MvPolynomial<double>(2.0, Monomial{0});
+        MvPolynomial<double> g2(3, grlex);
+        g2 = g2 + MvPolynomial<double>(1.0, {1, 1, 0}, grlex)
+                - MvPolynomial<double>(1.0, {0, 0, 0}, grlex);
 
-    MvPolynomial<double> W(1);
-    W = W + MvPolynomial<double>(7.0, Monomial{3});
-    W = W + MvPolynomial<double>(5.0, Monomial{2});
-    W = W + MvPolynomial<double>(7.0, Monomial{1});
+        std::vector<MvPolynomial<double>> G1 = {g1, g2};
+        std::vector<MvPolynomial<double>> G2 = {g2, g1};
 
-    double g = -W.evaluate({1.0});
+        auto res1 = f.PolynomialReduce(G1);
+        auto res2 = f.PolynomialReduce(G2);
 
-    MvPolynomial<double> W_g = W + MvPolynomial<double>(g, Monomial{0});
+        std::cout << "Polynomial f: " << f << "\n";
+        std::cout << "r1 (G = g1, g2): " << res1.r << "\n";
+        std::cout << "r2 (G = g2, g1): " << res2.r << "\n";
 
-    MvPolynomial<double> X(1), Y(1);
-    MvPolynomial<double> nwd = ext_gcd(V, W_g, X, Y);
+        MvPolynomial<double> diff = res1.r - res2.r;
+        auto res_diff = diff.PolynomialReduce(G1);
+        
+        std::cout << "Is r1 - r2 in <g1, g2>? ";
+        if (res_diff.r.isZeroPoly()) {
+            std::cout << "Yes\n";
+        } else {
+            std::cout << "No\n";
+        }
 
-    std::cout << g << "\n";
-    std::cout << nwd << "\n";
-    std::cout << X << "\n";
-    std::cout << Y << "\n";
-    
-    MvPolynomial<double> check = (V * X) + (W_g * Y);
-    std::cout << check << "\n";
-    
-    std::cout << lcm(V, W_g) << "\n";
+    } else if (flag == "2") {
+        std::cout << "--- List 2 (Index Exercise) ---\n";
+        std::cout << "Index: 279757 (a=2, b=7, c=9, d=7, e=5, f=7)\n";
+
+        std::vector<std::vector<int>> perms = {
+            {0, 1, 2},
+            {1, 2, 0}, 
+            {2, 0, 1}
+        };
+
+        for (size_t i = 0; i < perms.size(); ++i) {
+            MonomialCmp lex(OrderType::LEX, perms[i]);
+            
+            MvPolynomial<double> h(3, lex);
+            h = h + MvPolynomial<double>(1.0, {2, 7, 0}, lex)
+                  - MvPolynomial<double>(1.0, {0, 9, 7}, lex)
+                  + MvPolynomial<double>(1.0, {5, 0, 7}, lex);
+
+            MvPolynomial<double> g1(3, lex);
+            g1 = g1 + MvPolynomial<double>(1.0, {2, 0, 0}, lex)
+                    - MvPolynomial<double>(1.0, {0, 1, 0}, lex);
+
+            MvPolynomial<double> g2(3, lex);
+            g2 = g2 + MvPolynomial<double>(1.0, {0, 7, 0}, lex)
+                    - MvPolynomial<double>(1.0, {0, 0, 1}, lex);
+
+            std::vector<MvPolynomial<double>> G = {g1, g2};
+            auto res = h.PolynomialReduce(G);
+
+            std::cout << "\nPermutation " << i + 1 << " (";
+            for (size_t j = 0; j < perms[i].size(); ++j) {
+                std::cout << "x_" << perms[i][j] << (j < 2 ? " > " : "");
+            }
+            std::cout << "):\n";
+            std::cout << "h(x,y,z) = " << h << "\n";
+            std::cout << "Remainder r: " << res.r << "\n";
+        }
+
+    } else {
+        std::cout << "Invalid flag. Use 1 for List 1, or 2 for List 2.\n";
+        return 1;
+    }
 
     return 0;
 }
