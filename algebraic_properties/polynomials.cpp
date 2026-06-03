@@ -69,6 +69,12 @@ struct MonomialCmp {
 };
 
 template <typename T>
+struct ReduceResult {
+    std::vector<MvPolynomial<T>> alphas; // Ciąg współczynników
+    MvPolynomial<T> r;                   // Reszta
+};
+
+template <typename T>
 class MvPolynomial {
 private:
     std::map<Monomial, T, MonomialCmp> terms;   // monomial → coefficient
@@ -166,6 +172,54 @@ public:
         MvPolynomial res(numVars);
         for (auto& [m, c] : terms) res.terms[m] = c / scalar;
         return res;
+    }
+
+    ReduceResult<T> PolynomialReduce(const std::vector<MvPolynomial>& G) const {
+        int n = G.size();
+        std::vector<MvPolynomial> alphas(n, MvPolynomial(numVars, terms.key_comp()));
+        MvPolynomial r(numVars, terms.key_comp());
+        MvPolynomial f = *this;
+
+        while (!f.isZeroPoly()) {
+            bool division_occurred = false;
+            const Monomial& lm_f = f.leadMonomial();
+            const T&        lc_f = f.leadCoeff();
+
+            for (int i = 0; i < n; ++i) {
+                if (G[i].isZeroPoly())
+                    throw std::invalid_argument("Division by zero polynomial in G");
+
+                const Monomial& lm_g = G[i].leadMonomial();
+
+                size_t max_len = std::max(lm_f.size(), lm_g.size());
+                Monomial lm_f_pad = pad(lm_f, max_len);
+                Monomial lm_g_pad = pad(lm_g, max_len);
+                bool divides = true;
+                Monomial diff(max_len);
+                
+                for (size_t k = 0; k < max_len; ++k) {
+                    diff[k] = lm_f_pad[k] - lm_g_pad[k];
+                    if (diff[k] < 0) { divides = false; break; }
+                }
+
+                if (divides) {
+                    T factor_coeff = lc_f / G[i].leadCoeff();
+                    MvPolynomial term(factor_coeff, diff, terms.key_comp());
+                    
+                    alphas[i] = alphas[i] + term;
+                    f = f - (term * G[i]);
+                    division_occurred = true;
+                    break;
+                }
+            }
+
+            if (!division_occurred) {
+                MvPolynomial lt_f(lc_f, lm_f, terms.key_comp());
+                r = r + lt_f;
+                f = f - lt_f;
+            }
+        }
+        return {alphas, r};
     }
 
     std::pair<std::vector<MvPolynomial>, MvPolynomial>
