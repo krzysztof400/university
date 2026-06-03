@@ -28,10 +28,50 @@ inline int totalDeg(const Monomial& m) {
     return std::accumulate(m.begin(), m.end(), 0);
 }
 
+enum class OrderType {
+    LEX,
+    GRADED_LEX
+};
+
+struct MonomialCmp {
+    OrderType type;
+    std::vector<int> permutation; 
+
+    explicit MonomialCmp(OrderType t = OrderType::LEX, std::vector<int> perm = {}) 
+        : type(t), permutation(std::move(perm)) {}
+
+    bool operator()(Monomial a, Monomial b) const {
+        size_t n = std::max(a.size(), b.size());
+        a.resize(n, 0);
+        b.resize(n, 0);
+
+        if (type == OrderType::GRADED_LEX) {
+            int degA = std::accumulate(a.begin(), a.end(), 0);
+            int degB = std::accumulate(b.begin(), b.end(), 0);
+            if (degA != degB) {
+                return degA < degB;
+            }
+        }
+
+        if (permutation.empty()) {
+            for (size_t i = 0; i < n; ++i) {
+                if (a[i] != b[i]) return a[i] < b[i];
+            }
+        } else {
+            for (int var_idx : permutation) {
+                if (var_idx < static_cast<int>(n)) {
+                    if (a[var_idx] != b[var_idx]) return a[var_idx] < b[var_idx];
+                }
+            }
+        }
+        return false;
+    }
+};
+
 template <typename T>
 class MvPolynomial {
 private:
-    std::map<Monomial, T> terms;   // monomial → coefficient
+    std::map<Monomial, T, MonomialCmp> terms;   // monomial → coefficient
     int numVars;                   // number of variables
 
     static bool isZero(const T& v) { return v == T(0); }
@@ -47,24 +87,22 @@ private:
     }
 
 public:
-    explicit MvPolynomial(int n = 1) : numVars(n) {}
+    explicit MvPolynomial(int n = 1, MonomialCmp cmp = MonomialCmp()) 
+        : terms(cmp), numVars(n) {}
 
-    // Constant polynomial.
-    MvPolynomial(T constant, int n)
-        : numVars(n) {
+    MvPolynomial(T constant, int n, MonomialCmp cmp = MonomialCmp())
+        : terms(cmp), numVars(n) {
         if (!isZero(constant))
             terms[Monomial(n, 0)] = constant;
     }
 
-    // Single monomial: coefficient * x_0^e[0] * x_1^e[1] * ...
-    MvPolynomial(T coeff, Monomial exponents)
-        : numVars(static_cast<int>(exponents.size())) {
+    MvPolynomial(T coeff, Monomial exponents, MonomialCmp cmp = MonomialCmp())
+        : terms(cmp), numVars(static_cast<int>(exponents.size())) {
         if (!isZero(coeff))
             terms[std::move(exponents)] = coeff;
     }
 
-    // Build from explicit map.
-    MvPolynomial(std::map<Monomial, T> t, int n)
+    MvPolynomial(std::map<Monomial, T, MonomialCmp> t, int n)
         : terms(std::move(t)), numVars(n) {}
 
 
@@ -88,9 +126,10 @@ public:
     }
 
     MvPolynomial operator+(const MvPolynomial& other) const {
-        MvPolynomial res = *this;
+        // Używamy terms.key_comp() aby pobrać komparator z obecnego wielomianu
+        MvPolynomial res(std::max(numVars, other.numVars), terms.key_comp());
+        for (auto& [m, c] : terms) res.addTerm(m, c);
         for (auto& [m, c] : other.terms) res.addTerm(m, c);
-        res.numVars = std::max(numVars, other.numVars);
         return res;
     }
 
@@ -108,7 +147,7 @@ public:
     }
 
     MvPolynomial operator*(const MvPolynomial& other) const {
-        MvPolynomial res(std::max(numVars, other.numVars));
+        MvPolynomial res(std::max(numVars, other.numVars), terms.key_comp());
         for (auto& [ma, ca] : terms)
             for (auto& [mb, cb] : other.terms)
                 res.addTerm(monomialAdd(ma, mb), ca * cb);
