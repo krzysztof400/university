@@ -241,8 +241,13 @@ void Wheels::left()
         backLeft();
         forwardRight();
     } else {
-        int slowSpeed = currentBaseSpeed * 0.4;
-        int fastSpeed = min(255, currentBaseSpeed * 1.3);
+        int turnOffset = currentBaseSpeed * 0.30; 
+        
+        int slowSpeed = currentBaseSpeed - turnOffset;
+        int fastSpeed = currentBaseSpeed + turnOffset;
+        
+        slowSpeed = constrain(slowSpeed, 0, 255);
+        fastSpeed = constrain(fastSpeed, 0, 255);
         
         setSpeedLeft(slowSpeed);
         setSpeedRight(fastSpeed);
@@ -261,8 +266,13 @@ void Wheels::right()
         forwardLeft();
         backRight();
     } else {
-        int slowSpeed = currentBaseSpeed * 0.4;
-        int fastSpeed = min(255, currentBaseSpeed * 1.3);
+        int turnOffset = currentBaseSpeed * 0.30; 
+        
+        int slowSpeed = currentBaseSpeed - turnOffset;
+        int fastSpeed = currentBaseSpeed + turnOffset;
+        
+        slowSpeed = constrain(slowSpeed, 0, 255);
+        fastSpeed = constrain(fastSpeed, 0, 255);
         
         setSpeedLeft(fastSpeed);
         setSpeedRight(slowSpeed);
