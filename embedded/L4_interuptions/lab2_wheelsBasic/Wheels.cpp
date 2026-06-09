@@ -156,6 +156,7 @@ void Wheels::setSpeedLeft(uint8_t s)
 
 void Wheels::setSpeed(uint8_t s)
 {
+    this->currentBaseSpeed = s;
     setSpeedLeft(s);
     setSpeedRight(s);
     intPeroid = max(50000L, (long)s * 1000L);
@@ -210,6 +211,8 @@ void Wheels::backRight()
 
 void Wheels::forward()
 {
+    currentDirection = 1;
+    setSpeed(currentBaseSpeed);
     reverseBeepEnabled = false;
     TimerStop();
     this->forwardLeft();
@@ -218,10 +221,52 @@ void Wheels::forward()
 
 void Wheels::back()
 {
+    currentDirection = -1;
+    setSpeed(currentBaseSpeed);
     reverseBeepEnabled = true;
     TimerUpdate();
     this->backLeft();
     this->backRight();
+}
+
+void Wheels::left()
+{
+    if (currentDirection == 0 || currentBaseSpeed == 0) {
+        int turnSpeed = 160;
+        setSpeedLeft(turnSpeed);
+        setSpeedRight(turnSpeed);
+        
+        reverseBeepEnabled = true;
+        TimerUpdate();
+        backLeft();
+        forwardRight();
+    } else {
+        int slowSpeed = currentBaseSpeed * 0.4;
+        int fastSpeed = min(255, currentBaseSpeed * 1.3);
+        
+        setSpeedLeft(slowSpeed);
+        setSpeedRight(fastSpeed);
+    }
+}
+
+void Wheels::right()
+{
+    if (currentDirection == 0 || currentBaseSpeed == 0) {
+        int turnSpeed = 160;
+        setSpeedLeft(turnSpeed);
+        setSpeedRight(turnSpeed);
+        
+        reverseBeepEnabled = true;
+        TimerUpdate();
+        forwardLeft();
+        backRight();
+    } else {
+        int slowSpeed = currentBaseSpeed * 0.4;
+        int fastSpeed = min(255, currentBaseSpeed * 1.3);
+        
+        setSpeedLeft(fastSpeed);
+        setSpeedRight(slowSpeed);
+    }
 }
 
 void Wheels::stopLeft()
@@ -236,6 +281,7 @@ void Wheels::stopRight()
 
 void Wheels::stop()
 {
+    currentDirection = 0;
     reverseBeepEnabled = false;
     TimerStop();
     this->stopLeft();
@@ -308,82 +354,6 @@ void Wheels::goBack(int cm)
 
     lcd.clear();
     lcd.print("Zatrzymany (Tyl)");
-    lcd.setCursor(0, 1);
-    lcd.print("L: STOP  P: STOP");
-}
-
-void Wheels::turnLeft(int cm)
-{
-    int currentSpeed = 170;
-    int targetTicks = distanceToTargetTicks(cm);
-    unsigned long startTime = millis();
-    unsigned long timeoutMs = max(1000L, (long)MS_PER_CM * cm * 2L);
-
-    resetWheelTicks();
-    setSpeed(currentSpeed);
-    reverseBeepEnabled = true;
-    TimerUpdate();
-    backLeft();
-    forwardRight();
-
-    while (true) {
-        unsigned long leftTicks = readLeftWheelTicks();
-        unsigned long rightTicks = readRightWheelTicks();
-
-        if (leftTicks >= (unsigned long)targetTicks && rightTicks >= (unsigned long)targetTicks) {
-            break;
-        }
-
-        if (millis() - startTime >= timeoutMs) {
-            break;
-        }
-
-        showProgress("TL", leftTicks, rightTicks, targetTicks);
-        delay(50);
-    }
-
-    stop();
-
-    lcd.clear();
-    lcd.print("Skret w lewo");
-    lcd.setCursor(0, 1);
-    lcd.print("L: STOP  P: STOP");
-}
-
-void Wheels::turnRight(int cm)
-{
-    int currentSpeed = 170;
-    int targetTicks = distanceToTargetTicks(cm);
-    unsigned long startTime = millis();
-    unsigned long timeoutMs = max(1000L, (long)MS_PER_CM * cm * 2L);
-
-    resetWheelTicks();
-    setSpeed(currentSpeed);
-    reverseBeepEnabled = true;
-    TimerUpdate();
-    forwardLeft();
-    backRight();
-
-    while (true) {
-        unsigned long leftTicks = readLeftWheelTicks();
-        unsigned long rightTicks = readRightWheelTicks();
-
-        if (leftTicks >= (unsigned long)targetTicks && rightTicks >= (unsigned long)targetTicks) {
-            break;
-        }
-
-        if (millis() - startTime >= timeoutMs) {
-            break;
-        }
-
-        showProgress("TR", leftTicks, rightTicks, targetTicks);
-        delay(50);
-    }
-
-    stop();
-
-    lcd.clear();
-    lcd.print("Skret w prawo");
     lcd.setCursor(0, 1);
     lcd.print("L: STOP  P: STOP");
 }

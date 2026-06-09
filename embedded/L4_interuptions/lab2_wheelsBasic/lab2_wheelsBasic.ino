@@ -78,8 +78,8 @@ void loop() {
       case 'd': w.forwardRight(); break;
       case 'z': w.backLeft(); break;
       case 'c': w.backRight(); break;
-      case 'l': w.turnLeft(20); break;
-      case 'r': w.turnRight(20); break;
+      case 'a': w.left(); break;
+      case 'd': w.right(); break;
       case 's': w.stop(); break;
       case '1': w.setSpeed(60); break;
       case '2': w.setSpeed(90); break;
@@ -89,7 +89,6 @@ void loop() {
       case 'f' : w.goForward(200); break;
       case 'b' : w.goBack(200); break;
       case 'v' : runSpeedSweep(); break;
-      case 'V' : runSpeedSweep(); break;
     }
   }
 }

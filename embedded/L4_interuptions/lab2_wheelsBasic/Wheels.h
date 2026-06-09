@@ -36,16 +36,18 @@ class Wheels {
         /*
          *  funkcje ruchu
          */
-        void forward();
-        void forwardLeft();
-        void forwardRight();
-        void back();
-        void backLeft();
-        void backRight();
-        void stop();
-        void stopLeft();
-        void stopRight();
-        /*
+         void forward();
+         void forwardLeft();
+         void forwardRight();
+         void back();
+         void backLeft();
+         void backRight();
+         void stop();
+         void stopLeft();
+         void stopRight();
+         void left();
+         void right();
+         /*
          *  ustawienie prędkości obrotowej (przez PWM)
          *   - minimalna efektywna wartość 60
          *      może zależeć od stanu naładowania baterii
@@ -56,8 +58,6 @@ class Wheels {
 
         void goForward(int cm);
         void goBack(int cm);
-        void turnLeft(int cm);
-        void turnRight(int cm);
         void resetEncoders();
         unsigned long getLeftTicks();
         unsigned long getRightTicks();
@@ -68,6 +68,8 @@ class Wheels {
     private: 
         int pinsRight[3];
         int pinsLeft[3];
+        uint8_t currentBaseSpeed = 0;
+        int currentDirection = 0;
 };
 
 
