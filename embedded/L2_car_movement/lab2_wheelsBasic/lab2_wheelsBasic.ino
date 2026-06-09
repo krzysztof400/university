@@ -10,6 +10,7 @@ void setup() {
   w.attach(7,8,5,12,11,10);
   // void Wheels::attach(int pRF, int pRB, int pRS, int pLF, int pLB, int pLS)
   // blue green yellow grey purple white
+  // może będzie trzeba zmienic 11 i 10 ze sobą miejscami i odpowiednio zmienić ze sobą miejscami kabelki
   
   Serial.begin(9600);
   Serial.println("Forward: WAD");
