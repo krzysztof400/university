@@ -27,7 +27,7 @@ static long measureDistanceCm(int angle) {
   delayMicroseconds(10);
   digitalWrite(SONAR_TRIG, LOW);
 
-  long duration = pulseIn(SONAR_ECHO, HIGH, 30000); // 30 ms timeout
+  long duration = pulseIn(SONAR_ECHO, HIGH, 30000);
   if (duration == 0) return -1;
 
   return (duration / 2) / 29.1;
@@ -49,34 +49,56 @@ static int scanFront(int &outDistance) {
   return bestAngle;
 }
 
-static void avoidObstacleIfNeeded(int bestDist) {
-  if (bestDist <= 0 || bestDist > DIST_THRESHOLD_CM) {
-    return;
-  }
+static void avoidObstacleIfNeeded() {
+    int frontDist = (int)measureDistanceCm(90);
 
-  w.stop();
-  delay(200);
+    if (frontDist < 0 || frontDist > DIST_THRESHOLD_CM) {
+        w.forward();
+        return;
+    }
 
-  int leftDist = (int)measureDistanceCm(SCAN_MAX_ANGLE);
-  int rightDist = (int)measureDistanceCm(SCAN_MIN_ANGLE);
+    w.stop();
+    delay(300);
 
-  if (leftDist > rightDist) {
-    w.turnLeft(40);
-    w.goForward(50);
-  } else {
-    w.turnRight(40);
-    w.goForward(50);
-  }
+    while (true) {
+
+        int leftDist  = (int)measureDistanceCm(SCAN_MAX_ANGLE); // 150°
+        int rightDist = (int)measureDistanceCm(SCAN_MIN_ANGLE); // 30°
+
+        bool leftFree  = leftDist  > DIST_THRESHOLD_CM;
+        bool rightFree = rightDist > DIST_THRESHOLD_CM;
+
+        // free on left
+        if (leftFree && leftDist >= rightDist) {
+            w.turnLeft(40);
+            delay(500);
+            w.stop();
+            break;
+        }
+
+        // free on right
+        if (rightFree) {
+            w.turnRight(40);
+            delay(500);
+            w.stop();
+            break;
+        }
+
+        // both blocked
+        w.goBack(30);
+        delay(500);
+        w.stop();
+        delay(300);
+    }
 }
 
 static void idleScanStep() {
   int bestDist = -1;
   int bestAngle = scanFront(bestDist);
 
-  // LCD only, no Serial spam
   w.displaySonar(bestAngle, bestDist);
 
-  avoidObstacleIfNeeded(bestDist);
+  avoidObstacleIfNeeded();
 
   delay(200);
 }
@@ -147,7 +169,7 @@ static void handleCommand(char c) {
 
 void setup() {
   w.attach(7, 8, 5, 12, 13, 6);
-  w.setPulsesPerCm(1.0f);
+  w.setPulsesPerCm(2.0f);
 
   pinMode(SONAR_TRIG, OUTPUT);
   pinMode(SONAR_ECHO, INPUT);
@@ -156,8 +178,6 @@ void setup() {
   scanServo.write((SCAN_MIN_ANGLE + SCAN_MAX_ANGLE) / 2);
 
   Serial.begin(9600);
-
-  // Optional: startup message on LCD already handled in Wheels::attach()
 }
 
 void loop() {
