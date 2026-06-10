@@ -53,8 +53,11 @@ void runSpeedSweep() {
 }
 
 void setup() {
-  w.attach(7,8,5,12,11,10);
-  w.setPulsesPerCm(1.0f);
+  w.attach(7,8,5,12,13,6);
+  // void Wheels::attach(int pRF, int pRB, int pRS, int pLF, int pLB, int pLS)
+  // blue green yellow grey purple white
+
+  w.setPulsesPerCm(2.0f);
 
   
   Serial.begin(9600);
