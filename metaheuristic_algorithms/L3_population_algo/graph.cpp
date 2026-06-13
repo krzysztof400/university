@@ -30,6 +30,11 @@ static std::vector<int> DIST;
 
 inline int dist(int i, int j) { return DIST[i * N + j]; }
 
+enum class CrossoverMethod {
+    OX1,
+    PMX
+};
+
 struct Timer {
     std::chrono::time_point<std::chrono::steady_clock> start;
     Timer() : start(std::chrono::steady_clock::now()) {}
@@ -110,10 +115,10 @@ static std::vector<int> random_perm() {
 }
 
 // ---------------------------------------------------------------------------
-// Genetic & Memetic Operators
+// Genetic Operators
 // ---------------------------------------------------------------------------
 
-// Order Crossover (OX1) - optymalny dla permutacji (TSP)
+// 1. Order Crossover (OX1)
 static std::vector<int> crossover_ox(const std::vector<int>& p1, const std::vector<int>& p2) {
     auto& rng = get_local_rng();
     std::vector<int> child(N, -1);
@@ -141,13 +146,50 @@ static std::vector<int> crossover_ox(const std::vector<int>& p1, const std::vect
     return child;
 }
 
-// ---------------------------------------------------------------------------
-// Algorithm
-// ---------------------------------------------------------------------------
-static std::tuple<int, std::vector<int>, int> genetic_algorithm() {
-    int max_epochs = 100;
-    int popSize = std::min(N * 10, 200);
+// 2. Partially Mapped Crossover (PMX)
+static std::vector<int> crossover_pmx(const std::vector<int>& p1, const std::vector<int>& p2) {
+    auto& rng = get_local_rng();
+    std::vector<int> child(N, -1);
     
+    int start = std::uniform_int_distribution<>(0, N - 1)(rng);
+    int end = std::uniform_int_distribution<>(0, N - 1)(rng);
+    if (start > end) std::swap(start, end);
+
+    std::vector<bool> in_child(N + 1, false);
+    for (int i = start; i <= end; ++i) {
+        child[i] = p1[i];
+        in_child[p1[i]] = true;
+    }
+
+    for (int i = 0; i < N; ++i) {
+        if (i >= start && i <= end) continue;
+        
+        int val = p2[i];
+        // Rozwiązywanie konfliktów mapowania PMX
+        while (in_child[val]) {
+            auto it = std::find(p1.begin() + start, p1.begin() + end + 1, val);
+            int idx = std::distance(p1.begin(), it);
+            val = p2[idx];
+        }
+        child[i] = val;
+    }
+    return child;
+}
+
+// ---------------------------------------------------------------------------
+// Algorithm Core
+// ---------------------------------------------------------------------------
+static std::tuple<int, std::vector<int>, int> genetic_algorithm(bool withIsland, CrossoverMethod cx_method) {
+    int max_epochs = 100;
+    int popSize = std::min(N * 10, 200); 
+    
+    // Ustawienia wysp
+    int num_islands = withIsland ? 4 : 1;
+    // Wyrównujemy popSize, aby dzieliło się idealnie przez num_islands
+    popSize = (popSize / num_islands) * num_islands; 
+    int island_size = popSize / num_islands;
+    int migration_interval = 10; // Co ile epok następuje wymiana genów
+
     std::vector<std::vector<int>> population(popSize);
     std::vector<int> fitness(popSize);
     std::vector<int> indices(popSize);
@@ -163,11 +205,15 @@ static std::tuple<int, std::vector<int>, int> genetic_algorithm() {
         });
     };
 
-    auto selection_tournament = [&](const std::vector<int>& fit, int k = 3) {
+    // Selekcja odbywa się tylko w obrębie własnej wyspy
+    auto selection_tournament = [&](const std::vector<int>& fit, int island_id, int k = 3) {
         auto& rng = get_local_rng();
-        int best_idx = std::uniform_int_distribution<>(0, popSize - 1)(rng);
+        int start_idx = island_id * island_size;
+        int end_idx = start_idx + island_size - 1;
+        
+        int best_idx = std::uniform_int_distribution<>(start_idx, end_idx)(rng);
         for(int i = 1; i < k; ++i) {
-            int idx = std::uniform_int_distribution<>(0, popSize - 1)(rng);
+            int idx = std::uniform_int_distribution<>(start_idx, end_idx)(rng);
             if(fit[idx] < fit[best_idx]) best_idx = idx;
         }
         return best_idx;
@@ -175,11 +221,16 @@ static std::tuple<int, std::vector<int>, int> genetic_algorithm() {
 
     auto do_crossover = [&](std::vector<std::vector<int>>& next_pop) {
         std::for_each(std::execution::par_unseq, indices.begin(), indices.end(), [&](int i) {
-            int p1_idx = selection_tournament(fitness);
-            int p2_idx = selection_tournament(fitness);
-            next_pop[i] = crossover_ox(population[p1_idx], population[p2_idx]);
+            int island_id = i / island_size; // Określenie przynależności do wyspy
+            int p1_idx = selection_tournament(fitness, island_id);
+            int p2_idx = selection_tournament(fitness, island_id);
             
-            // Lekka mutacja Swap (~10% szans)
+            if (cx_method == CrossoverMethod::OX1) {
+                next_pop[i] = crossover_ox(population[p1_idx], population[p2_idx]);
+            } else {
+                next_pop[i] = crossover_pmx(population[p1_idx], population[p2_idx]);
+            }
+            
             auto& rng = get_local_rng();
             if (std::uniform_real_distribution<>(0.0, 1.0)(rng) < 0.10) {
                 int u = std::uniform_int_distribution<>(0, N - 1)(rng);
@@ -211,20 +262,24 @@ static std::tuple<int, std::vector<int>, int> genetic_algorithm() {
         });
     };
 
+    // Elitaryzm również musi działać per wyspa
     auto update_population = [&](std::vector<std::vector<int>>& next_pop, std::vector<int>& next_fit) {
-        auto min_it = std::min_element(std::execution::par_unseq, fitness.begin(), fitness.end());
-        int best_old_idx = std::distance(fitness.begin(), min_it);
-        
-        auto worst_new_it = std::max_element(std::execution::par_unseq, next_fit.begin(), next_fit.end());
-        int worst_new_idx = std::distance(next_fit.begin(), worst_new_it);
-        
-        next_pop[worst_new_idx] = population[best_old_idx];
-        next_fit[worst_new_idx] = fitness[best_old_idx];
-
+        for (int k = 0; k < num_islands; ++k) {
+            int start_idx = k * island_size;
+            int end_idx = start_idx + island_size;
+            
+            auto min_it = std::min_element(std::execution::par_unseq, fitness.begin() + start_idx, fitness.begin() + end_idx);
+            int best_old_idx = std::distance(fitness.begin(), min_it);
+            
+            auto worst_new_it = std::max_element(std::execution::par_unseq, next_fit.begin() + start_idx, next_fit.begin() + end_idx);
+            int worst_new_idx = std::distance(next_fit.begin(), worst_new_it);
+            
+            next_pop[worst_new_idx] = population[best_old_idx];
+            next_fit[worst_new_idx] = fitness[best_old_idx];
+        }
         population = std::move(next_pop);
         fitness = std::move(next_fit);
     };
-
 
     evaluate(population, fitness);
     int overall_best = std::numeric_limits<int>::max();
@@ -238,6 +293,23 @@ static std::tuple<int, std::vector<int>, int> genetic_algorithm() {
         memetic_local_search(next_population);
         evaluate(next_population, next_fitness);
         update_population(next_population, next_fitness);
+
+        // Mechanizm migracji między wyspami (Ring Topology)
+        if (withIsland && epoch > 0 && epoch % migration_interval == 0) {
+            for (int k = 0; k < num_islands; ++k) {
+                int current_start = k * island_size;
+                int next_island_start = ((k + 1) % num_islands) * island_size;
+                
+                auto best_it = std::min_element(fitness.begin() + current_start, fitness.begin() + current_start + island_size);
+                int best_idx = std::distance(fitness.begin(), best_it);
+                
+                auto worst_it = std::max_element(fitness.begin() + next_island_start, fitness.begin() + next_island_start + island_size);
+                int worst_idx = std::distance(fitness.begin(), worst_it);
+                
+                population[worst_idx] = population[best_idx];
+                fitness[worst_idx] = fitness[best_idx];
+            }
+        }
 
         int current_best_idx = std::distance(fitness.begin(), std::min_element(fitness.begin(), fitness.end()));
         if (fitness[current_best_idx] < overall_best) {
@@ -317,15 +389,19 @@ int main(int argc, char* argv[]) {
     std::cout << "Graph: " << GRAPH_NAME << " (n=" << N << ")\n\n";
 
     int iterations = 10;
+    
+    bool use_island_model = true;
+    CrossoverMethod method = CrossoverMethod::PMX;
 
     std::cout << "[GA] Metoda: Memetic Algorithm (Lamarckian)\n";
-    std::cout << "[GA] Crossover: Order Crossover (OX1)\n";
+    std::cout << "[GA] Wyspy: " << (use_island_model ? "Tak (Migracja co 10 epok)" : "Nie") << "\n";
+    std::cout << "[GA] Crossover: " << (method == CrossoverMethod::OX1 ? "OX1" : "PMX") << "\n";
     std::cout << "[GA] Local Search: 2-opt\n\n";
 
     std::cout << "Genetic algorithm (" << iterations << " trials)...\n";
     
     TaskResult ga_res = run_parallel(iterations, [&](int) {
-        return genetic_algorithm();
+        return genetic_algorithm(use_island_model, method);
     });
     
     std::cout << "  Best dist:    " << ga_res.best_dist << "\n";
