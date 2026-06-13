@@ -16,6 +16,8 @@
 #include <tuple>
 #include <vector>
 #include <chrono>
+#include <execution> // Wymagane do zrównoleglania (C++17)
+#include <numeric>
 
 // ---------------------------------------------------------------------------
 // Globals / Types / Utility
@@ -25,8 +27,6 @@ static int N = 0;
 static std::string GRAPH_NAME;
 static std::vector<int> CITY_IDS;           
 static std::vector<int> DIST;               
-
-thread_local std::mt19937 tl_rng(std::random_device{}());
 
 inline int dist(int i, int j) { return DIST[i * N + j]; }
 
@@ -43,9 +43,14 @@ struct TaskResult {
     double avg_dist, avg_steps;
     int best_dist;
     std::vector<int> best_path;
-    std::vector<int> best_len_in_epoch;
     double total_time_ms; 
 };
+
+// Thread-safe generator dla operacji równoległych w <execution>
+inline std::mt19937& get_local_rng() {
+    thread_local std::mt19937 tl_rng(std::random_device{}());
+    return tl_rng;
+}
 
 // ---------------------------------------------------------------------------
 // Loading and Basic Heuristics
@@ -100,47 +105,149 @@ static int path_dist(const std::vector<int>& path) {
 
 static std::vector<int> random_perm() {
     std::vector<int> p = CITY_IDS;
-    std::shuffle(p.begin(), p.end(), tl_rng);
+    std::shuffle(p.begin(), p.end(), get_local_rng());
     return p;
 }
 
-static void apply_2opt_inversion(std::vector<int>& tour, int i, int j) {
-    if (i > j) std::swap(i, j);
-    std::reverse(tour.begin() + i + 1, tour.begin() + j + 1);
-}
+// ---------------------------------------------------------------------------
+// Genetic & Memetic Operators
+// ---------------------------------------------------------------------------
 
+// Order Crossover (OX1) - optymalny dla permutacji (TSP)
+static std::vector<int> crossover_ox(const std::vector<int>& p1, const std::vector<int>& p2) {
+    auto& rng = get_local_rng();
+    std::vector<int> child(N, -1);
+    
+    int start = std::uniform_int_distribution<>(0, N - 1)(rng);
+    int end = std::uniform_int_distribution<>(0, N - 1)(rng);
+    if (start > end) std::swap(start, end);
+
+    std::vector<bool> in_child(N + 1, false);
+    for (int i = start; i <= end; ++i) {
+        child[i] = p1[i];
+        in_child[p1[i]] = true;
+    }
+
+    int p2_idx = (end + 1) % N;
+    int child_idx = (end + 1) % N;
+    for (int i = 0; i < N; ++i) {
+        int gene = p2[p2_idx];
+        if (!in_child[gene]) {
+            child[child_idx] = gene;
+            child_idx = (child_idx + 1) % N;
+        }
+        p2_idx = (p2_idx + 1) % N;
+    }
+    return child;
+}
 
 // ---------------------------------------------------------------------------
 // Algorithm
 // ---------------------------------------------------------------------------
-static TaskResult genetic_algorithm(bool withIslands = true, std::function<std::vector<int>>(std::vector<int>) crossover_method) {
-    // static evaluate(){}
-    // static crossover(){}
-    // static update_population(){}
-    // static memetic(){}
-    int popSize = N * 10;
-    vector<vector<int>(N)>(popSize) population;
-    vector<int>(N) fitness;
-    for(int i = 0; i<N; i++) {
+static std::tuple<int, std::vector<int>, int> genetic_algorithm() {
+    int max_epochs = 100;
+    int popSize = std::min(N * 10, 200);
+    
+    std::vector<std::vector<int>> population(popSize);
+    std::vector<int> fitness(popSize);
+    std::vector<int> indices(popSize);
+    std::iota(indices.begin(), indices.end(), 0);
+
+    for(int i = 0; i < popSize; i++) {
         population[i] = random_perm();
     }
-    while() {
-        for(int i=0; i<N; ++i) {
-            fitness[i] = path_dist(population[i]);
+
+    auto evaluate = [&](const std::vector<std::vector<int>>& pop, std::vector<int>& fit) {
+        std::for_each(std::execution::par_unseq, indices.begin(), indices.end(), [&](int i) {
+            fit[i] = path_dist(pop[i]);
+        });
+    };
+
+    auto selection_tournament = [&](const std::vector<int>& fit, int k = 3) {
+        auto& rng = get_local_rng();
+        int best_idx = std::uniform_int_distribution<>(0, popSize - 1)(rng);
+        for(int i = 1; i < k; ++i) {
+            int idx = std::uniform_int_distribution<>(0, popSize - 1)(rng);
+            if(fit[idx] < fit[best_idx]) best_idx = idx;
         }
+        return best_idx;
+    };
+
+    auto do_crossover = [&](std::vector<std::vector<int>>& next_pop) {
+        std::for_each(std::execution::par_unseq, indices.begin(), indices.end(), [&](int i) {
+            int p1_idx = selection_tournament(fitness);
+            int p2_idx = selection_tournament(fitness);
+            next_pop[i] = crossover_ox(population[p1_idx], population[p2_idx]);
+            
+            // Lekka mutacja Swap (~10% szans)
+            auto& rng = get_local_rng();
+            if (std::uniform_real_distribution<>(0.0, 1.0)(rng) < 0.10) {
+                int u = std::uniform_int_distribution<>(0, N - 1)(rng);
+                int v = std::uniform_int_distribution<>(0, N - 1)(rng);
+                std::swap(next_pop[i][u], next_pop[i][v]);
+            }
+        });
+    };
+
+    auto memetic_local_search = [&](std::vector<std::vector<int>>& pop) {
+        std::for_each(std::execution::par_unseq, indices.begin(), indices.end(), [&](int i) {
+            bool improved = true;
+            auto& path = pop[i];
+            while (improved) {
+                improved = false;
+                for (int u = 0; u < N - 1; ++u) {
+                    for (int v = u + 2; v < N; ++v) {
+                        if (u == 0 && v == N - 1) continue;
+                        int n1 = path[u]-1, n2 = path[u+1]-1;
+                        int n3 = path[v]-1, n4 = path[(v+1)%N]-1;
+                        
+                        if (DIST[n1*N + n3] + DIST[n2*N + n4] < DIST[n1*N + n2] + DIST[n3*N + n4]) {
+                            std::reverse(path.begin() + u + 1, path.begin() + v + 1);
+                            improved = true;
+                        }
+                    }
+                }
+            }
+        });
+    };
+
+    auto update_population = [&](std::vector<std::vector<int>>& next_pop, std::vector<int>& next_fit) {
+        auto min_it = std::min_element(std::execution::par_unseq, fitness.begin(), fitness.end());
+        int best_old_idx = std::distance(fitness.begin(), min_it);
+        
+        auto worst_new_it = std::max_element(std::execution::par_unseq, next_fit.begin(), next_fit.end());
+        int worst_new_idx = std::distance(next_fit.begin(), worst_new_it);
+        
+        next_pop[worst_new_idx] = population[best_old_idx];
+        next_fit[worst_new_idx] = fitness[best_old_idx];
+
+        population = std::move(next_pop);
+        fitness = std::move(next_fit);
+    };
 
 
+    evaluate(population, fitness);
+    int overall_best = std::numeric_limits<int>::max();
+    std::vector<int> overall_best_path;
 
+    for (int epoch = 0; epoch < max_epochs; ++epoch) {
+        std::vector<std::vector<int>> next_population(popSize);
+        std::vector<int> next_fitness(popSize);
+
+        do_crossover(next_population);
+        memetic_local_search(next_population);
+        evaluate(next_population, next_fitness);
+        update_population(next_population, next_fitness);
+
+        int current_best_idx = std::distance(fitness.begin(), std::min_element(fitness.begin(), fitness.end()));
+        if (fitness[current_best_idx] < overall_best) {
+            overall_best = fitness[current_best_idx];
+            overall_best_path = population[current_best_idx];
+        }
     }
-    // select
-    // crossover
-    // have paraleism based on islands
-    // update population
-    // memetic development
 
-    return //best in population
+    return {overall_best, overall_best_path, max_epochs};
 }
-
 
 // ---------------------------------------------------------------------------
 // Parallel Runner 
@@ -211,17 +318,19 @@ int main(int argc, char* argv[]) {
 
     int iterations = 10;
 
-    std::cout << "--- Parametry A Priori ---\n";
-    std::cout << "[SA] T_start = " << sa_params.initial_temp << ", alpha = " << sa_params.alpha << "\n";
-    std::cout << "[TS] Tabu List = " << ts_params.tabu_list_size << ", Max Iter = " << ts_params.max_iterations << "\n\n";
+    std::cout << "[GA] Metoda: Memetic Algorithm (Lamarckian)\n";
+    std::cout << "[GA] Crossover: Order Crossover (OX1)\n";
+    std::cout << "[GA] Local Search: 2-opt\n\n";
 
-    std::cout << "Genetic algorithm(10 trials)...\n";
-    TaskResult sa_res = run_parallel(iterations, [&](int) {
+    std::cout << "Genetic algorithm (" << iterations << " trials)...\n";
+    
+    TaskResult ga_res = run_parallel(iterations, [&](int) {
         return genetic_algorithm();
     });
-    std::cout << "  Best dist:    " << sa_res.best_dist << "\n";
-    std::cout << "  Avg dist:     " << sa_res.avg_dist << "\n";
-    std::cout << "  Total time:   " << sa_res.total_time_ms << " ms\n\n";
+    
+    std::cout << "  Best dist:    " << ga_res.best_dist << "\n";
+    std::cout << "  Avg dist:     " << ga_res.avg_dist << "\n";
+    std::cout << "  Total time:   " << ga_res.total_time_ms << " ms\n\n";
 
     return 0;
 }
