@@ -16,7 +16,7 @@
 #include <tuple>
 #include <vector>
 #include <chrono>
-#include <execution> // Wymagane do zrównoleglania (C++17)
+#include <execution>
 #include <numeric>
 
 // ---------------------------------------------------------------------------
@@ -51,7 +51,6 @@ struct TaskResult {
     double total_time_ms; 
 };
 
-// Thread-safe generator dla operacji równoległych w <execution>
 inline std::mt19937& get_local_rng() {
     thread_local std::mt19937 tl_rng(std::random_device{}());
     return tl_rng;
@@ -118,7 +117,6 @@ static std::vector<int> random_perm() {
 // Genetic Operators
 // ---------------------------------------------------------------------------
 
-// 1. Order Crossover (OX1)
 static std::vector<int> crossover_ox(const std::vector<int>& p1, const std::vector<int>& p2) {
     auto& rng = get_local_rng();
     std::vector<int> child(N, -1);
@@ -146,7 +144,6 @@ static std::vector<int> crossover_ox(const std::vector<int>& p1, const std::vect
     return child;
 }
 
-// 2. Partially Mapped Crossover (PMX)
 static std::vector<int> crossover_pmx(const std::vector<int>& p1, const std::vector<int>& p2) {
     auto& rng = get_local_rng();
     std::vector<int> child(N, -1);
@@ -183,12 +180,10 @@ static std::tuple<int, std::vector<int>, int> genetic_algorithm(bool withIsland,
     int max_epochs = 100;
     int popSize = std::min(N * 10, 200); 
     
-    // Ustawienia wysp
     int num_islands = withIsland ? 4 : 1;
-    // Wyrównujemy popSize, aby dzieliło się idealnie przez num_islands
     popSize = (popSize / num_islands) * num_islands; 
     int island_size = popSize / num_islands;
-    int migration_interval = 10; // Co ile epok następuje wymiana genów
+    int migration_interval = 10;
 
     std::vector<std::vector<int>> population(popSize);
     std::vector<int> fitness(popSize);
@@ -205,7 +200,6 @@ static std::tuple<int, std::vector<int>, int> genetic_algorithm(bool withIsland,
         });
     };
 
-    // Selekcja odbywa się tylko w obrębie własnej wyspy
     auto selection_tournament = [&](const std::vector<int>& fit, int island_id, int k = 3) {
         auto& rng = get_local_rng();
         int start_idx = island_id * island_size;
@@ -262,7 +256,6 @@ static std::tuple<int, std::vector<int>, int> genetic_algorithm(bool withIsland,
         });
     };
 
-    // Elitaryzm również musi działać per wyspa
     auto update_population = [&](std::vector<std::vector<int>>& next_pop, std::vector<int>& next_fit) {
         for (int k = 0; k < num_islands; ++k) {
             int start_idx = k * island_size;
@@ -294,7 +287,6 @@ static std::tuple<int, std::vector<int>, int> genetic_algorithm(bool withIsland,
         evaluate(next_population, next_fitness);
         update_population(next_population, next_fitness);
 
-        // Mechanizm migracji między wyspami (Ring Topology)
         if (withIsland && epoch > 0 && epoch % migration_interval == 0) {
             for (int k = 0; k < num_islands; ++k) {
                 int current_start = k * island_size;
@@ -379,8 +371,8 @@ static TaskResult run_parallel(
 // Main
 // ---------------------------------------------------------------------------
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <tsplib_file>\n";
+    if (argc < 4) {
+        std::cerr << "Usage: " << argv[0] << " <tsplib_file> 1/0 1/0\n";
         return 1;
     }
 
@@ -389,9 +381,17 @@ int main(int argc, char* argv[]) {
     std::cout << "Graph: " << GRAPH_NAME << " (n=" << N << ")\n\n";
 
     int iterations = 10;
-    
-    bool use_island_model = true;
-    CrossoverMethod method = CrossoverMethod::PMX;
+    bool use_island_model;
+    CrossoverMethod method;
+    if (*argv[2] == '1'){
+        use_island_model = true;
+    }
+    if (*argv[3] == '1'){
+        method = CrossoverMethod::PMX;
+    }
+    else {
+        method = CrossoverMethod::OX1;
+    }
 
     std::cout << "[GA] Metoda: Memetic Algorithm (Lamarckian)\n";
     std::cout << "[GA] Wyspy: " << (use_island_model ? "Tak (Migracja co 10 epok)" : "Nie") << "\n";
