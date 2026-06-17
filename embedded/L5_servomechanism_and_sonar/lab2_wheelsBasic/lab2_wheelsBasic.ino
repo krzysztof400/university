@@ -61,9 +61,8 @@ static void avoidObstacleIfNeeded() {
     delay(300);
 
     while (true) {
-
-        int leftDist  = (int)measureDistanceCm(SCAN_MAX_ANGLE); // 150°
-        int rightDist = (int)measureDistanceCm(SCAN_MIN_ANGLE); // 30°
+        int leftDist  = (int)measureDistanceCm(SCAN_MAX_ANGLE); 
+        int rightDist = (int)measureDistanceCm(SCAN_MIN_ANGLE);
 
         bool leftFree  = leftDist  > DIST_THRESHOLD_CM;
         bool rightFree = rightDist > DIST_THRESHOLD_CM;
@@ -103,42 +102,6 @@ static void idleScanStep() {
   delay(200);
 }
 
-static void runSpeedSweep() {
-  const int speedStart = 60;
-  const int speedEnd   = 240;
-  const int speedStep   = 20;
-  const unsigned long sampleMs = 2000;
-
-  for (int speedValue = speedStart; speedValue <= speedEnd; speedValue += speedStep) {
-    w.stop();
-    w.resetEncoders();
-    w.setSpeed((uint8_t)speedValue);
-    delay(200);
-
-    w.forward();
-
-    unsigned long startTs = millis();
-    while (millis() - startTs < sampleMs) {
-      delay(20);
-    }
-
-    w.stop();
-
-    unsigned long durationMs = millis() - startTs;
-    unsigned long leftTicks  = w.getLeftTicks();
-    unsigned long rightTicks = w.getRightTicks();
-
-    float avgTicks = ((float)leftTicks + (float)rightTicks) * 0.5f;
-    float distanceCm = avgTicks / w.getPulsesPerCm();
-    float cmPerSec = (distanceCm * 1000.0f) / (float)durationMs;
-
-    w.showSpeedMeasurement(speedValue, cmPerSec);
-    delay(900);
-  }
-
-  w.stop();
-}
-
 static void handleCommand(char c) {
   switch (c) {
     case 'w': w.forward(); break;
@@ -159,17 +122,13 @@ static void handleCommand(char c) {
 
     case 'f': w.goForward(200); break;
     case 'b': w.goBack(200); break;
-
-    case 'v':
-    case 'V':
-      runSpeedSweep();
-      break;
   }
 }
 
 void setup() {
   w.attach(7, 8, 5, 12, 13, 6);
   w.setPulsesPerCm(2.0f);
+  w.setSpeed(120);
 
   pinMode(SONAR_TRIG, OUTPUT);
   pinMode(SONAR_ECHO, INPUT);
