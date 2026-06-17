@@ -176,7 +176,7 @@ static std::vector<int> crossover_pmx(const std::vector<int>& p1, const std::vec
 // ---------------------------------------------------------------------------
 // Algorithm Core
 // ---------------------------------------------------------------------------
-static std::tuple<int, std::vector<int>, int> genetic_algorithm(bool withIsland, CrossoverMethod cx_method) {
+static std::tuple<int, std::vector<int>, int> genetic_algorithm(bool withIsland, CrossoverMethod cx_method, bool memes) {
     int max_epochs = 100;
     int popSize = std::min(N * 10, 200); 
     
@@ -283,7 +283,7 @@ static std::tuple<int, std::vector<int>, int> genetic_algorithm(bool withIsland,
         std::vector<int> next_fitness(popSize);
 
         do_crossover(next_population);
-        memetic_local_search(next_population);
+        if (memes) { memetic_local_search(next_population); }
         evaluate(next_population, next_fitness);
         update_population(next_population, next_fitness);
 
@@ -371,8 +371,8 @@ static TaskResult run_parallel(
 // Main
 // ---------------------------------------------------------------------------
 int main(int argc, char* argv[]) {
-    if (argc < 4) {
-        std::cerr << "Usage: " << argv[0] << " <tsplib_file> 1/0 1/0\n";
+    if (argc < 5) {
+        std::cerr << "Usage: " << argv[0] << " <tsplib_file> 1/0 1/0 1/0\n";
         return 1;
     }
 
@@ -380,18 +380,11 @@ int main(int argc, char* argv[]) {
     load_and_build(argv[1]);
     std::cout << "Graph: " << GRAPH_NAME << " (n=" << N << ")\n\n";
 
-    int iterations = 10;
-    bool use_island_model;
-    CrossoverMethod method;
-    if (*argv[2] == '1'){
-        use_island_model = true;
-    }
-    if (*argv[3] == '1'){
-        method = CrossoverMethod::PMX;
-    }
-    else {
-        method = CrossoverMethod::OX1;
-    }
+    int iterations = 100;
+    bool use_island_model = (*argv[2] == '1');
+    bool use_pmx = (*argv[3] == '1');
+    bool memes = (*argv[4] == '1');
+    CrossoverMethod method = use_pmx ? CrossoverMethod::PMX : CrossoverMethod::OX1;
 
     std::cout << "[GA] Metoda: Memetic Algorithm (Lamarckian)\n";
     std::cout << "[GA] Wyspy: " << (use_island_model ? "Tak (Migracja co 10 epok)" : "Nie") << "\n";
@@ -401,7 +394,7 @@ int main(int argc, char* argv[]) {
     std::cout << "Genetic algorithm (" << iterations << " trials)...\n";
     
     TaskResult ga_res = run_parallel(iterations, [&](int) {
-        return genetic_algorithm(use_island_model, method);
+        return genetic_algorithm(use_island_model, method, memes);
     });
     
     std::cout << "  Best dist:    " << ga_res.best_dist << "\n";
