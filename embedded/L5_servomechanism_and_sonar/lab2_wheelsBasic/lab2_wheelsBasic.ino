@@ -12,14 +12,26 @@ const int SERVO_PIN  = 11;
 
 Servo scanServo;
 
-// Scan parameters
+// --- SERVO BIAS CONFIGURATION ---
+// Adjust this value if your servo is physically rotated.
+// For example, if 90 degrees logically actually points slightly right,
+// try a negative number like -5 or -10 to center it.
+const int SERVO_OFFSET = -5; 
+
 const int SCAN_MIN_ANGLE = 30;
 const int SCAN_MAX_ANGLE = 150;
-const int DIST_THRESHOLD_CM = 20;
+const int DIST_THRESHOLD_CM = 30;
+
+static void setServoAngle(int logicalAngle) {
+    int physicalAngle = logicalAngle + SERVO_OFFSET;
+    physicalAngle = constrain(physicalAngle, 0, 180);
+    
+    scanServo.write(physicalAngle);
+}
 
 static long measureDistanceCm(int angle) {
-  scanServo.write(angle);
-  delay(200); // allow servo to move
+  setServoAngle(angle);
+  delay(150);
 
   digitalWrite(SONAR_TRIG, LOW);
   delayMicroseconds(2);
@@ -28,16 +40,22 @@ static long measureDistanceCm(int angle) {
   digitalWrite(SONAR_TRIG, LOW);
 
   long duration = pulseIn(SONAR_ECHO, HIGH, 30000);
-  if (duration == 0) return -1;
+  long distance = -1;
+  
+  if (duration != 0) {
+      distance = (duration / 2) / 29.1;
+  }
 
-  return (duration / 2) / 29.1;
+  w.displaySonar(angle, (int)distance);
+
+  return distance;
 }
 
-static int scanFront(int &outDistance) {
-  int bestAngle = (SCAN_MIN_ANGLE + SCAN_MAX_ANGLE) / 2;
+static int scanForBestDirection(int &outDistance) {
+  int bestAngle = 90;
   long bestDist = -1;
 
-  for (int a = SCAN_MIN_ANGLE; a <= SCAN_MAX_ANGLE; a += 15) {
+  for (int a = SCAN_MIN_ANGLE; a <= SCAN_MAX_ANGLE; a += 20) {
     long d = measureDistanceCm(a);
     if (d > bestDist) {
       bestDist = d;
@@ -50,56 +68,48 @@ static int scanFront(int &outDistance) {
 }
 
 static void avoidObstacleIfNeeded() {
-    int frontDist = (int)measureDistanceCm(90);
+    int quickScanAngles[] = {90, 75, 105}; 
+    bool blocked = false;
 
-    if (frontDist < 0 || frontDist > DIST_THRESHOLD_CM) {
+    for (int i = 0; i < 3; i++) {
+        int dist = (int)measureDistanceCm(quickScanAngles[i]);
+        if (dist > 0 && dist <= DIST_THRESHOLD_CM) {
+            blocked = true;
+            break;
+        }
+    }
+
+    // If the path is clear, continue driving
+    if (!blocked) {
         w.forward();
         return;
     }
 
+    // --- OBSTACLE DETECTED ---
     w.stop();
-    delay(300);
+    delay(200);
 
-    while (true) {
-        int leftDist  = (int)measureDistanceCm(SCAN_MAX_ANGLE); 
-        int rightDist = (int)measureDistanceCm(SCAN_MIN_ANGLE);
+    int bestDist = -1;
+    int bestAngle = scanForBestDirection(bestDist);
 
-        bool leftFree  = leftDist  > DIST_THRESHOLD_CM;
-        bool rightFree = rightDist > DIST_THRESHOLD_CM;
-
-        // free on left
-        if (leftFree && leftDist >= rightDist) {
-            w.turnLeft(40);
-            delay(500);
-            w.stop();
-            break;
-        }
-
-        // free on right
-        if (rightFree) {
-            w.turnRight(40);
-            delay(500);
-            w.stop();
-            break;
-        }
-
-        // both blocked
+    if (bestDist <= DIST_THRESHOLD_CM) {
+        // Both sides are blocked, back up
         w.goBack(30);
         delay(500);
         w.stop();
-        delay(300);
+    } else if (bestAngle > 90) {
+        // More space on the left
+        w.turnLeft(20);
+        delay(500);
+        w.stop();
+    } else {
+        w.turnRight(20);
+        delay(500);
+        w.stop();
     }
-}
-
-static void idleScanStep() {
-  int bestDist = -1;
-  int bestAngle = scanFront(bestDist);
-
-  w.displaySonar(bestAngle, bestDist);
-
-  avoidObstacleIfNeeded();
-
-  delay(200);
+    
+    setServoAngle(90);
+    delay(150);
 }
 
 static void handleCommand(char c) {
@@ -128,20 +138,20 @@ static void handleCommand(char c) {
 void setup() {
   w.attach(7, 8, 5, 12, 13, 6);
   w.setPulsesPerCm(2.0f);
-  w.setSpeed(120);
+  w.setSpeed(90);
 
   pinMode(SONAR_TRIG, OUTPUT);
   pinMode(SONAR_ECHO, INPUT);
 
   scanServo.attach(SERVO_PIN);
-  scanServo.write((SCAN_MIN_ANGLE + SCAN_MAX_ANGLE) / 2);
+  setServoAngle(90);
 
   Serial.begin(9600);
 }
 
 void loop() {
   if (Serial.available() == 0) {
-    idleScanStep();
+    avoidObstacleIfNeeded();
     return;
   }
 
