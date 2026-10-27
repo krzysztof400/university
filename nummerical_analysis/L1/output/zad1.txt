@@ -1,0 +1,14 @@
+=== macheps ===
+Float16  iter=9.765625e-04   eps()=9.765625e-04   float.h=9.765625e-04  
+Float32  iter=1.192093e-07   eps()=1.192093e-07   float.h=1.192093e-07  
+Float64  iter=2.220446e-16   eps()=2.220446e-16   float.h=2.220446e-16  
+
+=== eta (MIN_sub) ===
+Float16  iter=5.960464e-08   nextfloat(0)=5.960464e-08   floatmin=6.103516e-05  
+Float32  iter=1.401298e-45   nextfloat(0)=1.401298e-45   floatmin=1.175494e-38  
+Float64  iter=4.940656e-324  nextfloat(0)=4.940656e-324  floatmin=2.225074e-308 
+
+=== MAX ===
+Float16  iter=6.550400e+04   floatmax()=6.550400e+04   float.h=6.550400e+04  
+Float32  iter=3.402823e+38   floatmax()=3.402823e+38   float.h=3.402823e+38  
+Float64  iter=1.797693e+308  floatmax()=1.797693e+308  float.h=1.797693e+308 

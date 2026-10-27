@@ -1,0 +1,12 @@
+exact = -1.00657107000000e-11
+
+Float32
+  forward            -4.9994429946e-01   abs.err = 4.999e-01
+  backward           -4.5434570312e-01   abs.err = 4.543e-01
+  largest->smallest  -5.0000000000e-01   abs.err = 5.000e-01
+  smallest->largest  -5.0000000000e-01   abs.err = 5.000e-01
+Float64
+  forward            +1.0251881368e-10   abs.err = 1.126e-10
+  backward           -1.5643308870e-10   abs.err = 1.464e-10
+  largest->smallest  +0.0000000000e+00   abs.err = 1.007e-11
+  smallest->largest  +0.0000000000e+00   abs.err = 1.007e-11
