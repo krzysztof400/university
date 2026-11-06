@@ -1,0 +1,2 @@
+- metodologi budowania algorytmów
+- 
